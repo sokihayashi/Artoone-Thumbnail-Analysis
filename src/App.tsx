@@ -13,7 +13,10 @@ import miniHayashiPrompt from './prompts/mini-hayashi.md?raw'
 import miniHayashiBigPrompt from './prompts/mini-hayashi-big.md?raw'
 
 const STORAGE_KEY = 'artoone_settings'
-const BAKED_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY as string | undefined
+const BAKED_GEMINI_KEY = import.meta.env.VITE_GEMINI_API_KEY as string | undefined
+const BAKED_ANTHROPIC_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY as string | undefined
+const BAKED_KEY = BAKED_GEMINI_KEY ?? BAKED_ANTHROPIC_KEY
+const BAKED_PROVIDER: Provider | undefined = BAKED_GEMINI_KEY ? 'gemini' : BAKED_ANTHROPIC_KEY ? 'anthropic' : undefined
 
 function loadSettings(): Partial<AppSettings> {
   try {
@@ -33,9 +36,9 @@ export default function App() {
   const saved = loadSettings()
 
   const [apiKey, setApiKey] = useState(saved.apiKey ?? BAKED_KEY ?? '')
-  const [provider, setProvider] = useState<Provider>(saved.provider ?? 'gemini')
+  const [provider, setProvider] = useState<Provider>(saved.provider ?? BAKED_PROVIDER ?? 'gemini')
   const [version, setVersion] = useState<ToolVersion>(saved.version ?? 'mini')
-  const [model, setModel] = useState(saved.model ?? 'gemini-2.0-flash')
+  const [model, setModel] = useState(saved.model ?? (BAKED_PROVIDER === 'anthropic' ? 'claude-sonnet-4-6' : 'gemini-2.0-flash'))
   const [dlcData, setDlcData] = useState<string | null>(saved.dlcData ?? null)
 
   const [screen, setScreen] = useState<Screen>('mode-select')
