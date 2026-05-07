@@ -78,6 +78,46 @@ async function* streamGemini(
   })
 }
 
+// ─── OpenRouter streaming (OpenAI-compatible) ─────────────────────────────
+
+type OpenRouterPart =
+  | { type: 'text'; text: string }
+  | { type: 'image_url'; image_url: { url: string } }
+
+async function* streamOpenRouter(
+  apiKey: string,
+  systemPrompt: string,
+  parts: OpenRouterPart[],
+  model: string,
+): AsyncGenerator<string> {
+  const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model,
+      stream: true,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: parts },
+      ],
+    }),
+  })
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    const msg = (err as { error?: { message?: string } }).error?.message ?? `HTTP ${res.status}`
+    throw new Error(msg)
+  }
+
+  yield* readSSE(res, (parsed: unknown) => {
+    const p = parsed as { choices?: { delta?: { content?: string } }[] }
+    return p.choices?.[0]?.delta?.content ?? null
+  })
+}
+
 // ─── Shared SSE reader ─────────────────────────────────────────────────────
 
 async function* readSSE(
@@ -124,6 +164,13 @@ export async function* streamClaude(
       return { inlineData: { mimeType: img.source.media_type, data: img.source.data } }
     })
     yield* streamGemini(apiKey, systemPrompt, parts, model)
+  } else if (provider === 'openrouter') {
+    const parts: OpenRouterPart[] = userContent.map((c) => {
+      if (c.type === 'text') return { type: 'text', text: c.text }
+      const img = c as ReturnType<typeof buildImageContent>
+      return { type: 'image_url', image_url: { url: `data:${img.source.media_type};base64,${img.source.data}` } }
+    })
+    yield* streamOpenRouter(apiKey, systemPrompt, parts, model)
   } else {
     yield* streamAnthropic(apiKey, systemPrompt, userContent, model)
   }

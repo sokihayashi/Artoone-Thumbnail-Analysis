@@ -14,10 +14,11 @@ import miniHayashiBigPrompt from './prompts/mini-hayashi-big.md?raw'
 import dlcData from './data/dlc.json'
 
 const STORAGE_KEY = 'artoone_settings'
+const BAKED_OPENROUTER_KEY = import.meta.env.VITE_OPENROUTER_API_KEY as string | undefined
 const BAKED_GEMINI_KEY = import.meta.env.VITE_GEMINI_API_KEY as string | undefined
 const BAKED_ANTHROPIC_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY as string | undefined
-const BAKED_KEY = BAKED_GEMINI_KEY ?? BAKED_ANTHROPIC_KEY
-const BAKED_PROVIDER: Provider | undefined = BAKED_GEMINI_KEY ? 'gemini' : BAKED_ANTHROPIC_KEY ? 'anthropic' : undefined
+const BAKED_KEY = BAKED_OPENROUTER_KEY ?? BAKED_GEMINI_KEY ?? BAKED_ANTHROPIC_KEY
+const BAKED_PROVIDER: Provider | undefined = BAKED_OPENROUTER_KEY ? 'openrouter' : BAKED_GEMINI_KEY ? 'gemini' : BAKED_ANTHROPIC_KEY ? 'anthropic' : undefined
 
 function loadSettings(): Partial<AppSettings> {
   try {
@@ -44,7 +45,10 @@ export default function App() {
   const [apiKey, setApiKey] = useState(saved.apiKey ?? BAKED_KEY ?? '')
   const [provider, setProvider] = useState<Provider>(saved.provider ?? BAKED_PROVIDER ?? 'gemini')
   const [version, setVersion] = useState<ToolVersion>(saved.version ?? 'mini')
-  const [model, setModel] = useState(saved.model ?? (BAKED_PROVIDER === 'anthropic' ? 'claude-sonnet-4-6' : 'gemini-1.5-flash'))
+  const defaultModel = BAKED_PROVIDER === 'anthropic' ? 'claude-sonnet-4-6'
+    : BAKED_PROVIDER === 'openrouter' ? 'google/gemini-2.0-flash-exp:free'
+    : 'gemini-1.5-flash'
+  const [model, setModel] = useState(saved.model ?? defaultModel)
 
   const [screen, setScreen] = useState<Screen>('mode-select')
   const [selectedMode, setSelectedMode] = useState<Mode | null>(null)
@@ -70,7 +74,8 @@ export default function App() {
   const handleApiKeySave = (key: string, p: Provider) => {
     setApiKey(key)
     setProvider(p)
-    const defaultModel = p === 'gemini' ? 'gemini-1.5-flash' : 'claude-sonnet-4-6'
+    const defaultModel = p === 'openrouter' ? 'google/gemini-2.0-flash-exp:free'
+      : p === 'gemini' ? 'gemini-1.5-flash' : 'claude-sonnet-4-6'
     setModel(defaultModel)
     persistSettings({ apiKey: key, provider: p, model: defaultModel })
   }

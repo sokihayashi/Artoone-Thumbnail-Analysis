@@ -6,6 +6,13 @@ interface Props {
 }
 
 const INFO: Record<Provider, { label: string; placeholder: string; hint: string; url: string; urlLabel: string }> = {
+  openrouter: {
+    label: 'OpenRouter APIキー',
+    placeholder: 'sk-or-...',
+    hint: '無料モデル（Gemini 2.0 Flash等）が使えます。',
+    url: 'https://openrouter.ai/keys',
+    urlLabel: 'openrouter.ai',
+  },
   gemini: {
     label: 'Google AI Studio APIキー',
     placeholder: 'AIza...',
@@ -23,7 +30,7 @@ const INFO: Record<Provider, { label: string; placeholder: string; hint: string;
 }
 
 export default function ApiKeySetup({ onSave }: Props) {
-  const [provider, setProvider] = useState<Provider>('gemini')
+  const [provider, setProvider] = useState<Provider>('openrouter')
   const [key, setKey] = useState('')
   const [show, setShow] = useState(false)
 
@@ -50,10 +57,17 @@ export default function ApiKeySetup({ onSave }: Props) {
         <div className="provider-toggle">
           <button
             type="button"
+            className={provider === 'openrouter' ? 'toggle-btn active' : 'toggle-btn'}
+            onClick={() => handleProviderChange('openrouter')}
+          >
+            OpenRouter（無料）
+          </button>
+          <button
+            type="button"
             className={provider === 'gemini' ? 'toggle-btn active' : 'toggle-btn'}
             onClick={() => handleProviderChange('gemini')}
           >
-            Gemini（無料）
+            Gemini
           </button>
           <button
             type="button"

@@ -23,6 +23,11 @@ const MODELS: Record<Provider, { id: string; label: string }[]> = {
     { id: 'gemini-2.0-flash', label: 'Flash 2.0' },
     { id: 'gemini-1.5-pro', label: '1.5 Pro' },
   ],
+  openrouter: [
+    { id: 'google/gemini-2.0-flash-exp:free', label: 'Gemini 2.0 Flash (無料)' },
+    { id: 'google/gemini-flash-1.5-8b:free', label: 'Gemini 1.5 Flash 8B (無料)' },
+    { id: 'meta-llama/llama-3.2-11b-vision-instruct:free', label: 'Llama 3.2 Vision (無料)' },
+  ],
 }
 
 export default function Header({
@@ -66,6 +71,9 @@ export default function Header({
 
           {!bakedKey && (
             <div className="version-toggle">
+              <button className={provider === 'openrouter' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => handleProviderChange('openrouter')}>
+                OpenRouter
+              </button>
               <button className={provider === 'gemini' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => handleProviderChange('gemini')}>
                 Gemini
               </button>
