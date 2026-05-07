@@ -14,9 +14,9 @@ import miniHayashiBigPrompt from './prompts/mini-hayashi-big.md?raw'
 import dlcData from './data/dlc.json'
 
 const STORAGE_KEY = 'artoone_settings'
-const BAKED_OPENROUTER_KEY = import.meta.env.VITE_OPENROUTER_API_KEY as string | undefined
-const BAKED_GEMINI_KEY = import.meta.env.VITE_GEMINI_API_KEY as string | undefined
-const BAKED_ANTHROPIC_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY as string | undefined
+const BAKED_OPENROUTER_KEY = import.meta.env.VITE_OPENROUTER_API_KEY || undefined
+const BAKED_GEMINI_KEY = import.meta.env.VITE_GEMINI_API_KEY || undefined
+const BAKED_ANTHROPIC_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY || undefined
 const BAKED_KEY = BAKED_OPENROUTER_KEY ?? BAKED_GEMINI_KEY ?? BAKED_ANTHROPIC_KEY
 const BAKED_PROVIDER: Provider | undefined = BAKED_OPENROUTER_KEY ? 'openrouter' : BAKED_GEMINI_KEY ? 'gemini' : BAKED_ANTHROPIC_KEY ? 'anthropic' : undefined
 
