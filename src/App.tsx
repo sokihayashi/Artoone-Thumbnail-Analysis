@@ -16,7 +16,7 @@ import dlcData from './data/dlc.json'
 const STORAGE_KEY = 'artoone_settings'
 
 const DEFAULT_MODEL: Record<Provider, string> = {
-  openrouter: 'google/gemini-2.0-flash-exp:free',
+  openrouter: 'meta-llama/llama-3.2-11b-vision-instruct:free',
   anthropic: 'claude-sonnet-4-6',
 }
 
