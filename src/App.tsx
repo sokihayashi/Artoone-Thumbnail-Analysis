@@ -16,7 +16,7 @@ import dlcData from './data/dlc.json'
 const STORAGE_KEY = 'artoone_settings'
 
 const DEFAULT_MODEL: Record<Provider, string> = {
-  openrouter: 'meta-llama/llama-3.2-11b-vision-instruct:free',
+  openrouter: 'nvidia/nemotron-nano-12b-v2-vl:free',
   anthropic: 'claude-sonnet-4-6',
 }
 

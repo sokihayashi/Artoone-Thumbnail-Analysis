@@ -15,9 +15,7 @@ interface Props {
 
 const MODELS: Record<Provider, { id: string; label: string }[]> = {
   openrouter: [
-    { id: 'meta-llama/llama-3.2-11b-vision-instruct:free', label: 'Llama 3.2 Vision (無料)' },
-    { id: 'mistralai/mistral-small-3.1-24b-instruct:free', label: 'Mistral Small 3.1 (無料)' },
-    { id: 'google/gemma-3-27b-it:free', label: 'Gemma 3 27B (無料)' },
+    { id: 'nvidia/nemotron-nano-12b-v2-vl:free', label: 'Nemotron Nano 12B VL (無料)' },
   ],
   anthropic: [
     { id: 'claude-sonnet-4-6', label: 'Sonnet 4.6' },
