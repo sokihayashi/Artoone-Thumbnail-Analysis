@@ -141,6 +141,8 @@ export default function App() {
         onModelChange={handleModel}
         onReset={handleNewDiagnosis}
         onApiKeyReset={handleApiKeyReset}
+        bakedKey={!!BAKED_KEY}
+        screen={screen}
       />
 
       <main className="app-main">
