@@ -13,6 +13,7 @@ import miniHayashiPrompt from './prompts/mini-hayashi.md?raw'
 import miniHayashiBigPrompt from './prompts/mini-hayashi-big.md?raw'
 
 const STORAGE_KEY = 'artoone_settings'
+const BAKED_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY as string | undefined
 
 function loadSettings(): Partial<AppSettings> {
   try {
@@ -31,7 +32,7 @@ type Screen = 'mode-select' | 'form' | 'result'
 export default function App() {
   const saved = loadSettings()
 
-  const [apiKey, setApiKey] = useState(saved.apiKey ?? '')
+  const [apiKey, setApiKey] = useState(saved.apiKey ?? BAKED_KEY ?? '')
   const [version, setVersion] = useState<ToolVersion>(saved.version ?? 'mini')
   const [model, setModel] = useState(saved.model ?? 'claude-sonnet-4-6')
   const [dlcData, setDlcData] = useState<string | null>(saved.dlcData ?? null)
