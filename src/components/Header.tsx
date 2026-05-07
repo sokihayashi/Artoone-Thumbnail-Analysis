@@ -15,7 +15,10 @@ interface Props {
 
 const MODELS: Record<Provider, { id: string; label: string }[]> = {
   openrouter: [
+    { id: 'google/gemma-4-31b-it:free', label: 'Gemma 4 31B (無料)' },
     { id: 'google/gemma-4-26b-a4b-it:free', label: 'Gemma 4 26B (無料)' },
+    { id: 'tencent/hy3-preview:free', label: 'Tencent Hy3 (無料)' },
+    { id: 'openrouter/owl-alpha', label: 'Owl Alpha (無料)' },
     { id: 'nvidia/nemotron-nano-12b-v2-vl:free', label: 'Nemotron Nano 12B VL (無料)' },
   ],
   anthropic: [
