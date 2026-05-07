@@ -43,12 +43,12 @@ export default function App() {
   const saved = loadSettings()
 
   const [apiKey, setApiKey] = useState(saved.apiKey ?? BAKED_KEY ?? '')
-  const [provider, setProvider] = useState<Provider>(saved.provider ?? BAKED_PROVIDER ?? 'gemini')
+  const [provider, setProvider] = useState<Provider>(BAKED_PROVIDER ?? saved.provider ?? 'gemini')
   const [version, setVersion] = useState<ToolVersion>(saved.version ?? 'mini')
   const defaultModel = BAKED_PROVIDER === 'anthropic' ? 'claude-sonnet-4-6'
     : BAKED_PROVIDER === 'openrouter' ? 'google/gemini-2.0-flash-exp:free'
     : 'gemini-1.5-flash'
-  const [model, setModel] = useState(saved.model ?? defaultModel)
+  const [model, setModel] = useState(BAKED_PROVIDER ? defaultModel : (saved.model ?? defaultModel))
 
   const [screen, setScreen] = useState<Screen>('mode-select')
   const [selectedMode, setSelectedMode] = useState<Mode | null>(null)
