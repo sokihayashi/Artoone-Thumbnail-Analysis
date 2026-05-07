@@ -27,6 +27,14 @@ jobs:
 
       - run: npm ci
 
+      - name: Check secrets
+        run: |
+          echo "OPENROUTER key length: ${#VITE_OPENROUTER_API_KEY}"
+          echo "GEMINI key length: ${#VITE_GEMINI_API_KEY}"
+        env:
+          VITE_OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          VITE_GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
       - name: Build
         run: npm run build
         env:
