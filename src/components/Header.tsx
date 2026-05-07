@@ -12,6 +12,8 @@ interface Props {
   onModelChange: (m: string) => void
   onReset: () => void
   onApiKeyReset: () => void
+  bakedKey: boolean
+  screen: 'mode-select' | 'form' | 'result'
 }
 
 const MODELS: Record<Provider, { id: string; label: string }[]> = {
@@ -32,6 +34,7 @@ export default function Header({
   dlcLoaded, onDlcUpload, onDlcClear,
   model, onModelChange,
   onReset, onApiKeyReset,
+  bakedKey, screen,
 }: Props) {
   const handleDlcFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -55,13 +58,22 @@ export default function Header({
     onModelChange(MODELS[p][0].id)
   }
 
+  const showBack = screen !== 'mode-select'
+
   return (
     <header className="app-header">
       <div className="header-inner">
-        <button className="header-logo" onClick={onReset}>
-          <span className="logo-icon">🎨</span>
-          <span className="logo-text">サムネ診断</span>
-        </button>
+        <div className="header-left">
+          {showBack && (
+            <button className="btn-back-header" onClick={onReset} title="モード選択に戻る">
+              ←
+            </button>
+          )}
+          <button className="header-logo" onClick={onReset}>
+            <span className="logo-icon">🎨</span>
+            <span className="logo-text">サムネ診断</span>
+          </button>
+        </div>
 
         <div className="header-controls">
           <div className="version-toggle">
@@ -73,20 +85,24 @@ export default function Header({
             </button>
           </div>
 
-          <div className="version-toggle">
-            <button className={provider === 'gemini' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => handleProviderChange('gemini')}>
-              Gemini
-            </button>
-            <button className={provider === 'anthropic' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => handleProviderChange('anthropic')}>
-              Claude
-            </button>
-          </div>
+          {!bakedKey && (
+            <div className="version-toggle">
+              <button className={provider === 'gemini' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => handleProviderChange('gemini')}>
+                Gemini
+              </button>
+              <button className={provider === 'anthropic' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => handleProviderChange('anthropic')}>
+                Claude
+              </button>
+            </div>
+          )}
 
-          <select className="model-select" value={model} onChange={(e) => onModelChange(e.target.value)}>
-            {MODELS[provider].map((m) => (
-              <option key={m.id} value={m.id}>{m.label}</option>
-            ))}
-          </select>
+          {!bakedKey && (
+            <select className="model-select" value={model} onChange={(e) => onModelChange(e.target.value)}>
+              {MODELS[provider].map((m) => (
+                <option key={m.id} value={m.id}>{m.label}</option>
+              ))}
+            </select>
+          )}
 
           <div className="dlc-control">
             {dlcLoaded ? (
@@ -99,7 +115,9 @@ export default function Header({
             )}
           </div>
 
-          <button className="btn-text-small" onClick={onApiKeyReset}>APIキー</button>
+          {!bakedKey && (
+            <button className="btn-text-small" onClick={onApiKeyReset}>APIキー</button>
+          )}
         </div>
       </div>
     </header>
