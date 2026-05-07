@@ -19,9 +19,9 @@ const MODELS: Record<Provider, { id: string; label: string }[]> = {
     { id: 'claude-opus-4-7', label: 'Opus 4.7' },
   ],
   gemini: [
-    { id: 'gemini-2.0-flash', label: 'Flash 2.0 (無料)' },
+    { id: 'gemini-1.5-flash', label: '1.5 Flash (無料)' },
+    { id: 'gemini-2.0-flash', label: 'Flash 2.0' },
     { id: 'gemini-1.5-pro', label: '1.5 Pro' },
-    { id: 'gemini-1.5-flash', label: '1.5 Flash' },
   ],
 }
 

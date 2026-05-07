@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import type { Mode, ToolVersion, FormData, AppSettings, Provider } from './types'
 import { streamClaude, buildUserMessage } from './utils/claude'
 import ApiKeySetup from './components/ApiKeySetup'
@@ -31,6 +31,11 @@ function saveSettings(s: Partial<AppSettings>) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(s))
 }
 
+function parseRetryAfter(msg: string): number | null {
+  const m = msg.match(/Please retry in ([\d.]+)s/)
+  return m ? Math.ceil(parseFloat(m[1])) : null
+}
+
 type Screen = 'mode-select' | 'form' | 'result'
 
 export default function App() {
@@ -39,7 +44,7 @@ export default function App() {
   const [apiKey, setApiKey] = useState(saved.apiKey ?? BAKED_KEY ?? '')
   const [provider, setProvider] = useState<Provider>(saved.provider ?? BAKED_PROVIDER ?? 'gemini')
   const [version, setVersion] = useState<ToolVersion>(saved.version ?? 'mini')
-  const [model, setModel] = useState(saved.model ?? (BAKED_PROVIDER === 'anthropic' ? 'claude-sonnet-4-6' : 'gemini-2.0-flash'))
+  const [model, setModel] = useState(saved.model ?? (BAKED_PROVIDER === 'anthropic' ? 'claude-sonnet-4-6' : 'gemini-1.5-flash'))
 
   const [screen, setScreen] = useState<Screen>('mode-select')
   const [selectedMode, setSelectedMode] = useState<Mode | null>(null)
@@ -47,6 +52,13 @@ export default function App() {
   const [result, setResult] = useState('')
   const [streaming, setStreaming] = useState(false)
   const [error, setError] = useState('')
+  const [retryCountdown, setRetryCountdown] = useState<number | null>(null)
+
+  const retryTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  useEffect(() => {
+    return () => { if (retryTimerRef.current) clearInterval(retryTimerRef.current) }
+  }, [])
 
   const persistSettings = useCallback(
     (patch: Partial<AppSettings>) => {
@@ -58,7 +70,7 @@ export default function App() {
   const handleApiKeySave = (key: string, p: Provider) => {
     setApiKey(key)
     setProvider(p)
-    const defaultModel = p === 'gemini' ? 'gemini-2.0-flash' : 'claude-sonnet-4-6'
+    const defaultModel = p === 'gemini' ? 'gemini-1.5-flash' : 'claude-sonnet-4-6'
     setModel(defaultModel)
     persistSettings({ apiKey: key, provider: p, model: defaultModel })
   }
@@ -81,11 +93,12 @@ export default function App() {
     return `${base}\n\n---\n\n## 追加DLC ミニCooさん データ\n\n以下のJSONが今回提供されています。\n\`\`\`json\n${dlcJson}\n\`\`\``
   }
 
-  const runDiagnosis = async (mode: Mode, data: FormData) => {
+  const runDiagnosis = useCallback(async (mode: Mode, data: FormData, retryCount = 0) => {
     setResult('')
     setError('')
+    setRetryCountdown(null)
     setStreaming(true)
-    setScreen('result')
+    if (retryCount === 0) setScreen('result')
 
     try {
       const systemPrompt = buildSystemPrompt()
@@ -95,12 +108,30 @@ export default function App() {
         accumulated += chunk
         setResult(accumulated)
       }
-    } catch (e) {
-      setError(e instanceof Error ? e.message : String(e))
-    } finally {
       setStreaming(false)
+    } catch (e) {
+      setStreaming(false)
+      const msg = e instanceof Error ? e.message : String(e)
+      const waitSecs = retryCount < 3 ? parseRetryAfter(msg) : null
+      if (waitSecs !== null) {
+        let remaining = waitSecs
+        setRetryCountdown(remaining)
+        retryTimerRef.current = setInterval(() => {
+          remaining -= 1
+          setRetryCountdown(remaining)
+          if (remaining <= 0) {
+            clearInterval(retryTimerRef.current!)
+            retryTimerRef.current = null
+            setRetryCountdown(null)
+            runDiagnosis(mode, data, retryCount + 1)
+          }
+        }, 1000)
+      } else {
+        setError(msg)
+      }
     }
-  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiKey, model, provider, version])
 
   const handleFormSubmit = (data: FormData) => {
     if (!selectedMode) return
@@ -108,17 +139,21 @@ export default function App() {
   }
 
   const handleBackToForm = () => {
+    if (retryTimerRef.current) { clearInterval(retryTimerRef.current); retryTimerRef.current = null }
     setScreen('form')
     setResult('')
     setError('')
     setStreaming(false)
+    setRetryCountdown(null)
   }
 
   const handleNewDiagnosis = () => {
+    if (retryTimerRef.current) { clearInterval(retryTimerRef.current); retryTimerRef.current = null }
     setScreen('mode-select')
     setSelectedMode(null)
     setResult('')
     setError('')
+    setRetryCountdown(null)
   }
 
   if (!apiKey) {
@@ -157,6 +192,11 @@ export default function App() {
 
         {screen === 'result' && (
           <>
+            {retryCountdown !== null && (
+              <div className="retry-banner">
+                レート制限中... <strong>{retryCountdown}秒後に自動リトライします</strong>
+              </div>
+            )}
             {error && (
               <div className="error-banner">
                 <strong>エラー：</strong> {error}
@@ -165,7 +205,7 @@ export default function App() {
             )}
             <ResultDisplay
               result={result}
-              streaming={streaming}
+              streaming={streaming || retryCountdown !== null}
               onBack={handleBackToForm}
               onNewDiagnosis={handleNewDiagnosis}
             />
