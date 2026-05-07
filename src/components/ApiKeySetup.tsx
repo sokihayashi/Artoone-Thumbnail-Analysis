@@ -44,7 +44,7 @@ export default function ApiKeySetup({ onSave }: Props) {
     <div className="setup-overlay">
       <div className="setup-card">
         <div className="setup-icon">🎨</div>
-        <h1>サムネ診断ツール</h1>
+        <h1>Artooneサムネ診断</h1>
         <p className="setup-subtitle">アートゥーン！ サムネイル診断システム</p>
 
         <div className="provider-toggle">

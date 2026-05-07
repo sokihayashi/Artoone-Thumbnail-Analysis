@@ -5,9 +5,6 @@ interface Props {
   onVersionChange: (v: ToolVersion) => void
   provider: Provider
   onProviderChange: (p: Provider) => void
-  dlcLoaded: boolean
-  onDlcUpload: (json: string) => void
-  onDlcClear: () => void
   model: string
   onModelChange: (m: string) => void
   onReset: () => void
@@ -31,28 +28,10 @@ const MODELS: Record<Provider, { id: string; label: string }[]> = {
 export default function Header({
   version, onVersionChange,
   provider, onProviderChange,
-  dlcLoaded, onDlcUpload, onDlcClear,
   model, onModelChange,
   onReset, onApiKeyReset,
   bakedKey, screen,
 }: Props) {
-  const handleDlcFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    const reader = new FileReader()
-    reader.onload = (ev) => {
-      const text = ev.target?.result as string
-      try {
-        JSON.parse(text)
-        onDlcUpload(text)
-      } catch {
-        alert('JSONファイルの読み込みに失敗しました。')
-      }
-    }
-    reader.readAsText(file)
-    e.target.value = ''
-  }
-
   const handleProviderChange = (p: Provider) => {
     onProviderChange(p)
     onModelChange(MODELS[p][0].id)
@@ -71,17 +50,17 @@ export default function Header({
           )}
           <button className="header-logo" onClick={onReset}>
             <span className="logo-icon">🎨</span>
-            <span className="logo-text">サムネ診断</span>
+            <span className="logo-text">Artooneサムネ診断</span>
           </button>
         </div>
 
         <div className="header-controls">
           <div className="version-toggle">
             <button className={version === 'mini' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => onVersionChange('mini')}>
-              ミニはやし
+              かんたん
             </button>
             <button className={version === 'big' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => onVersionChange('big')}>
-              ビッグ
+              詳細
             </button>
           </div>
 
@@ -103,17 +82,6 @@ export default function Header({
               ))}
             </select>
           )}
-
-          <div className="dlc-control">
-            {dlcLoaded ? (
-              <button className="btn-dlc-loaded" onClick={onDlcClear}>DLC ✓</button>
-            ) : (
-              <label className="btn-dlc">
-                DLC
-                <input type="file" accept=".json" onChange={handleDlcFile} hidden />
-              </label>
-            )}
-          </div>
 
           {!bakedKey && (
             <button className="btn-text-small" onClick={onApiKeyReset}>APIキー</button>

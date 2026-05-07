@@ -56,5 +56,4 @@ export interface AppSettings {
   model: string
   provider: Provider
   version: ToolVersion
-  dlcData: string | null
 }

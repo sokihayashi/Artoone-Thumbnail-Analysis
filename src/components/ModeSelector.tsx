@@ -31,8 +31,8 @@ export default function ModeSelector({ version, onSelect }: Props) {
     <div className="mode-selector">
       <div className="mode-header">
         <h2>
-          {version === 'big' ? 'サムネ診断 ミニはやしビッグ' : 'サムネ診断 ミニはやし'}{' '}
-          <span className="version-badge">Ver.1.0</span>
+          Artooneサムネ診断{' '}
+          <span className="version-badge">{version === 'big' ? '詳細' : 'かんたん'}</span>
         </h2>
         <p>やりたいことを選んでください。</p>
       </div>

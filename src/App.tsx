@@ -11,6 +11,7 @@ import ResultDisplay from './components/ResultDisplay'
 
 import miniHayashiPrompt from './prompts/mini-hayashi.md?raw'
 import miniHayashiBigPrompt from './prompts/mini-hayashi-big.md?raw'
+import dlcData from './data/dlc.json'
 
 const STORAGE_KEY = 'artoone_settings'
 const BAKED_GEMINI_KEY = import.meta.env.VITE_GEMINI_API_KEY as string | undefined
@@ -39,7 +40,6 @@ export default function App() {
   const [provider, setProvider] = useState<Provider>(saved.provider ?? BAKED_PROVIDER ?? 'gemini')
   const [version, setVersion] = useState<ToolVersion>(saved.version ?? 'mini')
   const [model, setModel] = useState(saved.model ?? (BAKED_PROVIDER === 'anthropic' ? 'claude-sonnet-4-6' : 'gemini-2.0-flash'))
-  const [dlcData, setDlcData] = useState<string | null>(saved.dlcData ?? null)
 
   const [screen, setScreen] = useState<Screen>('mode-select')
   const [selectedMode, setSelectedMode] = useState<Mode | null>(null)
@@ -50,9 +50,9 @@ export default function App() {
 
   const persistSettings = useCallback(
     (patch: Partial<AppSettings>) => {
-      saveSettings({ apiKey, provider, version, model, dlcData, ...patch })
+      saveSettings({ apiKey, provider, version, model, ...patch })
     },
-    [apiKey, provider, version, model, dlcData],
+    [apiKey, provider, version, model],
   )
 
   const handleApiKeySave = (key: string, p: Provider) => {
@@ -66,9 +66,7 @@ export default function App() {
   const handleVersion = (v: ToolVersion) => { setVersion(v); persistSettings({ version: v }) }
   const handleProvider = (p: Provider) => { setProvider(p); persistSettings({ provider: p }) }
   const handleModel = (m: string) => { setModel(m); persistSettings({ model: m }) }
-  const handleDlcUpload = (json: string) => { setDlcData(json); persistSettings({ dlcData: json }) }
-  const handleDlcClear = () => { setDlcData(null); persistSettings({ dlcData: null }) }
-  const handleApiKeyReset = () => { setApiKey(''); saveSettings({ provider, version, model, dlcData }) }
+  const handleApiKeyReset = () => { setApiKey(''); saveSettings({ provider, version, model }) }
 
   const handleModeSelect = (mode: Mode) => {
     setSelectedMode(mode)
@@ -79,8 +77,8 @@ export default function App() {
 
   const buildSystemPrompt = () => {
     const base = version === 'big' ? miniHayashiBigPrompt : miniHayashiPrompt
-    if (!dlcData) return base
-    return `${base}\n\n---\n\n## 追加DLC ミニCooさん データ\n\n以下のJSONが今回提供されています。\n\`\`\`json\n${dlcData}\n\`\`\``
+    const dlcJson = JSON.stringify(dlcData)
+    return `${base}\n\n---\n\n## 追加DLC ミニCooさん データ\n\n以下のJSONが今回提供されています。\n\`\`\`json\n${dlcJson}\n\`\`\``
   }
 
   const runDiagnosis = async (mode: Mode, data: FormData) => {
@@ -134,9 +132,6 @@ export default function App() {
         onVersionChange={handleVersion}
         provider={provider}
         onProviderChange={handleProvider}
-        dlcLoaded={!!dlcData}
-        onDlcUpload={handleDlcUpload}
-        onDlcClear={handleDlcClear}
         model={model}
         onModelChange={handleModel}
         onReset={handleNewDiagnosis}

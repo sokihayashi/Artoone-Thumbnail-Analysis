@@ -144,29 +144,6 @@ html, body {
   cursor: pointer;
 }
 
-.dlc-control { display: flex; }
-
-.btn-dlc, .btn-dlc-loaded {
-  font-family: var(--font);
-  font-size: 12px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all .15s;
-}
-.btn-dlc {
-  background: var(--bg);
-  border: 1px dashed var(--border);
-  color: var(--text-muted);
-}
-.btn-dlc:hover { border-color: var(--primary); color: var(--primary); }
-.btn-dlc-loaded {
-  background: var(--primary-light);
-  border: 1px solid var(--primary);
-  color: var(--primary);
-}
-.btn-dlc-loaded:hover { background: #fde0cc; }
 
 .btn-text-small {
   background: none;
