@@ -49,7 +49,7 @@ export interface Mode3FormData {
 
 export type FormData = Mode1FormData | Mode2FormData | Mode3FormData
 
-export type Provider = 'anthropic' | 'gemini' | 'openrouter'
+export type Provider = 'anthropic' | 'openrouter'
 
 export interface AppSettings {
   apiKey: string

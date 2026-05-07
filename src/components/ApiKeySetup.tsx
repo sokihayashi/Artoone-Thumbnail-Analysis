@@ -5,29 +5,35 @@ interface Props {
   onSave: (key: string, provider: Provider) => void
 }
 
-const INFO: Record<Provider, { label: string; placeholder: string; hint: string; url: string; urlLabel: string }> = {
+interface ProviderInfo {
+  label: string
+  toggleLabel: string
+  placeholder: string
+  hint: string
+  url: string
+  urlLabel: string
+}
+
+const INFO: Record<Provider, ProviderInfo> = {
   openrouter: {
     label: 'OpenRouter APIキー',
+    toggleLabel: 'OpenRouter（無料）',
     placeholder: 'sk-or-...',
     hint: '無料モデル（Gemini 2.0 Flash等）が使えます。',
     url: 'https://openrouter.ai/keys',
     urlLabel: 'openrouter.ai',
   },
-  gemini: {
-    label: 'Google AI Studio APIキー',
-    placeholder: 'AIza...',
-    hint: 'Google AI Studio で無料発行できます。',
-    url: 'https://aistudio.google.com/app/apikey',
-    urlLabel: 'aistudio.google.com',
-  },
   anthropic: {
     label: 'Anthropic APIキー',
+    toggleLabel: 'Claude',
     placeholder: 'sk-ant-...',
     hint: 'console.anthropic.com でAPIキーを発行してください。',
     url: 'https://console.anthropic.com/',
     urlLabel: 'console.anthropic.com',
   },
 }
+
+const PROVIDER_ORDER: Provider[] = ['openrouter', 'anthropic']
 
 export default function ApiKeySetup({ onSave }: Props) {
   const [provider, setProvider] = useState<Provider>('openrouter')
@@ -55,27 +61,16 @@ export default function ApiKeySetup({ onSave }: Props) {
         <p className="setup-subtitle">アートゥーン！ サムネイル診断システム</p>
 
         <div className="provider-toggle">
-          <button
-            type="button"
-            className={provider === 'openrouter' ? 'toggle-btn active' : 'toggle-btn'}
-            onClick={() => handleProviderChange('openrouter')}
-          >
-            OpenRouter（無料）
-          </button>
-          <button
-            type="button"
-            className={provider === 'gemini' ? 'toggle-btn active' : 'toggle-btn'}
-            onClick={() => handleProviderChange('gemini')}
-          >
-            Gemini
-          </button>
-          <button
-            type="button"
-            className={provider === 'anthropic' ? 'toggle-btn active' : 'toggle-btn'}
-            onClick={() => handleProviderChange('anthropic')}
-          >
-            Claude
-          </button>
+          {PROVIDER_ORDER.map((p) => (
+            <button
+              key={p}
+              type="button"
+              className={provider === p ? 'toggle-btn active' : 'toggle-btn'}
+              onClick={() => handleProviderChange(p)}
+            >
+              {INFO[p].toggleLabel}
+            </button>
+          ))}
         </div>
 
         <form onSubmit={handleSubmit} className="setup-form">

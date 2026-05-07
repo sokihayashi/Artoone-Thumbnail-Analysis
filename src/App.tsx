@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 import type { Mode, ToolVersion, FormData, AppSettings, Provider } from './types'
-import { streamClaude, buildUserMessage } from './utils/claude'
+import { streamChat, buildUserMessage } from './utils/llm'
 import ApiKeySetup from './components/ApiKeySetup'
 import Header from './components/Header'
 import ModeSelector from './components/ModeSelector'
@@ -14,11 +14,16 @@ import miniHayashiBigPrompt from './prompts/mini-hayashi-big.md?raw'
 import dlcData from './data/dlc.json'
 
 const STORAGE_KEY = 'artoone_settings'
+
+const DEFAULT_MODEL: Record<Provider, string> = {
+  openrouter: 'google/gemini-2.0-flash-exp:free',
+  anthropic: 'claude-sonnet-4-6',
+}
+
 const BAKED_OPENROUTER_KEY = import.meta.env.VITE_OPENROUTER_API_KEY || undefined
-const BAKED_GEMINI_KEY = import.meta.env.VITE_GEMINI_API_KEY || undefined
 const BAKED_ANTHROPIC_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY || undefined
-const BAKED_KEY = BAKED_OPENROUTER_KEY ?? BAKED_GEMINI_KEY ?? BAKED_ANTHROPIC_KEY
-const BAKED_PROVIDER: Provider | undefined = BAKED_OPENROUTER_KEY ? 'openrouter' : BAKED_GEMINI_KEY ? 'gemini' : BAKED_ANTHROPIC_KEY ? 'anthropic' : undefined
+const BAKED_KEY = BAKED_OPENROUTER_KEY || BAKED_ANTHROPIC_KEY
+const BAKED_PROVIDER: Provider | undefined = BAKED_OPENROUTER_KEY ? 'openrouter' : BAKED_ANTHROPIC_KEY ? 'anthropic' : undefined
 
 function loadSettings(): Partial<AppSettings> {
   try {
@@ -42,13 +47,15 @@ type Screen = 'mode-select' | 'form' | 'result'
 export default function App() {
   const saved = loadSettings()
 
+  const initialProvider: Provider = BAKED_PROVIDER ?? saved.provider ?? 'openrouter'
+  const initialModel = BAKED_PROVIDER
+    ? DEFAULT_MODEL[BAKED_PROVIDER]
+    : (saved.model || DEFAULT_MODEL[initialProvider])
+
   const [apiKey, setApiKey] = useState(BAKED_KEY || saved.apiKey || '')
-  const [provider, setProvider] = useState<Provider>(BAKED_PROVIDER ?? saved.provider ?? 'gemini')
+  const [provider, setProvider] = useState<Provider>(initialProvider)
   const [version, setVersion] = useState<ToolVersion>(saved.version ?? 'mini')
-  const defaultModel = BAKED_PROVIDER === 'anthropic' ? 'claude-sonnet-4-6'
-    : BAKED_PROVIDER === 'openrouter' ? 'google/gemini-2.0-flash-exp:free'
-    : 'gemini-2.0-flash'
-  const [model, setModel] = useState(BAKED_PROVIDER ? defaultModel : (saved.model ?? defaultModel))
+  const [model, setModel] = useState(initialModel)
 
   const [screen, setScreen] = useState<Screen>('mode-select')
   const [selectedMode, setSelectedMode] = useState<Mode | null>(null)
@@ -72,12 +79,11 @@ export default function App() {
   )
 
   const handleApiKeySave = (key: string, p: Provider) => {
+    const m = DEFAULT_MODEL[p]
     setApiKey(key)
     setProvider(p)
-    const defaultModel = p === 'openrouter' ? 'google/gemini-2.0-flash-exp:free'
-      : p === 'gemini' ? 'gemini-2.0-flash' : 'claude-sonnet-4-6'
-    setModel(defaultModel)
-    persistSettings({ apiKey: key, provider: p, model: defaultModel })
+    setModel(m)
+    persistSettings({ apiKey: key, provider: p, model: m })
   }
 
   const handleVersion = (v: ToolVersion) => { setVersion(v); persistSettings({ version: v }) }
@@ -94,8 +100,7 @@ export default function App() {
 
   const buildSystemPrompt = () => {
     const base = version === 'big' ? miniHayashiBigPrompt : miniHayashiPrompt
-    const dlcJson = JSON.stringify(dlcData)
-    return `${base}\n\n---\n\n## 追加DLC ミニCooさん データ\n\n以下のJSONが今回提供されています。\n\`\`\`json\n${dlcJson}\n\`\`\``
+    return `${base}\n\n---\n\n## 追加DLC ミニCooさん データ\n\n以下のJSONが今回提供されています。\n\`\`\`json\n${JSON.stringify(dlcData)}\n\`\`\``
   }
 
   const runDiagnosis = useCallback(async (mode: Mode, data: FormData, retryCount = 0) => {
@@ -109,7 +114,7 @@ export default function App() {
       const systemPrompt = buildSystemPrompt()
       const userContent = buildUserMessage(mode, data)
       let accumulated = ''
-      for await (const chunk of streamClaude(apiKey, systemPrompt, userContent, model, provider)) {
+      for await (const chunk of streamChat(apiKey, systemPrompt, userContent, model, provider)) {
         accumulated += chunk
         setResult(accumulated)
       }
@@ -118,22 +123,22 @@ export default function App() {
       setStreaming(false)
       const msg = e instanceof Error ? e.message : String(e)
       const waitSecs = retryCount < 3 ? parseRetryAfter(msg) : null
-      if (waitSecs !== null) {
-        let remaining = waitSecs
-        setRetryCountdown(remaining)
-        retryTimerRef.current = setInterval(() => {
-          remaining -= 1
-          setRetryCountdown(remaining)
-          if (remaining <= 0) {
-            clearInterval(retryTimerRef.current!)
-            retryTimerRef.current = null
-            setRetryCountdown(null)
-            runDiagnosis(mode, data, retryCount + 1)
-          }
-        }, 1000)
-      } else {
+      if (waitSecs === null) {
         setError(msg)
+        return
       }
+      let remaining = waitSecs
+      setRetryCountdown(remaining)
+      retryTimerRef.current = setInterval(() => {
+        remaining -= 1
+        setRetryCountdown(remaining)
+        if (remaining <= 0) {
+          clearInterval(retryTimerRef.current!)
+          retryTimerRef.current = null
+          setRetryCountdown(null)
+          runDiagnosis(mode, data, retryCount + 1)
+        }
+      }, 1000)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiKey, model, provider, version])
@@ -143,27 +148,28 @@ export default function App() {
     runDiagnosis(selectedMode, data)
   }
 
-  const handleBackToForm = () => {
+  const cancelRetry = () => {
     if (retryTimerRef.current) { clearInterval(retryTimerRef.current); retryTimerRef.current = null }
+    setRetryCountdown(null)
+  }
+
+  const handleBackToForm = () => {
+    cancelRetry()
     setScreen('form')
     setResult('')
     setError('')
     setStreaming(false)
-    setRetryCountdown(null)
   }
 
   const handleNewDiagnosis = () => {
-    if (retryTimerRef.current) { clearInterval(retryTimerRef.current); retryTimerRef.current = null }
+    cancelRetry()
     setScreen('mode-select')
     setSelectedMode(null)
     setResult('')
     setError('')
-    setRetryCountdown(null)
   }
 
-  if (!apiKey) {
-    return <ApiKeySetup onSave={handleApiKeySave} />
-  }
+  if (!apiKey) return <ApiKeySetup onSave={handleApiKeySave} />
 
   return (
     <div className="app">

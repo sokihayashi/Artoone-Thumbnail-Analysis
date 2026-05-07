@@ -14,21 +14,23 @@ interface Props {
 }
 
 const MODELS: Record<Provider, { id: string; label: string }[]> = {
-  anthropic: [
-    { id: 'claude-sonnet-4-6', label: 'Sonnet 4.6' },
-    { id: 'claude-opus-4-7', label: 'Opus 4.7' },
-  ],
-  gemini: [
-    { id: 'gemini-2.0-flash', label: 'Flash 2.0 (無料)' },
-    { id: 'gemini-2.0-flash-lite', label: 'Flash Lite 2.0 (無料)' },
-    { id: 'gemini-1.5-flash-8b', label: '1.5 Flash 8B (無料)' },
-  ],
   openrouter: [
     { id: 'google/gemini-2.0-flash-exp:free', label: 'Gemini 2.0 Flash (無料)' },
     { id: 'google/gemini-flash-1.5-8b:free', label: 'Gemini 1.5 Flash 8B (無料)' },
     { id: 'meta-llama/llama-3.2-11b-vision-instruct:free', label: 'Llama 3.2 Vision (無料)' },
   ],
+  anthropic: [
+    { id: 'claude-sonnet-4-6', label: 'Sonnet 4.6' },
+    { id: 'claude-opus-4-7', label: 'Opus 4.7' },
+  ],
 }
+
+const PROVIDER_LABEL: Record<Provider, string> = {
+  openrouter: 'OpenRouter',
+  anthropic: 'Claude',
+}
+
+const PROVIDER_ORDER: Provider[] = ['openrouter', 'anthropic']
 
 export default function Header({
   version, onVersionChange,
@@ -70,29 +72,27 @@ export default function Header({
           </div>
 
           {!bakedKey && (
-            <div className="version-toggle">
-              <button className={provider === 'openrouter' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => handleProviderChange('openrouter')}>
-                OpenRouter
-              </button>
-              <button className={provider === 'gemini' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => handleProviderChange('gemini')}>
-                Gemini
-              </button>
-              <button className={provider === 'anthropic' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => handleProviderChange('anthropic')}>
-                Claude
-              </button>
-            </div>
-          )}
+            <>
+              <div className="version-toggle">
+                {PROVIDER_ORDER.map((p) => (
+                  <button
+                    key={p}
+                    className={provider === p ? 'toggle-btn active' : 'toggle-btn'}
+                    onClick={() => handleProviderChange(p)}
+                  >
+                    {PROVIDER_LABEL[p]}
+                  </button>
+                ))}
+              </div>
 
-          {!bakedKey && (
-            <select className="model-select" value={model} onChange={(e) => onModelChange(e.target.value)}>
-              {MODELS[provider].map((m) => (
-                <option key={m.id} value={m.id}>{m.label}</option>
-              ))}
-            </select>
-          )}
+              <select className="model-select" value={model} onChange={(e) => onModelChange(e.target.value)}>
+                {MODELS[provider].map((m) => (
+                  <option key={m.id} value={m.id}>{m.label}</option>
+                ))}
+              </select>
 
-          {!bakedKey && (
-            <button className="btn-text-small" onClick={onApiKeyReset}>APIキー</button>
+              <button className="btn-text-small" onClick={onApiKeyReset}>APIキー</button>
+            </>
           )}
         </div>
       </div>
