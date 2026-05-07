@@ -47,7 +47,7 @@ export default function App() {
   const [version, setVersion] = useState<ToolVersion>(saved.version ?? 'mini')
   const defaultModel = BAKED_PROVIDER === 'anthropic' ? 'claude-sonnet-4-6'
     : BAKED_PROVIDER === 'openrouter' ? 'google/gemini-2.0-flash-exp:free'
-    : 'gemini-1.5-flash'
+    : 'gemini-2.0-flash'
   const [model, setModel] = useState(BAKED_PROVIDER ? defaultModel : (saved.model ?? defaultModel))
 
   const [screen, setScreen] = useState<Screen>('mode-select')
@@ -75,7 +75,7 @@ export default function App() {
     setApiKey(key)
     setProvider(p)
     const defaultModel = p === 'openrouter' ? 'google/gemini-2.0-flash-exp:free'
-      : p === 'gemini' ? 'gemini-1.5-flash' : 'claude-sonnet-4-6'
+      : p === 'gemini' ? 'gemini-2.0-flash' : 'claude-sonnet-4-6'
     setModel(defaultModel)
     persistSettings({ apiKey: key, provider: p, model: defaultModel })
   }
