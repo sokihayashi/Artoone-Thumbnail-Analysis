@@ -42,7 +42,7 @@ type Screen = 'mode-select' | 'form' | 'result'
 export default function App() {
   const saved = loadSettings()
 
-  const [apiKey, setApiKey] = useState(saved.apiKey || BAKED_KEY || '')
+  const [apiKey, setApiKey] = useState(BAKED_KEY || saved.apiKey || '')
   const [provider, setProvider] = useState<Provider>(BAKED_PROVIDER ?? saved.provider ?? 'gemini')
   const [version, setVersion] = useState<ToolVersion>(saved.version ?? 'mini')
   const defaultModel = BAKED_PROVIDER === 'anthropic' ? 'claude-sonnet-4-6'
