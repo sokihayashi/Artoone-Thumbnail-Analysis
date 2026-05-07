@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import type { Mode, ToolVersion, FormData, AppSettings } from './types'
+import type { Mode, ToolVersion, FormData, AppSettings, Provider } from './types'
 import { streamClaude, buildUserMessage } from './utils/claude'
 import ApiKeySetup from './components/ApiKeySetup'
 import Header from './components/Header'
@@ -33,8 +33,9 @@ export default function App() {
   const saved = loadSettings()
 
   const [apiKey, setApiKey] = useState(saved.apiKey ?? BAKED_KEY ?? '')
+  const [provider, setProvider] = useState<Provider>(saved.provider ?? 'gemini')
   const [version, setVersion] = useState<ToolVersion>(saved.version ?? 'mini')
-  const [model, setModel] = useState(saved.model ?? 'claude-sonnet-4-6')
+  const [model, setModel] = useState(saved.model ?? 'gemini-2.0-flash')
   const [dlcData, setDlcData] = useState<string | null>(saved.dlcData ?? null)
 
   const [screen, setScreen] = useState<Screen>('mode-select')
@@ -46,41 +47,25 @@ export default function App() {
 
   const persistSettings = useCallback(
     (patch: Partial<AppSettings>) => {
-      const next = { apiKey, version, model, dlcData, ...patch }
-      saveSettings(next)
+      saveSettings({ apiKey, provider, version, model, dlcData, ...patch })
     },
-    [apiKey, version, model, dlcData],
+    [apiKey, provider, version, model, dlcData],
   )
 
-  const handleApiKey = (key: string) => {
+  const handleApiKeySave = (key: string, p: Provider) => {
     setApiKey(key)
-    persistSettings({ apiKey: key })
+    setProvider(p)
+    const defaultModel = p === 'gemini' ? 'gemini-2.0-flash' : 'claude-sonnet-4-6'
+    setModel(defaultModel)
+    persistSettings({ apiKey: key, provider: p, model: defaultModel })
   }
 
-  const handleVersion = (v: ToolVersion) => {
-    setVersion(v)
-    persistSettings({ version: v })
-  }
-
-  const handleModel = (m: string) => {
-    setModel(m)
-    persistSettings({ model: m })
-  }
-
-  const handleDlcUpload = (json: string) => {
-    setDlcData(json)
-    persistSettings({ dlcData: json })
-  }
-
-  const handleDlcClear = () => {
-    setDlcData(null)
-    persistSettings({ dlcData: null })
-  }
-
-  const handleApiKeyReset = () => {
-    setApiKey('')
-    saveSettings({ version, model, dlcData })
-  }
+  const handleVersion = (v: ToolVersion) => { setVersion(v); persistSettings({ version: v }) }
+  const handleProvider = (p: Provider) => { setProvider(p); persistSettings({ provider: p }) }
+  const handleModel = (m: string) => { setModel(m); persistSettings({ model: m }) }
+  const handleDlcUpload = (json: string) => { setDlcData(json); persistSettings({ dlcData: json }) }
+  const handleDlcClear = () => { setDlcData(null); persistSettings({ dlcData: null }) }
+  const handleApiKeyReset = () => { setApiKey(''); saveSettings({ provider, version, model, dlcData }) }
 
   const handleModeSelect = (mode: Mode) => {
     setSelectedMode(mode)
@@ -105,7 +90,7 @@ export default function App() {
       const systemPrompt = buildSystemPrompt()
       const userContent = buildUserMessage(mode, data)
       let accumulated = ''
-      for await (const chunk of streamClaude(apiKey, systemPrompt, userContent, model)) {
+      for await (const chunk of streamClaude(apiKey, systemPrompt, userContent, model, provider)) {
         accumulated += chunk
         setResult(accumulated)
       }
@@ -136,7 +121,7 @@ export default function App() {
   }
 
   if (!apiKey) {
-    return <ApiKeySetup onSave={handleApiKey} />
+    return <ApiKeySetup onSave={handleApiKeySave} />
   }
 
   return (
@@ -144,6 +129,8 @@ export default function App() {
       <Header
         version={version}
         onVersionChange={handleVersion}
+        provider={provider}
+        onProviderChange={handleProvider}
         dlcLoaded={!!dlcData}
         onDlcUpload={handleDlcUpload}
         onDlcClear={handleDlcClear}
@@ -159,25 +146,13 @@ export default function App() {
         )}
 
         {screen === 'form' && selectedMode === 1 && (
-          <Mode1Form
-            onSubmit={(d) => handleFormSubmit(d as unknown as FormData)}
-            onBack={() => setScreen('mode-select')}
-            loading={streaming}
-          />
+          <Mode1Form onSubmit={(d) => handleFormSubmit(d as unknown as FormData)} onBack={() => setScreen('mode-select')} loading={streaming} />
         )}
         {screen === 'form' && selectedMode === 2 && (
-          <Mode2Form
-            onSubmit={(d) => handleFormSubmit(d as unknown as FormData)}
-            onBack={() => setScreen('mode-select')}
-            loading={streaming}
-          />
+          <Mode2Form onSubmit={(d) => handleFormSubmit(d as unknown as FormData)} onBack={() => setScreen('mode-select')} loading={streaming} />
         )}
         {screen === 'form' && selectedMode === 3 && (
-          <Mode3Form
-            onSubmit={(d) => handleFormSubmit(d as unknown as FormData)}
-            onBack={() => setScreen('mode-select')}
-            loading={streaming}
-          />
+          <Mode3Form onSubmit={(d) => handleFormSubmit(d as unknown as FormData)} onBack={() => setScreen('mode-select')} loading={streaming} />
         )}
 
         {screen === 'result' && (
@@ -185,9 +160,7 @@ export default function App() {
             {error && (
               <div className="error-banner">
                 <strong>エラー：</strong> {error}
-                <button className="btn-text-small" onClick={handleBackToForm}>
-                  フォームに戻る
-                </button>
+                <button className="btn-text-small" onClick={handleBackToForm}>フォームに戻る</button>
               </div>
             )}
             <ResultDisplay

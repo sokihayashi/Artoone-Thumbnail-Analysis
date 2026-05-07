@@ -49,9 +49,12 @@ export interface Mode3FormData {
 
 export type FormData = Mode1FormData | Mode2FormData | Mode3FormData
 
+export type Provider = 'anthropic' | 'gemini'
+
 export interface AppSettings {
   apiKey: string
   model: string
+  provider: Provider
   version: ToolVersion
   dlcData: string | null
 }

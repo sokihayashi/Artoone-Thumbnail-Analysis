@@ -198,8 +198,19 @@ html, body {
   margin-bottom: 28px;
 }
 
+.provider-toggle {
+  display: flex;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2px;
+  margin-bottom: 20px;
+  align-self: center;
+}
+
 .setup-form { text-align: left; display: flex; flex-direction: column; gap: 12px; }
 .setup-form label { font-size: 13px; font-weight: 600; color: var(--text); }
+.setup-form a { color: var(--primary); }
 
 .input-row { display: flex; gap: 8px; }
 .input-row input { flex: 1; }
