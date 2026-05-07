@@ -1,8 +1,10 @@
-import type { ToolVersion } from '../types'
+import type { ToolVersion, Provider } from '../types'
 
 interface Props {
   version: ToolVersion
   onVersionChange: (v: ToolVersion) => void
+  provider: Provider
+  onProviderChange: (p: Provider) => void
   dlcLoaded: boolean
   onDlcUpload: (json: string) => void
   onDlcClear: () => void
@@ -12,21 +14,24 @@ interface Props {
   onApiKeyReset: () => void
 }
 
-const MODELS = [
-  { id: 'claude-opus-4-7', label: 'Opus 4.7 (高精度)' },
-  { id: 'claude-sonnet-4-6', label: 'Sonnet 4.6 (標準)' },
-]
+const MODELS: Record<Provider, { id: string; label: string }[]> = {
+  anthropic: [
+    { id: 'claude-sonnet-4-6', label: 'Sonnet 4.6' },
+    { id: 'claude-opus-4-7', label: 'Opus 4.7' },
+  ],
+  gemini: [
+    { id: 'gemini-2.0-flash', label: 'Flash 2.0 (無料)' },
+    { id: 'gemini-1.5-pro', label: '1.5 Pro' },
+    { id: 'gemini-1.5-flash', label: '1.5 Flash' },
+  ],
+}
 
 export default function Header({
-  version,
-  onVersionChange,
-  dlcLoaded,
-  onDlcUpload,
-  onDlcClear,
-  model,
-  onModelChange,
-  onReset,
-  onApiKeyReset,
+  version, onVersionChange,
+  provider, onProviderChange,
+  dlcLoaded, onDlcUpload, onDlcClear,
+  model, onModelChange,
+  onReset, onApiKeyReset,
 }: Props) {
   const handleDlcFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -45,6 +50,11 @@ export default function Header({
     e.target.value = ''
   }
 
+  const handleProviderChange = (p: Provider) => {
+    onProviderChange(p)
+    onModelChange(MODELS[p][0].id)
+  }
+
   return (
     <header className="app-header">
       <div className="header-inner">
@@ -55,49 +65,41 @@ export default function Header({
 
         <div className="header-controls">
           <div className="version-toggle">
-            <button
-              className={version === 'mini' ? 'toggle-btn active' : 'toggle-btn'}
-              onClick={() => onVersionChange('mini')}
-            >
+            <button className={version === 'mini' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => onVersionChange('mini')}>
               ミニはやし
             </button>
-            <button
-              className={version === 'big' ? 'toggle-btn active' : 'toggle-btn'}
-              onClick={() => onVersionChange('big')}
-            >
+            <button className={version === 'big' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => onVersionChange('big')}>
               ビッグ
             </button>
           </div>
 
-          <select
-            className="model-select"
-            value={model}
-            onChange={(e) => onModelChange(e.target.value)}
-            title="使用するモデル"
-          >
-            {MODELS.map((m) => (
-              <option key={m.id} value={m.id}>
-                {m.label}
-              </option>
+          <div className="version-toggle">
+            <button className={provider === 'gemini' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => handleProviderChange('gemini')}>
+              Gemini
+            </button>
+            <button className={provider === 'anthropic' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => handleProviderChange('anthropic')}>
+              Claude
+            </button>
+          </div>
+
+          <select className="model-select" value={model} onChange={(e) => onModelChange(e.target.value)}>
+            {MODELS[provider].map((m) => (
+              <option key={m.id} value={m.id}>{m.label}</option>
             ))}
           </select>
 
           <div className="dlc-control">
             {dlcLoaded ? (
-              <button className="btn-dlc-loaded" onClick={onDlcClear} title="DLCを解除">
-                DLC ✓
-              </button>
+              <button className="btn-dlc-loaded" onClick={onDlcClear}>DLC ✓</button>
             ) : (
-              <label className="btn-dlc" title="ミニCooさん DLCをアップロード">
+              <label className="btn-dlc">
                 DLC
                 <input type="file" accept=".json" onChange={handleDlcFile} hidden />
               </label>
             )}
           </div>
 
-          <button className="btn-text-small" onClick={onApiKeyReset} title="APIキーを変更">
-            APIキー
-          </button>
+          <button className="btn-text-small" onClick={onApiKeyReset}>APIキー</button>
         </div>
       </div>
     </header>

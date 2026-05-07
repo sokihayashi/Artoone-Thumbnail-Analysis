@@ -1,10 +1,14 @@
-import type { Mode, Mode1FormData, Mode2FormData, Mode3FormData, FormData, UploadedImage } from '../types'
+import type { Mode, Mode1FormData, Mode2FormData, Mode3FormData, FormData, UploadedImage, Provider } from '../types'
 import { buildImageContent } from './imageUtils'
 
-export async function* streamClaude(
+// ─── Anthropic streaming ───────────────────────────────────────────────────
+
+type AnthropicContent = { type: 'text'; text: string } | ReturnType<typeof buildImageContent>
+
+async function* streamAnthropic(
   apiKey: string,
   systemPrompt: string,
-  userContent: Array<{ type: 'text'; text: string } | ReturnType<typeof buildImageContent>>,
+  content: AnthropicContent[],
   model: string,
 ): AsyncGenerator<string> {
   const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -20,15 +24,66 @@ export async function* streamClaude(
       max_tokens: 4096,
       stream: true,
       system: systemPrompt,
-      messages: [{ role: 'user', content: userContent }],
+      messages: [{ role: 'user', content }],
     }),
   })
 
   if (!res.ok) {
-    const err = await res.json().catch(() => ({ error: { message: `HTTP ${res.status}` } }))
+    const err = await res.json().catch(() => ({}))
     throw new Error((err as { error?: { message?: string } }).error?.message ?? `HTTP ${res.status}`)
   }
 
+  yield* readSSE(res, (parsed: unknown) => {
+    const p = parsed as { type: string; delta?: { type: string; text?: string } }
+    if (p.type === 'content_block_delta' && p.delta?.type === 'text_delta') {
+      return p.delta.text ?? ''
+    }
+    return null
+  })
+}
+
+// ─── Gemini streaming ──────────────────────────────────────────────────────
+
+type GeminiPart =
+  | { text: string }
+  | { inlineData: { mimeType: string; data: string } }
+
+async function* streamGemini(
+  apiKey: string,
+  systemPrompt: string,
+  parts: GeminiPart[],
+  model: string,
+): AsyncGenerator<string> {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?key=${apiKey}&alt=sse`
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      systemInstruction: { parts: [{ text: systemPrompt }] },
+      contents: [{ role: 'user', parts }],
+      generationConfig: { maxOutputTokens: 4096 },
+    }),
+  })
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    const msg = (err as { error?: { message?: string } }).error?.message ?? `HTTP ${res.status}`
+    throw new Error(msg)
+  }
+
+  yield* readSSE(res, (parsed: unknown) => {
+    const p = parsed as { candidates?: { content?: { parts?: { text?: string }[] } }[] }
+    return p.candidates?.[0]?.content?.parts?.[0]?.text ?? null
+  })
+}
+
+// ─── Shared SSE reader ─────────────────────────────────────────────────────
+
+async function* readSSE(
+  res: Response,
+  extract: (parsed: unknown) => string | null,
+): AsyncGenerator<string> {
   const reader = res.body!.getReader()
   const decoder = new TextDecoder()
   let buf = ''
@@ -44,16 +99,37 @@ export async function* streamClaude(
       const data = line.slice(6)
       if (data === '[DONE]') continue
       try {
-        const parsed = JSON.parse(data) as { type: string; delta?: { type: string; text?: string } }
-        if (parsed.type === 'content_block_delta' && parsed.delta?.type === 'text_delta') {
-          yield parsed.delta.text ?? ''
-        }
+        const text = extract(JSON.parse(data))
+        if (text) yield text
       } catch {
         // ignore
       }
     }
   }
 }
+
+// ─── Public API ────────────────────────────────────────────────────────────
+
+export async function* streamClaude(
+  apiKey: string,
+  systemPrompt: string,
+  userContent: AnthropicContent[],
+  model: string,
+  provider: Provider = 'anthropic',
+): AsyncGenerator<string> {
+  if (provider === 'gemini') {
+    const parts: GeminiPart[] = userContent.map((c) => {
+      if (c.type === 'text') return { text: c.text }
+      const img = c as ReturnType<typeof buildImageContent>
+      return { inlineData: { mimeType: img.source.media_type, data: img.source.data } }
+    })
+    yield* streamGemini(apiKey, systemPrompt, parts, model)
+  } else {
+    yield* streamAnthropic(apiKey, systemPrompt, userContent, model)
+  }
+}
+
+// ─── Message builder ───────────────────────────────────────────────────────
 
 function imageLabel(images: UploadedImage[], label: string): string {
   if (!images.length) return ''
@@ -63,7 +139,7 @@ function imageLabel(images: UploadedImage[], label: string): string {
 }
 
 export function buildUserMessage(mode: Mode, data: FormData) {
-  const allImages: { label: string; images: UploadedImage[] }[] = []
+  const allImages: { images: UploadedImage[] }[] = []
   let text = ''
 
   if (mode === 1) {
@@ -85,8 +161,8 @@ export function buildUserMessage(mode: Mode, data: FormData) {
 サムネで目指したい印象：${d.impression || '（未記入）'}
 
 参考にしたい既存サムネ：${d.referenceImages.length ? '（添付画像を参照）' : '（なし）'}`
-    allImages.push({ label: '素材', images: d.materialImages })
-    allImages.push({ label: '参考サムネ', images: d.referenceImages })
+    allImages.push({ images: d.materialImages })
+    allImages.push({ images: d.referenceImages })
   } else if (mode === 2) {
     const d = data as Mode2FormData
     text = `モード2：今ある1案をレビューしてください
@@ -106,8 +182,8 @@ export function buildUserMessage(mode: Mode, data: FormData) {
 参考にしたい既存サムネ：${d.referenceImages.length ? '（添付画像を参照）' : '（なし）'}
 
 ラフか完成版か：${d.completionLevel || '（未記入）'}${imageLabel(d.thumbnailImages, 'レビュー対象サムネ')}`
-    allImages.push({ label: 'サムネ', images: d.thumbnailImages })
-    allImages.push({ label: '参考', images: d.referenceImages })
+    allImages.push({ images: d.thumbnailImages })
+    allImages.push({ images: d.referenceImages })
   } else {
     const d = data as Mode3FormData
     text = `モード3：複数の案を見比べてください
@@ -130,20 +206,16 @@ export function buildUserMessage(mode: Mode, data: FormData) {
 
 参考にしたい既存サムネ：${d.referenceImages.length ? '（添付画像を参照）' : '（なし）'}
 
-ラフか完成版か：${d.completionLevel || '（未記入）'}${imageLabel(d.thumbnailImages, '比較対象サムネ')}`
-    allImages.push({ label: 'サムネ', images: d.thumbnailImages })
-    allImages.push({ label: '参考', images: d.referenceImages })
+ラフか完成版か：${d.completionLevel || '（未記入）'}`
+    allImages.push({ images: d.thumbnailImages })
+    allImages.push({ images: d.referenceImages })
   }
 
-  const content: Array<{ type: 'text'; text: string } | ReturnType<typeof buildImageContent>> = [
-    { type: 'text', text },
-  ]
-
+  const content: AnthropicContent[] = [{ type: 'text', text }]
   for (const { images } of allImages) {
     for (const img of images) {
       content.push(buildImageContent(img))
     }
   }
-
   return content
 }
