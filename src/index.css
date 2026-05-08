@@ -3,7 +3,14 @@
    Inter + Noto Sans JP (loaded in index.html)
    ──────────────────────────────────────── */
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; cursor: default; }
+a, button, [role="button"], select,
+.btn, .upload, .mode-card, .header-logo, .tab-pill button,
+.toc-item, .icon-btn, .image-thumb-remove, .btn-back-header,
+details.section-card--bonus summary, .bonus-toggle { cursor: pointer; }
+input[type="text"], input[type="password"], input[type="email"],
+input[type="number"], input[type="search"], textarea, .input, .textarea { cursor: text; }
+:disabled, [disabled] { cursor: not-allowed !important; }
 
 :root {
   /* Surface — warm paper */
@@ -30,13 +37,13 @@
   --text-faint:   #9D9C97;
   --whisper:      #C0BFB9;
 
-  /* Accent — orange used only on commit/active actions */
-  --accent:       #E8672A;
-  --accent-ink:   #C2511C;
-  --accent-soft:  #FCEFE5;
-  --primary:      #E8672A;
-  --primary-hover:#C2511C;
-  --primary-soft: #FCEFE5;
+  /* Accent — Artoone brand blue */
+  --accent:       #1A52E8;
+  --accent-ink:   #1340BE;
+  --accent-soft:  #EEF3FF;
+  --primary:      #1A52E8;
+  --primary-hover:#1340BE;
+  --primary-soft: #EEF3FF;
 
   /* Severity — for section-card kind labels */
   --sev-good:     #3F7F5C;
@@ -911,7 +918,7 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
   border: 1.5px dashed var(--border-strong);
   border-radius: var(--r-md);
   background: var(--surface-2);
-  padding: 18px;
+  aspect-ratio: 16 / 9;
   display: grid;
   place-items: center;
   color: var(--muted);
