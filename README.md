@@ -4,7 +4,8 @@
 
 ## 使い方
 
-1. GitHub Pages の URL にアクセスする
+1. 下記 URL にアクセスする  
+   **https://sokihayashi.github.io/artoone-thumbnail-analysis/**
 2. Anthropic API キーを入力する（初回のみ。localStorage に保存）
 3. モードを選ぶ（1: 1から考える / 2: レビュー / 3: 比較）
 4. フォームに入力してサムネ画像をアップロードし「診断する」
