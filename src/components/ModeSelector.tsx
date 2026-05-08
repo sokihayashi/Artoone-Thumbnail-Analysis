@@ -98,20 +98,11 @@ export default function ModeSelector({ version, onSelect }: Props) {
   return (
     <div className="mode-screen">
       <div className="mode-screen-inner">
-        <div className="title-bar" aria-hidden>
-          <span className="title-bar-stripes" />
-          <span className="title-bar-label">MODE SELECT</span>
-          <span className="title-bar-stripes" />
-          <span className="title-bar-meta">v3.2</span>
-        </div>
-        <div className="mode-step">[ STEP 1 / 3 ]</div>
+        <div className="mode-step">STEP 1 / 3</div>
         <h1 className="mode-h1">どう診断しますか？</h1>
-        <div className="ascii-rule" aria-hidden>
-          ////////////////////////////////////////////////////////////////
-        </div>
         <p className="mode-sub">
           企画段階か、検討中の案があるか、複数案で迷っているか。状況に合わせて選んでください。
-          <span className="chip" style={{ marginLeft: 8 }}>[ {version === 'big' ? '詳細' : 'かんたん'} ]</span>
+          <span className="chip" style={{ marginLeft: 8 }}>{version === 'big' ? '詳細' : 'かんたん'}</span>
         </p>
 
         <div className="mode-cards">
@@ -131,19 +122,6 @@ export default function ModeSelector({ version, onSelect }: Props) {
           ))}
         </div>
 
-        <div className="mode-bottom">
-          <div className="mode-hints">
-            <span className="row" style={{ gap: 4 }}>
-              <span className="kbd">↑</span><span className="kbd">↓</span> 選択
-            </span>
-            <span className="row" style={{ gap: 4 }}>
-              <span className="kbd">↵</span> 決定
-            </span>
-          </div>
-          <span className="dim mono" style={{ fontSize: 11 }}>
-            &gt;&gt; カードを選ぶとフォームに進みます
-          </span>
-        </div>
       </div>
     </div>
   )

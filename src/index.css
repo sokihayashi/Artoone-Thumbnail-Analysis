@@ -12,6 +12,18 @@ input[type="text"], input[type="password"], input[type="email"],
 input[type="number"], input[type="search"], textarea, .input, .textarea { cursor: text; }
 :disabled, [disabled] { cursor: not-allowed !important; }
 
+/* Suppress I-beam on non-content text (chrome, labels, headings).
+   Keep selectable in: inputs, report body, recap field values. */
+body { user-select: none; -webkit-user-select: none; }
+input, textarea, .input, .textarea, [contenteditable="true"],
+.section-card__body, .section-card__body *,
+.markdown-content, .markdown-content *,
+.priority-strip ol, .priority-strip ol *,
+.recap-field-value, .recap-field-value-sm {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
 :root {
   /* Surface — warm paper */
   --bg:           #F7F4ED;
@@ -85,9 +97,7 @@ body {
   font-size: 14px;
   line-height: 1.55;
   color: var(--ink);
-  background:
-    radial-gradient(circle, rgba(17,17,16,0.07) 1px, transparent 1.2px) 0 0 / 14px 14px,
-    var(--bg);
+  background: var(--bg);
   font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -1190,28 +1200,6 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
   --ink-stroke: 1.5px solid var(--ink);
 }
 
-/* ── Window controls (●○○) ── */
-.window-controls {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  margin-right: 6px;
-  padding: 0 4px 0 0;
-  border-right: 1px solid var(--border);
-  height: 18px;
-}
-.window-controls i {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--surface-3);
-  border: 1px solid var(--border-strong);
-  display: block;
-}
-.window-controls i:nth-child(1) { background: #FF5F57; border-color: #E04A41; }
-.window-controls i:nth-child(2) { background: #FEBC2E; border-color: #DEA021; }
-.window-controls i:nth-child(3) { background: #28C840; border-color: #1AAB29; }
-
 /* Header header-tag becomes a stamp */
 .header-tag {
   font-family: var(--font-pixel);
@@ -1242,18 +1230,6 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
   background: var(--accent);
   color: #fff;
   text-shadow: 1px 1px 0 rgba(0,0,0,0.35);
-}
-
-/* ── ASCII rule ── */
-.ascii-rule {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--whisper);
-  letter-spacing: 0.05em;
-  overflow: hidden;
-  white-space: nowrap;
-  margin: 6px 0 16px;
-  user-select: none;
 }
 
 /* ── Mode select retro ── */
@@ -1439,60 +1415,11 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
   .mode-card { box-shadow: 3px 3px 0 var(--ink); }
   .mode-card:hover { box-shadow: 4px 4px 0 var(--ink); }
   .btn-accent { box-shadow: 2px 2px 0 var(--ink); }
-  .ascii-rule { font-size: 10px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════
    RETRO CHROME OVERLAY — round 2: stronger pixel/brutalist vibes
    ═══════════════════════════════════════════════════════════════ */
-
-/* ── Pane backgrounds: subtle dot grid ── */
-.pane-l, .pane-r, .pane-toc {
-  background:
-    radial-gradient(circle, rgba(17,17,16,0.05) 1px, transparent 1.2px) 0 0 / 14px 14px,
-    var(--bg);
-}
-.app-header { background: var(--bg); }
-
-/* ── DATA/TIME-style title bar above the mode-screen ── */
-.title-bar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  height: 22px;
-  border: 1.5px solid var(--ink);
-  background: var(--surface);
-  padding: 0 10px;
-  margin-bottom: 18px;
-  box-shadow: 3px 3px 0 var(--ink);
-}
-.title-bar-stripes {
-  flex: 1;
-  height: 8px;
-  background-image: repeating-linear-gradient(
-    90deg,
-    var(--ink) 0 5px,
-    transparent 5px 9px
-  );
-  opacity: 0.85;
-}
-.title-bar-label {
-  font-family: var(--font-pixel);
-  font-size: 16px;
-  letter-spacing: 0.08em;
-  color: var(--ink);
-  white-space: nowrap;
-}
-.title-bar-meta {
-  font-family: var(--font-pixel);
-  font-size: 14px;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-  white-space: nowrap;
-}
-
-/* Mode screen inner: align top of title bar */
-.mode-screen-inner { padding-top: 36px; }
 
 /* ── Mode card: bigger pixel num badge, fix foot wrap ── */
 .mode-card-num {
@@ -1565,24 +1492,6 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
   line-height: 1;
 }
 
-/* ── Mode-h1: add corner brackets ── */
-.mode-h1 {
-  position: relative;
-  display: inline-block;
-  padding: 0 4px;
-}
-.mode-h1::before,
-.mode-h1::after {
-  font-family: var(--font-mono);
-  font-weight: 400;
-  color: var(--accent);
-  font-size: 0.7em;
-  position: absolute;
-  top: -2px;
-}
-.mode-h1::before { content: '┌'; left: -14px; }
-.mode-h1::after  { content: '┘'; right: -14px; bottom: -2px; top: auto; }
-
 /* ── Form step retro framed ── */
 .form-step-tag {
   display: inline-block;
@@ -1593,18 +1502,7 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
   letter-spacing: 0.06em;
 }
 
-/* ── Stage strip: hatched stripe band ── */
-.stage-strip {
-  background:
-    repeating-linear-gradient(
-      135deg,
-      transparent 0 6px,
-      rgba(17,17,16,0.04) 6px 7px
-    ),
-    var(--bg);
-}
-
-/* ── Priority strip: keep dark, add corner bracket effect ── */
+/* ── Priority strip: solid border + offset shadow ── */
 .priority-strip {
   border: 1.5px solid var(--ink);
   border-radius: 4px;
@@ -1671,13 +1569,10 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
 
 /* Mobile scaling for new retro elements */
 @media (max-width: 600px) {
-  .title-bar { box-shadow: 2px 2px 0 var(--ink); }
   .mode-card-num { box-shadow: 1px 1px 0 var(--ink); }
   .mode-card-foot { font-size: 12px; }
   .priority-strip { box-shadow: 3px 3px 0 var(--ink); }
   .setup-card { box-shadow: 4px 4px 0 var(--ink); }
-  .mode-h1::before { left: -10px; }
-  .mode-h1::after { right: -10px; }
 }
 
 

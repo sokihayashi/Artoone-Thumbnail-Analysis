@@ -192,9 +192,6 @@ export default function ResultDisplay({ result, streaming, model, onNewDiagnosis
       </div>
 
       <h1 className="report-h1">診断レポート</h1>
-      <div className="ascii-rule" aria-hidden>
-        ════════════════════════════════════════════════════════════════
-      </div>
 
       {streaming && !result && (
         <div className="streaming-dots">
