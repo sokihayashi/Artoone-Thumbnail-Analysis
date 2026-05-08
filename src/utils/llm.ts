@@ -84,8 +84,15 @@ async function* streamOpenRouter(
 
 async function responseError(res: Response): Promise<Error> {
   const err = await res.json().catch(() => ({}))
-  const msg = (err as { error?: { message?: string } }).error?.message ?? `HTTP ${res.status}`
-  return new Error(msg)
+  return new Error(extractStreamError(err) ?? `HTTP ${res.status}`)
+}
+
+function extractStreamError(parsed: unknown): string | null {
+  const e = (parsed as { error?: { message?: string; metadata?: { raw?: string; provider_name?: string } } }).error
+  if (!e) return null
+  const provider = e.metadata?.provider_name ? ` [${e.metadata.provider_name}]` : ''
+  const raw = e.metadata?.raw ? `: ${e.metadata.raw}` : ''
+  return `${e.message ?? 'Unknown error'}${provider}${raw}`
 }
 
 async function* readSSE(
@@ -106,12 +113,12 @@ async function* readSSE(
       if (!line.startsWith('data: ')) continue
       const data = line.slice(6)
       if (data === '[DONE]') continue
-      try {
-        const text = extract(JSON.parse(data))
-        if (text) yield text
-      } catch {
-        // skip malformed chunks
-      }
+      let parsed: unknown
+      try { parsed = JSON.parse(data) } catch { continue }
+      const errMsg = extractStreamError(parsed)
+      if (errMsg) throw new Error(errMsg)
+      const text = extract(parsed)
+      if (text) yield text
     }
   }
 }
