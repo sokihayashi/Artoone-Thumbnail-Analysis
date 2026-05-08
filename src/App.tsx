@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
-import type { Mode, ToolVersion, FormData, AppSettings, Provider } from './types'
+import type { Mode, ToolVersion, FormData, AppSettings, Provider, Mode1FormData, Mode2FormData, Mode3FormData } from './types'
 import { streamChat, buildUserMessage } from './utils/llm'
 import ApiKeySetup from './components/ApiKeySetup'
 import Header from './components/Header'
@@ -252,6 +252,7 @@ export default function App() {
             onSubmit={(d) => handleFormSubmit(d as unknown as FormData)}
             onBack={() => setScreen('mode-select')}
             loading={streaming}
+            initialData={submittedData as Mode1FormData | undefined}
           />
         </FormSplit>
       )}
@@ -261,6 +262,7 @@ export default function App() {
             onSubmit={(d) => handleFormSubmit(d as unknown as FormData)}
             onBack={() => setScreen('mode-select')}
             loading={streaming}
+            initialData={submittedData as Mode2FormData | undefined}
           />
         </FormSplit>
       )}
@@ -270,6 +272,7 @@ export default function App() {
             onSubmit={(d) => handleFormSubmit(d as unknown as FormData)}
             onBack={() => setScreen('mode-select')}
             loading={streaming}
+            initialData={submittedData as Mode3FormData | undefined}
           />
         </FormSplit>
       )}

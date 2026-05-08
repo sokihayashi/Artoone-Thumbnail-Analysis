@@ -6,10 +6,11 @@ interface Props {
   onSubmit: (data: Mode3FormData) => void
   onBack: () => void
   loading: boolean
+  initialData?: Mode3FormData
 }
 
-export default function Mode3Form({ onSubmit, onBack, loading }: Props) {
-  const [d, setD] = useState<Mode3FormData>({
+export default function Mode3Form({ onSubmit, onBack, loading, initialData }: Props) {
+  const [d, setD] = useState<Mode3FormData>(initialData ?? {
     title: '',
     overview: '',
     purpose: '',
