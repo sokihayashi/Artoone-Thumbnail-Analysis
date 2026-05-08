@@ -15,11 +15,11 @@ interface Props {
 
 const MODELS: Record<Provider, { id: string; label: string }[]> = {
   openrouter: [
-    { id: 'nvidia/nemotron-nano-12b-v2-vl:free', label: 'Nemotron Nano 12B VL (無料)' },
-    { id: 'google/gemma-4-31b-it:free', label: 'Gemma 4 31B (無料・要確認)' },
-    { id: 'google/gemma-4-26b-a4b-it:free', label: 'Gemma 4 26B (無料・要確認)' },
-    { id: 'tencent/hy3-preview:free', label: 'Tencent Hy3 (無料・要確認)' },
-    { id: 'openrouter/owl-alpha', label: 'Owl Alpha (無料・要確認)' },
+    { id: 'google/gemini-2.5-flash', label: 'Gemini 2.5 Flash（推奨・安価）' },
+    { id: 'google/gemini-2.5-flash-lite', label: 'Gemini 2.5 Flash Lite（最安）' },
+    { id: 'anthropic/claude-haiku-4-5', label: 'Claude Haiku 4.5（高速・賢め）' },
+    { id: 'anthropic/claude-sonnet-4-6', label: 'Claude Sonnet 4.6（最高品質）' },
+    { id: 'nvidia/nemotron-nano-12b-v2-vl:free', label: 'Nemotron Nano 12B VL（無料）' },
   ],
   anthropic: [
     { id: 'claude-sonnet-4-6', label: 'Sonnet 4.6' },
