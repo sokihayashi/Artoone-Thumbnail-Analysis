@@ -196,9 +196,10 @@ export default function App() {
         onApiKeyReset={handleApiKeyReset}
         bakedKey={!!BAKED_KEY}
         screen={screen}
+        subtitle={screen === 'form' ? 'FORM' : screen === 'result' ? 'REPORT' : undefined}
       />
 
-      <main className="app-main">
+      <main className={`app-main${screen === 'mode-select' ? ' app-main--wide' : ''}`}>
         {screen === 'mode-select' && (
           <ModeSelector version={version} onSelect={handleModeSelect} />
         )}

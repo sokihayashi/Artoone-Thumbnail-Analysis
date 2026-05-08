@@ -11,6 +11,17 @@ interface Props {
 type Section = { heading: string; body: string }
 type Accent = 'positive' | 'negative' | 'priority' | 'instruction' | 'bonus' | 'neutral'
 
+type KindConfig = { label: string; glyph: string; sev: number; color: string }
+
+const KIND_CONFIG: Record<Accent, KindConfig> = {
+  priority:    { label: 'PRIORITY',     glyph: '●', sev: 3, color: 'var(--sev-crit)' },
+  negative:    { label: 'ISSUE',        glyph: '▲', sev: 2, color: 'var(--sev-warn)' },
+  positive:    { label: 'STRENGTH',     glyph: '◆', sev: 2, color: 'var(--sev-good)' },
+  instruction: { label: 'ACTION',       glyph: '▶', sev: 1, color: 'var(--sev-info)' },
+  bonus:       { label: 'NICE TO HAVE', glyph: '○', sev: 0, color: 'var(--sev-mute)' },
+  neutral:     { label: '',             glyph: '',  sev: 0, color: 'var(--muted)' },
+}
+
 function parseSections(md: string): Section[] {
   if (!md) return []
   const lines = md.split('\n')
@@ -50,15 +61,6 @@ function accentFor(heading: string): Accent {
   return 'neutral'
 }
 
-const CHIP_ICON: Record<Accent, string> = {
-  positive:    '✓',
-  negative:    '!',
-  priority:    '★',
-  instruction: '→',
-  bonus:       '◇',
-  neutral:     '',
-}
-
 function SectionCard({ heading, body, accent, showCursor, streaming }: {
   heading: string
   body: string
@@ -66,22 +68,38 @@ function SectionCard({ heading, body, accent, showCursor, streaming }: {
   showCursor: boolean
   streaming: boolean
 }) {
-  const icon = CHIP_ICON[accent]
+  const cfg = KIND_CONFIG[accent]
   const isBonus = accent === 'bonus'
+  const isNeutral = accent === 'neutral'
+
   const bodyEl = (
     <div className="section-card__body markdown-content">
       <ReactMarkdown>{body}</ReactMarkdown>
       {showCursor && <span className="cursor-blink">▌</span>}
     </div>
   )
-  const chipEl = heading && (
-    accent === 'neutral'
+
+  const headerEl = heading && (
+    isNeutral
       ? <h3 className="section-card__heading">{heading}</h3>
       : (
-        <div className="section-chip">
-          {icon && <span className="section-chip__icon">{icon}</span>}
-          {heading}
-        </div>
+        <>
+          <div className="section-card-head">
+            <span className="section-kind" style={{ color: cfg.color }}>
+              {cfg.glyph && <span className="section-kind-glyph">{cfg.glyph}</span>}
+              {cfg.label}
+            </span>
+            <span className="section-spacer" />
+            {cfg.sev > 0 && (
+              <span className="sev" style={{ color: cfg.color }}>
+                {[0, 1, 2].map(i => (
+                  <span key={i} className={`sev-dot${i < cfg.sev ? ' on' : ''}`} />
+                ))}
+              </span>
+            )}
+          </div>
+          <div className="section-title">{heading}</div>
+        </>
       )
   )
 
@@ -89,8 +107,15 @@ function SectionCard({ heading, body, accent, showCursor, streaming }: {
     return (
       <details className={`section-card section-card--${accent}`} open={streaming}>
         <summary>
-          {chipEl}
-          <span className="bonus-toggle" />
+          <div className="section-card-head">
+            <span className="section-kind" style={{ color: cfg.color }}>
+              {cfg.glyph && <span className="section-kind-glyph">{cfg.glyph}</span>}
+              {cfg.label}
+            </span>
+            <span className="section-spacer" />
+            <span className="bonus-toggle" />
+          </div>
+          <div className="section-title">{heading}</div>
         </summary>
         {bodyEl}
       </details>
@@ -99,7 +124,7 @@ function SectionCard({ heading, body, accent, showCursor, streaming }: {
 
   return (
     <div className={`section-card section-card--${accent}`}>
-      {chipEl}
+      {headerEl}
       {bodyEl}
     </div>
   )

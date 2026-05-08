@@ -11,6 +11,7 @@ interface Props {
   onApiKeyReset: () => void
   bakedKey: boolean
   screen: 'mode-select' | 'form' | 'result'
+  subtitle?: string
 }
 
 const MODELS: Record<Provider, { id: string; label: string }[]> = {
@@ -38,7 +39,7 @@ export default function Header({
   provider, onProviderChange,
   model, onModelChange,
   onReset, onApiKeyReset,
-  bakedKey, screen,
+  bakedKey, screen, subtitle,
 }: Props) {
   const handleProviderChange = (p: Provider) => {
     onProviderChange(p)
@@ -58,8 +59,10 @@ export default function Header({
           )}
           <button className="header-logo" onClick={onReset}>
             <div className="logo-mark">A</div>
-            <span className="logo-text">Artooneサムネ診断</span>
+            <span className="logo-text">Artoone</span>
+            <span className="logo-subtitle">/ サムネ診断</span>
           </button>
+          {subtitle && <span className="header-tag">{subtitle}</span>}
         </div>
 
         <div className="header-controls">
