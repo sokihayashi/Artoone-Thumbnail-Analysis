@@ -38,67 +38,59 @@ export default function Header({
   version, onVersionChange,
   provider, onProviderChange,
   model, onModelChange,
-  onReset, onApiKeyReset,
-  bakedKey, screen, subtitle,
+  onApiKeyReset,
+  bakedKey, subtitle,
+  onReset,
 }: Props) {
   const handleProviderChange = (p: Provider) => {
     onProviderChange(p)
     onModelChange(MODELS[p][0].id)
   }
 
-  const showBack = screen !== 'mode-select'
-
   return (
     <header className="app-header">
-      <div className="header-inner">
-        <div className="header-left">
-          {showBack && (
-            <button className="btn-back-header" onClick={onReset} title="モード選択に戻る">
-              ←
-            </button>
-          )}
-          <button className="header-logo" onClick={onReset}>
-            <div className="logo-mark">A</div>
-            <span className="logo-text">Artoone</span>
-            <span className="logo-subtitle">/ サムネ診断</span>
+      <div className="header-left">
+        <button className="header-logo" onClick={onReset} title="モード選択へ">
+          <div className="logo-mark">A</div>
+          <span className="logo-text">Artoone</span>
+          <span className="logo-subtitle">/ サムネ診断</span>
+        </button>
+        {subtitle && <span className="header-tag">{subtitle}</span>}
+      </div>
+
+      <div className="header-right">
+        <div className="tab-pill">
+          <button className={version === 'mini' ? 'is-on' : ''} onClick={() => onVersionChange('mini')}>
+            かんたん
           </button>
-          {subtitle && <span className="header-tag">{subtitle}</span>}
+          <button className={version === 'big' ? 'is-on' : ''} onClick={() => onVersionChange('big')}>
+            詳細
+          </button>
         </div>
 
-        <div className="header-controls">
-          <div className="version-toggle">
-            <button className={version === 'mini' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => onVersionChange('mini')}>
-              かんたん
-            </button>
-            <button className={version === 'big' ? 'toggle-btn active' : 'toggle-btn'} onClick={() => onVersionChange('big')}>
-              詳細
-            </button>
-          </div>
-
-          {!bakedKey && (
-            <div className="header-advanced">
-              <div className="version-toggle">
-                {PROVIDER_ORDER.map((p) => (
-                  <button
-                    key={p}
-                    className={provider === p ? 'toggle-btn active' : 'toggle-btn'}
-                    onClick={() => handleProviderChange(p)}
-                  >
-                    {PROVIDER_LABEL[p]}
-                  </button>
-                ))}
-              </div>
-
-              <select className="model-select" value={model} onChange={(e) => onModelChange(e.target.value)}>
-                {MODELS[provider].map((m) => (
-                  <option key={m.id} value={m.id}>{m.label}</option>
-                ))}
-              </select>
-
-              <button className="btn-text-small" onClick={onApiKeyReset}>APIキー</button>
+        {!bakedKey && (
+          <div className="header-advanced row" style={{ gap: 6 }}>
+            <div className="tab-pill">
+              {PROVIDER_ORDER.map((p) => (
+                <button
+                  key={p}
+                  className={provider === p ? 'is-on' : ''}
+                  onClick={() => handleProviderChange(p)}
+                >
+                  {PROVIDER_LABEL[p]}
+                </button>
+              ))}
             </div>
-          )}
-        </div>
+
+            <select className="model-select" value={model} onChange={(e) => onModelChange(e.target.value)}>
+              {MODELS[provider].map((m) => (
+                <option key={m.id} value={m.id}>{m.label}</option>
+              ))}
+            </select>
+
+            <button className="btn btn-ghost btn-sm" onClick={onApiKeyReset}>APIキー</button>
+          </div>
+        )}
       </div>
     </header>
   )

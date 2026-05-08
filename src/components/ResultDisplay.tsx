@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown'
 interface Props {
   result: string
   streaming: boolean
-  onBack: () => void
+  model: string
   onNewDiagnosis: () => void
 }
 
@@ -61,7 +61,7 @@ function accentFor(heading: string): Accent {
   return 'neutral'
 }
 
-function SectionCard({ heading, body, accent, showCursor, streaming }: {
+function SectionCardView({ heading, body, accent, showCursor, streaming }: {
   heading: string
   body: string
   accent: Accent
@@ -75,32 +75,8 @@ function SectionCard({ heading, body, accent, showCursor, streaming }: {
   const bodyEl = (
     <div className="section-card__body markdown-content">
       <ReactMarkdown>{body}</ReactMarkdown>
-      {showCursor && <span className="cursor-blink">▌</span>}
+      {showCursor && <span className="stream-cursor" />}
     </div>
-  )
-
-  const headerEl = heading && (
-    isNeutral
-      ? <h3 className="section-card__heading">{heading}</h3>
-      : (
-        <>
-          <div className="section-card-head">
-            <span className="section-kind" style={{ color: cfg.color }}>
-              {cfg.glyph && <span className="section-kind-glyph">{cfg.glyph}</span>}
-              {cfg.label}
-            </span>
-            <span className="section-spacer" />
-            {cfg.sev > 0 && (
-              <span className="sev" style={{ color: cfg.color }}>
-                {[0, 1, 2].map(i => (
-                  <span key={i} className={`sev-dot${i < cfg.sev ? ' on' : ''}`} />
-                ))}
-              </span>
-            )}
-          </div>
-          <div className="section-title">{heading}</div>
-        </>
-      )
   )
 
   if (isBonus) {
@@ -115,22 +91,75 @@ function SectionCard({ heading, body, accent, showCursor, streaming }: {
             <span className="section-spacer" />
             <span className="bonus-toggle" />
           </div>
-          <div className="section-title">{heading}</div>
+          {heading && <div className="section-title">{heading}</div>}
         </summary>
         {bodyEl}
       </details>
     )
   }
 
+  if (isNeutral) {
+    return (
+      <div className={`section-card section-card--${accent}`}>
+        {heading && <h3 className="section-card__heading">{heading}</h3>}
+        {bodyEl}
+      </div>
+    )
+  }
+
   return (
     <div className={`section-card section-card--${accent}`}>
-      {headerEl}
+      <div className="section-card-head">
+        <span className="section-kind" style={{ color: cfg.color }}>
+          {cfg.glyph && <span className="section-kind-glyph">{cfg.glyph}</span>}
+          {cfg.label}
+        </span>
+        <span className="section-spacer" />
+        {cfg.sev > 0 && (
+          <span className="sev" style={{ color: cfg.color }}>
+            {[0, 1, 2].map(i => (
+              <span key={i} className={`sev-dot${i < cfg.sev ? ' on' : ''}`} />
+            ))}
+          </span>
+        )}
+      </div>
+      {heading && <div className="section-title">{heading}</div>}
       {bodyEl}
     </div>
   )
 }
 
-export default function ResultDisplay({ result, streaming, onBack, onNewDiagnosis }: Props) {
+function SkeletonCard() {
+  return (
+    <div className="section-card section-card--skeleton">
+      <div className="row" style={{ marginBottom: 8 }}>
+        <span className="skel" style={{ width: 64, height: 11 }} />
+        <span className="section-spacer" />
+        <span className="skel" style={{ width: 28, height: 8 }} />
+      </div>
+      <span className="skel" style={{ width: '70%', height: 14, marginBottom: 10 }} />
+      <span className="skel" style={{ width: '100%', height: 9, marginBottom: 4 }} />
+      <span className="skel" style={{ width: '92%', height: 9, marginBottom: 4 }} />
+      <span className="skel" style={{ width: '60%', height: 9 }} />
+    </div>
+  )
+}
+
+function shortModel(model: string): string {
+  return model.split('/').pop() || model
+}
+
+function todayStr(): string {
+  const now = new Date()
+  const y = now.getFullYear()
+  const m = (now.getMonth() + 1).toString().padStart(2, '0')
+  const d = now.getDate().toString().padStart(2, '0')
+  const hh = now.getHours().toString().padStart(2, '0')
+  const mm = now.getMinutes().toString().padStart(2, '0')
+  return `${y}-${m}-${d} ${hh}:${mm}`
+}
+
+export default function ResultDisplay({ result, streaming, model, onNewDiagnosis }: Props) {
   const [copyLabel, setCopyLabel] = useState('コピー')
 
   const handleCopy = () => {
@@ -147,54 +176,73 @@ export default function ResultDisplay({ result, streaming, onBack, onNewDiagnosi
   }
 
   const sections = parseSections(result)
+  const prioritySections = sections.filter(s => accentFor(s.heading) === 'priority')
 
   return (
-    <div className="result-container">
-      <div className="result-toolbar">
-        <button className="btn-ghost" onClick={onBack}>
-          ← 修正して再診断
-        </button>
-        <div className="result-toolbar-right">
-          {!streaming && result && (
-            <button className="btn-secondary" onClick={handleCopy}>
-              {copyLabel}
-            </button>
-          )}
-          <button className="btn-primary" onClick={onNewDiagnosis}>
-            新しい診断
-          </button>
-        </div>
+    <>
+      <div className="report-meta">
+        <span>REPORT · {todayStr()} · {shortModel(model)}</span>
+        <span className="section-spacer" />
+        {!streaming && result && (
+          <button className="btn btn-ghost btn-sm" onClick={handleCopy}>{copyLabel}</button>
+        )}
+        {!streaming && result && (
+          <button className="btn btn-primary btn-sm" onClick={onNewDiagnosis}>新しい診断</button>
+        )}
       </div>
 
-      <div className="result-body">
-        {streaming && !result && (
-          <div className="streaming-indicator">
-            <span className="dot" />
-            <span className="dot" />
-            <span className="dot" />
+      <h1 className="report-h1">診断レポート</h1>
+
+      {streaming && !result && (
+        <div className="streaming-dots">
+          <span className="dot" /><span className="dot" /><span className="dot" />
+        </div>
+      )}
+
+      {/* TOP PRIORITY strip — listed if there are priority sections */}
+      {!streaming && prioritySections.length > 0 && (
+        <div className="priority-strip">
+          <div className="priority-strip-head">
+            <span className="priority-strip-head-marker">●</span>
+            TOP PRIORITY · まず直すならここ
+            <span className="priority-strip-count">{prioritySections.length}件</span>
           </div>
-        )}
-        {result && sections.length > 0 && (
-          <div className="section-cards">
-            {sections.map((s, i) => (
-              <SectionCard
-                key={i}
-                heading={s.heading}
-                body={s.body}
-                accent={accentFor(s.heading)}
-                showCursor={streaming && i === sections.length - 1}
-                streaming={streaming}
-              />
+          <ol>
+            {prioritySections.map((s, i) => (
+              <li key={i}>{firstLine(s.body) || s.heading}</li>
             ))}
-          </div>
-        )}
-        {result && sections.length === 0 && (
-          <div className="markdown-content">
-            <ReactMarkdown>{result}</ReactMarkdown>
-            {streaming && <span className="cursor-blink">▌</span>}
-          </div>
-        )}
-      </div>
-    </div>
+          </ol>
+        </div>
+      )}
+
+      {sections.length > 0 && (
+        <div className="section-cards">
+          {sections.map((s, i) => (
+            <SectionCardView
+              key={i}
+              heading={s.heading}
+              body={s.body}
+              accent={accentFor(s.heading)}
+              showCursor={streaming && i === sections.length - 1}
+              streaming={streaming}
+            />
+          ))}
+          {streaming && sections.length > 0 && <SkeletonCard />}
+        </div>
+      )}
+
+      {result && sections.length === 0 && (
+        <div className="markdown-content">
+          <ReactMarkdown>{result}</ReactMarkdown>
+          {streaming && <span className="stream-cursor" />}
+        </div>
+      )}
+    </>
   )
+}
+
+function firstLine(body: string): string {
+  const trimmed = body.trim()
+  const line = trimmed.split('\n').find((l) => l.trim()) || ''
+  return line.replace(/^[*\->\s]+/, '').trim()
 }

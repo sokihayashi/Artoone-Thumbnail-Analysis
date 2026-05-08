@@ -19,7 +19,7 @@ const INFO: Record<Provider, ProviderInfo> = {
     label: 'OpenRouter APIキー',
     toggleLabel: 'OpenRouter（無料）',
     placeholder: 'sk-or-...',
-    hint: '無料モデル（Gemini 2.0 Flash等）が使えます。',
+    hint: '無料モデル（Gemini 2.5 Flash等）が使えます。',
     url: 'https://openrouter.ai/keys',
     urlLabel: 'openrouter.ai',
   },
@@ -56,16 +56,20 @@ export default function ApiKeySetup({ onSave }: Props) {
   return (
     <div className="setup-overlay">
       <div className="setup-card">
-        <div className="setup-icon">🎨</div>
-        <h1>Artooneサムネ診断</h1>
-        <p className="setup-subtitle">アートゥーン！ サムネイル診断システム</p>
+        <div className="row" style={{ gap: 10, marginBottom: 14 }}>
+          <div className="logo-mark" style={{ width: 28, height: 28, fontSize: 13 }}>A</div>
+          <div className="col">
+            <h1 style={{ margin: 0 }}>Artoone サムネ診断</h1>
+          </div>
+        </div>
+        <p className="setup-subtitle">YouTubeチーム向け · サムネイル診断ツール</p>
 
-        <div className="provider-toggle">
+        <div className="tab-pill" style={{ marginBottom: 18 }}>
           {PROVIDER_ORDER.map((p) => (
             <button
               key={p}
               type="button"
-              className={provider === p ? 'toggle-btn active' : 'toggle-btn'}
+              className={provider === p ? 'is-on' : ''}
               onClick={() => handleProviderChange(p)}
             >
               {INFO[p].toggleLabel}
@@ -74,20 +78,23 @@ export default function ApiKeySetup({ onSave }: Props) {
         </div>
 
         <form onSubmit={handleSubmit} className="setup-form">
-          <label htmlFor="apikey">{info.label}</label>
-          <div className="input-row">
-            <input
-              id="apikey"
-              type={show ? 'text' : 'password'}
-              value={key}
-              onChange={(e) => setKey(e.target.value)}
-              placeholder={info.placeholder}
-              autoComplete="off"
-              spellCheck={false}
-            />
-            <button type="button" className="btn-icon" onClick={() => setShow((s) => !s)}>
-              {show ? '非表示' : '表示'}
-            </button>
+          <div className="field">
+            <label className="field-label" htmlFor="apikey">{info.label}</label>
+            <div className="row" style={{ gap: 6 }}>
+              <input
+                className="input"
+                id="apikey"
+                type={show ? 'text' : 'password'}
+                value={key}
+                onChange={(e) => setKey(e.target.value)}
+                placeholder={info.placeholder}
+                autoComplete="off"
+                spellCheck={false}
+              />
+              <button type="button" className="btn btn-sm" onClick={() => setShow((s) => !s)}>
+                {show ? '非表示' : '表示'}
+              </button>
+            </div>
           </div>
           <p className="setup-hint">
             {info.hint}{' '}
@@ -95,7 +102,7 @@ export default function ApiKeySetup({ onSave }: Props) {
             <br />
             キーはブラウザの localStorage に保存されます。
           </p>
-          <button type="submit" className="btn-primary" disabled={!key.trim()}>
+          <button type="submit" className="btn btn-primary btn-lg" disabled={!key.trim()}>
             はじめる
           </button>
         </form>

@@ -6,11 +6,12 @@ interface Props {
   images: UploadedImage[]
   onChange: (images: UploadedImage[]) => void
   label: string
+  hint?: string
   multiple?: boolean
   required?: boolean
 }
 
-export default function ImageUploader({ images, onChange, label, multiple = true, required = false }: Props) {
+export default function ImageUploader({ images, onChange, label, hint, multiple = true, required = false }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleFiles = async (files: FileList | null) => {
@@ -30,13 +31,14 @@ export default function ImageUploader({ images, onChange, label, multiple = true
   }
 
   return (
-    <div className="field-group">
-      <label>
+    <div className="field">
+      <div className="field-label">
         {label}
-        {required && <span className="required">*</span>}
-      </label>
+        {required && <span className="field-required">*</span>}
+        {hint && <span className="field-hint">{hint}</span>}
+      </div>
       <div
-        className="drop-zone"
+        className="upload"
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
         onClick={() => inputRef.current?.click()}
@@ -49,23 +51,22 @@ export default function ImageUploader({ images, onChange, label, multiple = true
           hidden
           onChange={(e) => handleFiles(e.target.files)}
         />
-        <span className="drop-zone-text">
-          クリックまたはドラッグ&ドロップで画像を追加
-        </span>
+        <span>クリックまたはドラッグ&ドロップで画像を追加</span>
       </div>
       {images.length > 0 && (
-        <div className="image-previews">
+        <div className="image-grid">
           {images.map((img, i) => (
-            <div key={i} className="image-preview-item">
+            <div key={i} className="image-thumb">
               <img src={img.dataUrl} alt={img.name} />
               <button
                 type="button"
-                className="remove-image"
+                className="image-thumb-remove"
                 onClick={(e) => { e.stopPropagation(); remove(i) }}
+                title="削除"
               >
                 ×
               </button>
-              <span className="image-name">{img.name}</span>
+              <span className="image-thumb-name">{img.name}</span>
             </div>
           ))}
         </div>
