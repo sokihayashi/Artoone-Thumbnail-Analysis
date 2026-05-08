@@ -124,7 +124,12 @@ export default function App() {
 
   const buildSystemPrompt = () => {
     const base = version === 'big' ? miniHayashiBigPrompt : miniHayashiPrompt
-    return `${base}\n\n---\n\n## 追加DLC ミニCooさん データ\n\n以下のJSONが今回提供されています。\n\`\`\`json\n${JSON.stringify(dlcData)}\n\`\`\``
+    const staticDlc = {
+      channel_summary: dlcData.channel_summary,
+      linkage_notes: dlcData.linkage_notes,
+      type_summary: dlcData.type_summary,
+    }
+    return `${base}\n\n---\n\n## 追加DLC アートゥーン！チャンネル統計データ\n\n以下のJSONがチャンネルの基準値として提供されています（個別の動画事例は別途ユーザーメッセージで関連性の高いものが渡される）。\n\`\`\`json\n${JSON.stringify(staticDlc)}\n\`\`\``
   }
 
   const startElapsedTimer = () => {
@@ -155,7 +160,7 @@ export default function App() {
 
     try {
       const systemPrompt = buildSystemPrompt()
-      const userContent = buildUserMessage(mode, data)
+      const userContent = await buildUserMessage(mode, data)
       let accumulated = ''
       for await (const chunk of streamChat(apiKey, systemPrompt, userContent, model, provider, ac.signal)) {
         accumulated += chunk
