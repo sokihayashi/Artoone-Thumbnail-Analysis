@@ -17,20 +17,49 @@ interface ModeDef {
 
 const ICON = {
   spark: (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M8 1.5v3M8 11.5v3M1.5 8h3M11.5 8h3M3.4 3.4l2.1 2.1M10.5 10.5l2.1 2.1M3.4 12.6l2.1-2.1M10.5 5.5l2.1-2.1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    <svg width="22" height="22" viewBox="0 0 16 16" shapeRendering="crispEdges" fill="currentColor">
+      <rect x="7" y="1" width="2" height="2" />
+      <rect x="7" y="3" width="2" height="2" />
+      <rect x="7" y="11" width="2" height="2" />
+      <rect x="7" y="13" width="2" height="2" />
+      <rect x="1" y="7" width="2" height="2" />
+      <rect x="3" y="7" width="2" height="2" />
+      <rect x="11" y="7" width="2" height="2" />
+      <rect x="13" y="7" width="2" height="2" />
+      <rect x="7" y="7" width="2" height="2" />
+      <rect x="3" y="3" width="2" height="2" />
+      <rect x="11" y="3" width="2" height="2" />
+      <rect x="3" y="11" width="2" height="2" />
+      <rect x="11" y="11" width="2" height="2" />
     </svg>
   ),
   eye: (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path d="M1.5 8s2.5-4.5 6.5-4.5S14.5 8 14.5 8s-2.5 4.5-6.5 4.5S1.5 8 1.5 8z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
-      <circle cx="8" cy="8" r="2" stroke="currentColor" strokeWidth="1.4"/>
+    <svg width="22" height="22" viewBox="0 0 16 16" shapeRendering="crispEdges" fill="currentColor">
+      <rect x="3" y="5" width="2" height="2" />
+      <rect x="5" y="3" width="2" height="2" />
+      <rect x="7" y="3" width="2" height="2" />
+      <rect x="9" y="3" width="2" height="2" />
+      <rect x="11" y="5" width="2" height="2" />
+      <rect x="13" y="7" width="2" height="2" />
+      <rect x="11" y="9" width="2" height="2" />
+      <rect x="9" y="11" width="2" height="2" />
+      <rect x="7" y="11" width="2" height="2" />
+      <rect x="5" y="11" width="2" height="2" />
+      <rect x="3" y="9" width="2" height="2" />
+      <rect x="1" y="7" width="2" height="2" />
+      <rect x="6" y="6" width="4" height="4" />
     </svg>
   ),
   compare: (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <rect x="1.5" y="2.5" width="5.5" height="11" rx="1" stroke="currentColor" strokeWidth="1.4"/>
-      <rect x="9" y="2.5" width="5.5" height="11" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+    <svg width="22" height="22" viewBox="0 0 16 16" shapeRendering="crispEdges" fill="currentColor">
+      <rect x="1" y="2" width="6" height="2" />
+      <rect x="1" y="12" width="6" height="2" />
+      <rect x="1" y="2" width="2" height="12" />
+      <rect x="5" y="2" width="2" height="12" />
+      <rect x="9" y="2" width="6" height="2" />
+      <rect x="9" y="12" width="6" height="2" />
+      <rect x="9" y="2" width="2" height="12" />
+      <rect x="13" y="2" width="2" height="12" />
     </svg>
   ),
 }
@@ -42,7 +71,7 @@ const MODES: ModeDef[] = [
     title: 'サムネを1から考える',
     desc: '企画内容や使いたい素材から、構図と要素をゼロから提案します。',
     meta: '入力: タイトル / 概要 / ターゲット',
-    time: '~ 40秒',
+    time: '40秒',
     icon: ICON.spark,
   },
   {
@@ -51,7 +80,7 @@ const MODES: ModeDef[] = [
     title: '今ある1案をレビューする',
     desc: '良い点・問題点・最優先で直すべき箇所を洗い出します。',
     meta: '入力: 画像 + タイトル',
-    time: '~ 25秒',
+    time: '25秒',
     icon: ICON.eye,
   },
   {
@@ -60,7 +89,7 @@ const MODES: ModeDef[] = [
     title: '複数の案を見比べる',
     desc: '2〜4枚のサムネを並べて A/B/C 比較。CTRが伸びそうな案と理由を提示します。',
     meta: '入力: 画像 ×2〜4',
-    time: '~ 50秒',
+    time: '50秒',
     icon: ICON.compare,
   },
 ]
@@ -69,14 +98,20 @@ export default function ModeSelector({ version, onSelect }: Props) {
   return (
     <div className="mode-screen">
       <div className="mode-screen-inner">
-        <div className="mode-step">[ STEP 1 / 3 ] · MODE SELECT</div>
+        <div className="title-bar" aria-hidden>
+          <span className="title-bar-stripes" />
+          <span className="title-bar-label">MODE SELECT</span>
+          <span className="title-bar-stripes" />
+          <span className="title-bar-meta">v3.2</span>
+        </div>
+        <div className="mode-step">[ STEP 1 / 3 ]</div>
         <h1 className="mode-h1">どう診断しますか？</h1>
         <div className="ascii-rule" aria-hidden>
           ////////////////////////////////////////////////////////////////
         </div>
         <p className="mode-sub">
           企画段階か、検討中の案があるか、複数案で迷っているか。状況に合わせて選んでください。
-          <span className="chip" style={{ marginLeft: 8 }}>{version === 'big' ? '詳細' : 'かんたん'}</span>
+          <span className="chip" style={{ marginLeft: 8 }}>[ {version === 'big' ? '詳細' : 'かんたん'} ]</span>
         </p>
 
         <div className="mode-cards">
@@ -106,7 +141,7 @@ export default function ModeSelector({ version, onSelect }: Props) {
             </span>
           </div>
           <span className="dim mono" style={{ fontSize: 11 }}>
-            カードを選ぶとフォームに進みます
+            &gt;&gt; カードを選ぶとフォームに進みます
           </span>
         </div>
       </div>

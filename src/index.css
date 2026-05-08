@@ -85,7 +85,9 @@ body {
   font-size: 14px;
   line-height: 1.55;
   color: var(--ink);
-  background: var(--bg);
+  background:
+    radial-gradient(circle, rgba(17,17,16,0.07) 1px, transparent 1.2px) 0 0 / 14px 14px,
+    var(--bg);
   font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -1439,4 +1441,243 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
   .btn-accent { box-shadow: 2px 2px 0 var(--ink); }
   .ascii-rule { font-size: 10px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   RETRO CHROME OVERLAY — round 2: stronger pixel/brutalist vibes
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Pane backgrounds: subtle dot grid ── */
+.pane-l, .pane-r, .pane-toc {
+  background:
+    radial-gradient(circle, rgba(17,17,16,0.05) 1px, transparent 1.2px) 0 0 / 14px 14px,
+    var(--bg);
+}
+.app-header { background: var(--bg); }
+
+/* ── DATA/TIME-style title bar above the mode-screen ── */
+.title-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 22px;
+  border: 1.5px solid var(--ink);
+  background: var(--surface);
+  padding: 0 10px;
+  margin-bottom: 18px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.title-bar-stripes {
+  flex: 1;
+  height: 8px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--ink) 0 5px,
+    transparent 5px 9px
+  );
+  opacity: 0.85;
+}
+.title-bar-label {
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.title-bar-meta {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* Mode screen inner: align top of title bar */
+.mode-screen-inner { padding-top: 36px; }
+
+/* ── Mode card: bigger pixel num badge, fix foot wrap ── */
+.mode-card-num {
+  font-size: 18px;
+  padding: 2px 10px;
+  border-width: 1.5px;
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  letter-spacing: 0.06em;
+}
+
+.mode-card-icon {
+  width: 36px;
+  height: 36px;
+  border-width: 1.5px;
+  color: var(--ink);
+}
+
+.mode-card-foot {
+  white-space: nowrap;
+  overflow: hidden;
+}
+.mode-card-foot > span:first-child {
+  flex: 1;
+  min-width: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.mode-card-foot > span:last-child {
+  flex-shrink: 0;
+  margin-left: 12px;
+  color: var(--ink);
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  padding: 0 6px;
+  border-radius: 2px;
+}
+
+/* ── Pixel chip ── */
+.chip {
+  border-radius: 2px;
+  border: 1.5px solid var(--ink);
+  background: var(--surface);
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  height: 22px;
+  padding: 0 8px;
+  color: var(--ink);
+}
+
+/* ── Pixel kbd (chunky 3D look) ── */
+.kbd {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border: 1.5px solid var(--ink);
+  border-bottom-width: 3px;
+  border-radius: 3px;
+  background: var(--surface);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* ── Mode-h1: add corner brackets ── */
+.mode-h1 {
+  position: relative;
+  display: inline-block;
+  padding: 0 4px;
+}
+.mode-h1::before,
+.mode-h1::after {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  color: var(--accent);
+  font-size: 0.7em;
+  position: absolute;
+  top: -2px;
+}
+.mode-h1::before { content: '┌'; left: -14px; }
+.mode-h1::after  { content: '┘'; right: -14px; bottom: -2px; top: auto; }
+
+/* ── Form step retro framed ── */
+.form-step-tag {
+  display: inline-block;
+  border: 1.5px solid var(--ink);
+  padding: 1px 8px;
+  background: var(--surface);
+  margin-bottom: 10px;
+  letter-spacing: 0.06em;
+}
+
+/* ── Stage strip: hatched stripe band ── */
+.stage-strip {
+  background:
+    repeating-linear-gradient(
+      135deg,
+      transparent 0 6px,
+      rgba(17,17,16,0.04) 6px 7px
+    ),
+    var(--bg);
+}
+
+/* ── Priority strip: keep dark, add corner bracket effect ── */
+.priority-strip {
+  border: 1.5px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: 4px 4px 0 var(--ink);
+  position: relative;
+}
+
+/* ── Section card retro: square corners + shadow ── */
+.section-card {
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+.section-card--priority {
+  border: 1.5px solid var(--accent);
+  border-left-width: 4px;
+  background: var(--accent-soft);
+}
+
+/* ── Setup card retro framing ── */
+.setup-card {
+  border: 1.5px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+/* ── Header logo text: pixel for "Artoone" word ── */
+.logo-text {
+  font-family: var(--font-pixel);
+  font-size: 18px;
+  letter-spacing: 0.04em;
+}
+.logo-subtitle {
+  font-size: 12px;
+}
+
+/* ── Tab pill: square corners ── */
+.tab-pill {
+  border-radius: 3px;
+  border: 1.5px solid var(--ink);
+  background: var(--surface-2);
+  padding: 2px;
+}
+.tab-pill button {
+  border-radius: 2px;
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  height: 24px;
+  padding: 0 10px;
+}
+.tab-pill button.is-on {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* ── Empty result icon + sparkle ── */
+.empty-result-icon {
+  width: 64px;
+  height: 64px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+/* ── Keep markdown content body in modern sans-serif (already is) ── */
+
+/* Mobile scaling for new retro elements */
+@media (max-width: 600px) {
+  .title-bar { box-shadow: 2px 2px 0 var(--ink); }
+  .mode-card-num { box-shadow: 1px 1px 0 var(--ink); }
+  .mode-card-foot { font-size: 12px; }
+  .priority-strip { box-shadow: 3px 3px 0 var(--ink); }
+  .setup-card { box-shadow: 4px 4px 0 var(--ink); }
+  .mode-h1::before { left: -10px; }
+  .mode-h1::after { right: -10px; }
+}
+
 
