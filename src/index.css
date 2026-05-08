@@ -978,8 +978,8 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
 
 /* Multiple images: 2-col 16:9 grid */
 .upload-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 }
 .upload-tile {
