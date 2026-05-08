@@ -73,7 +73,7 @@ export default function Header({
           </div>
 
           {!bakedKey && (
-            <>
+            <div className="header-advanced">
               <div className="version-toggle">
                 {PROVIDER_ORDER.map((p) => (
                   <button
@@ -93,7 +93,7 @@ export default function Header({
               </select>
 
               <button className="btn-text-small" onClick={onApiKeyReset}>APIキー</button>
-            </>
+            </div>
           )}
         </div>
       </div>

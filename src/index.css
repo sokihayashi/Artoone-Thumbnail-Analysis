@@ -747,13 +747,78 @@ details.section-card--bonus .section-card__body { margin-top: 14px; }
   text-align: center;
 }
 
-/* ─── Mobile ─── */
+/* ─── Responsive ─── */
+
 @media (max-width: 600px) {
-  .header-controls { gap: 6px; }
-  .version-toggle .toggle-btn { padding: 3px 7px; font-size: 11px; }
-  .model-select { font-size: 11px; padding: 3px 6px; }
-  .diagnosis-form { padding: 20px 16px; }
-  .result-body { padding: 16px; }
-  .setup-card { padding: 28px 20px; }
+  /* Header: hide provider/model/api key controls; keep logo + version toggle */
+  .header-advanced { display: none; }
+  .header-inner { padding: 0 12px; }
+  .logo-text { font-size: 13px; }
+
+  /* App main padding */
+  .app-main { padding: 16px 12px 48px; }
+
+  /* Mode selector */
+  .mode-header { margin-bottom: 20px; }
   .mode-header h2 { font-size: 18px; }
+  .mode-card { padding: 14px 16px; gap: 12px; }
+  .mode-card-num { width: 40px; height: 40px; font-size: 13px; border-radius: 8px; }
+
+  /* Forms */
+  .diagnosis-form { padding: 20px 16px; gap: 16px; }
+  .form-header h2 { font-size: 16px; }
+
+  /* iOS: prevent auto-zoom on input focus (font-size must be ≥16px) */
+  input[type="text"],
+  input[type="password"],
+  textarea,
+  .select-input { font-size: 16px; }
+
+  /* Buttons — minimum 44px touch target on mobile */
+  .btn-primary  { min-height: 44px; font-size: 15px; }
+  .btn-secondary { min-height: 44px; padding: 10px 16px; }
+  .btn-ghost    { min-height: 44px; padding: 10px 16px; }
+  .btn-back     { min-height: 44px; display: flex; align-items: center; }
+
+  /* Result toolbar: stack actions on top, back link below */
+  .result-toolbar {
+    flex-direction: column;
+    padding: 12px 16px;
+    gap: 8px;
+    align-items: stretch;
+  }
+  .result-toolbar .btn-ghost {
+    order: 2;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-faint);
+    border: none;
+    padding: 8px;
+    min-height: 36px;
+  }
+  .result-toolbar-right {
+    order: 1;
+    display: flex;
+    gap: 8px;
+  }
+  .result-toolbar-right .btn-secondary { flex: 1; }
+  .result-toolbar-right .btn-primary   { flex: 2; }
+
+  /* Result body */
+  .result-body { padding: 14px; }
+
+  /* Section cards */
+  .section-card { padding: 14px 16px; }
+  .section-cards { gap: 10px; }
+
+  /* Setup card */
+  .setup-card { padding: 28px 20px; }
+
+  /* Image previews — slightly smaller on mobile */
+  .image-preview-item { width: 80px; }
+  .image-preview-item img { width: 80px; height: 54px; }
+
+  /* Error/retry banners */
+  .error-banner { font-size: 13px; }
+  .retry-banner { font-size: 13px; }
 }
