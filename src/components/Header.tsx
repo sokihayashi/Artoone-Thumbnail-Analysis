@@ -57,7 +57,7 @@ export default function Header({
             </button>
           )}
           <button className="header-logo" onClick={onReset}>
-            <span className="logo-icon">🎨</span>
+            <div className="logo-mark">A</div>
             <span className="logo-text">Artooneサムネ診断</span>
           </button>
         </div>

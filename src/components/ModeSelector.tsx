@@ -5,22 +5,25 @@ interface Props {
   onSelect: (mode: Mode) => void
 }
 
-const MODES: { id: Mode; title: string; subtitle: string; desc: string }[] = [
+const MODES: { id: Mode; num: string; title: string; subtitle: string; desc: string }[] = [
   {
     id: 1,
-    title: '1. サムネを1から考える',
+    num: '01',
+    title: 'サムネを1から考える',
     subtitle: 'まだ案がないとき',
     desc: '企画内容や使いたい素材から、どういうサムネにするかを考えるモードです。',
   },
   {
     id: 2,
-    title: '2. 今ある1案をレビューする',
+    num: '02',
+    title: '今ある1案をレビューする',
     subtitle: '制作中のサムネを改善する',
     desc: '複数枚アップロードしてもOKです。その場合は、それぞれを個別にレビューします。',
   },
   {
     id: 3,
-    title: '3. 複数の案を見比べる',
+    num: '03',
+    title: '複数の案を見比べる',
     subtitle: '完成案・提出案を比較する',
     desc: '完成案や提出案を見比べて、どれを採用するか決めるモードです。',
   },
@@ -31,15 +34,15 @@ export default function ModeSelector({ version, onSelect }: Props) {
     <div className="mode-selector">
       <div className="mode-header">
         <h2>
-          Artooneサムネ診断{' '}
+          やりたいことを選んでください{' '}
           <span className="version-badge">{version === 'big' ? '詳細' : 'かんたん'}</span>
         </h2>
-        <p>やりたいことを選んでください。</p>
+        <p>動画の段階に合わせて3つのモードから選べます。</p>
       </div>
       <div className="mode-cards">
         {MODES.map((m) => (
           <button key={m.id} className="mode-card" onClick={() => onSelect(m.id)}>
-            <div className="mode-card-num">{m.id}</div>
+            <div className="mode-card-num">{m.num}</div>
             <div className="mode-card-body">
               <div className="mode-card-title">{m.title}</div>
               <div className="mode-card-sub">{m.subtitle}</div>

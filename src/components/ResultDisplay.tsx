@@ -50,14 +50,57 @@ function accentFor(heading: string): Accent {
   return 'neutral'
 }
 
-function SectionCard({ heading, body, accent, showCursor }: { heading: string; body: string; accent: Accent; showCursor: boolean }) {
+const CHIP_ICON: Record<Accent, string> = {
+  positive:    '✓',
+  negative:    '!',
+  priority:    '★',
+  instruction: '→',
+  bonus:       '◇',
+  neutral:     '',
+}
+
+function SectionCard({ heading, body, accent, showCursor, streaming }: {
+  heading: string
+  body: string
+  accent: Accent
+  showCursor: boolean
+  streaming: boolean
+}) {
+  const icon = CHIP_ICON[accent]
+  const isBonus = accent === 'bonus'
+  const bodyEl = (
+    <div className="section-card__body markdown-content">
+      <ReactMarkdown>{body}</ReactMarkdown>
+      {showCursor && <span className="cursor-blink">▌</span>}
+    </div>
+  )
+  const chipEl = heading && (
+    accent === 'neutral'
+      ? <h3 className="section-card__heading">{heading}</h3>
+      : (
+        <div className="section-chip">
+          {icon && <span className="section-chip__icon">{icon}</span>}
+          {heading}
+        </div>
+      )
+  )
+
+  if (isBonus) {
+    return (
+      <details className={`section-card section-card--${accent}`} open={streaming}>
+        <summary>
+          {chipEl}
+          <span className="bonus-toggle" />
+        </summary>
+        {bodyEl}
+      </details>
+    )
+  }
+
   return (
     <div className={`section-card section-card--${accent}`}>
-      {heading && <h3 className="section-card__heading">{heading}</h3>}
-      <div className="section-card__body markdown-content">
-        <ReactMarkdown>{body}</ReactMarkdown>
-        {showCursor && <span className="cursor-blink">▌</span>}
-      </div>
+      {chipEl}
+      {bodyEl}
     </div>
   )
 }
@@ -83,7 +126,7 @@ export default function ResultDisplay({ result, streaming, onBack, onNewDiagnosi
   return (
     <div className="result-container">
       <div className="result-toolbar">
-        <button className="btn-back" onClick={onBack}>
+        <button className="btn-ghost" onClick={onBack}>
           ← 修正して再診断
         </button>
         <div className="result-toolbar-right">
@@ -115,6 +158,7 @@ export default function ResultDisplay({ result, streaming, onBack, onNewDiagnosi
                 body={s.body}
                 accent={accentFor(s.heading)}
                 showCursor={streaming && i === sections.length - 1}
+                streaming={streaming}
               />
             ))}
           </div>
