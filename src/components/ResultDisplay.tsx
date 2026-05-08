@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 
 interface Props {
@@ -62,8 +63,19 @@ function SectionCard({ heading, body, accent, showCursor }: { heading: string; b
 }
 
 export default function ResultDisplay({ result, streaming, onBack, onNewDiagnosis }: Props) {
+  const [copyLabel, setCopyLabel] = useState('コピー')
+
   const handleCopy = () => {
-    navigator.clipboard.writeText(result).catch(() => {})
+    navigator.clipboard.writeText(result).then(
+      () => {
+        setCopyLabel('コピー済み！')
+        setTimeout(() => setCopyLabel('コピー'), 1500)
+      },
+      () => {
+        setCopyLabel('コピー失敗')
+        setTimeout(() => setCopyLabel('コピー'), 1500)
+      },
+    )
   }
 
   const sections = parseSections(result)
@@ -77,7 +89,7 @@ export default function ResultDisplay({ result, streaming, onBack, onNewDiagnosi
         <div className="result-toolbar-right">
           {!streaming && result && (
             <button className="btn-secondary" onClick={handleCopy}>
-              コピー
+              {copyLabel}
             </button>
           )}
           <button className="btn-primary" onClick={onNewDiagnosis}>

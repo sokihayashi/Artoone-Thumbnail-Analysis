@@ -17,6 +17,7 @@ export default function ImageUploader({ images, onChange, label, multiple = true
     if (!files) return
     const newImages = await Promise.all(Array.from(files).map(fileToUploadedImage))
     onChange(multiple ? [...images, ...newImages] : newImages)
+    if (inputRef.current) inputRef.current.value = ''
   }
 
   const handleDrop = (e: React.DragEvent) => {

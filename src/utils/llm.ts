@@ -15,9 +15,11 @@ async function* streamAnthropic(
   systemPrompt: string,
   content: AnthropicContent[],
   model: string,
+  signal?: AbortSignal,
 ): AsyncGenerator<string> {
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
+    signal,
     headers: {
       'Content-Type': 'application/json',
       'x-api-key': apiKey,
@@ -35,7 +37,7 @@ async function* streamAnthropic(
 
   if (!res.ok) throw await responseError(res)
 
-  yield* readSSE(res, (parsed) => {
+  yield* readSSE(res, signal, (parsed) => {
     const p = parsed as { type: string; delta?: { type: string; text?: string } }
     if (p.type === 'content_block_delta' && p.delta?.type === 'text_delta') return p.delta.text ?? ''
     return null
@@ -49,6 +51,7 @@ async function* streamOpenRouter(
   systemPrompt: string,
   content: AnthropicContent[],
   model: string,
+  signal?: AbortSignal,
 ): AsyncGenerator<string> {
   const parts: OpenRouterPart[] = content.map((c) =>
     c.type === 'text'
@@ -58,6 +61,7 @@ async function* streamOpenRouter(
 
   const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',
+    signal,
     headers: {
       'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
@@ -74,7 +78,7 @@ async function* streamOpenRouter(
 
   if (!res.ok) throw await responseError(res)
 
-  yield* readSSE(res, (parsed) => {
+  yield* readSSE(res, signal, (parsed) => {
     const p = parsed as { choices?: { delta?: { content?: string } }[] }
     return p.choices?.[0]?.delta?.content ?? null
   })
@@ -97,29 +101,38 @@ function extractStreamError(parsed: unknown): string | null {
 
 async function* readSSE(
   res: Response,
+  signal: AbortSignal | undefined,
   extract: (parsed: unknown) => string | null,
 ): AsyncGenerator<string> {
-  const reader = res.body!.getReader()
+  if (!res.body) throw new Error('Response body is null')
+  const reader = res.body.getReader()
   const decoder = new TextDecoder()
   let buf = ''
 
-  while (true) {
-    const { done, value } = await reader.read()
-    if (done) break
-    buf += decoder.decode(value, { stream: true })
-    const lines = buf.split('\n')
-    buf = lines.pop() ?? ''
-    for (const line of lines) {
-      if (!line.startsWith('data: ')) continue
-      const data = line.slice(6)
-      if (data === '[DONE]') continue
-      let parsed: unknown
-      try { parsed = JSON.parse(data) } catch { continue }
-      const errMsg = extractStreamError(parsed)
-      if (errMsg) throw new Error(errMsg)
-      const text = extract(parsed)
-      if (text) yield text
+  try {
+    while (true) {
+      if (signal?.aborted) break
+      const { done, value } = await reader.read()
+      if (done) break
+      buf += decoder.decode(value, { stream: true })
+      const lines = buf.split('\n')
+      buf = lines.pop() ?? ''
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue
+        const data = line.slice(6)
+        if (data === '[DONE]') continue
+        let parsed: unknown
+        try { parsed = JSON.parse(data) } catch { continue }
+        const errMsg = extractStreamError(parsed)
+        if (errMsg) throw new Error(errMsg)
+        const text = extract(parsed)
+        if (text) yield text
+      }
     }
+    // Flush any remaining bytes held by the streaming TextDecoder
+    buf += decoder.decode()
+  } finally {
+    reader.cancel().catch(() => {})
   }
 }
 
@@ -131,9 +144,10 @@ export async function* streamChat(
   userContent: AnthropicContent[],
   model: string,
   provider: Provider,
+  signal?: AbortSignal,
 ): AsyncGenerator<string> {
-  if (provider === 'openrouter') yield* streamOpenRouter(apiKey, systemPrompt, userContent, model)
-  else yield* streamAnthropic(apiKey, systemPrompt, userContent, model)
+  if (provider === 'openrouter') yield* streamOpenRouter(apiKey, systemPrompt, userContent, model, signal)
+  else yield* streamAnthropic(apiKey, systemPrompt, userContent, model, signal)
 }
 
 // ─── User message builder ──────────────────────────────────────────────────

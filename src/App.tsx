@@ -66,9 +66,13 @@ export default function App() {
   const [retryCountdown, setRetryCountdown] = useState<number | null>(null)
 
   const retryTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const abortControllerRef = useRef<AbortController | null>(null)
 
   useEffect(() => {
-    return () => { if (retryTimerRef.current) clearInterval(retryTimerRef.current) }
+    return () => {
+      if (retryTimerRef.current) clearInterval(retryTimerRef.current)
+      abortControllerRef.current?.abort()
+    }
   }, [])
 
   const persistSettings = useCallback(
@@ -89,7 +93,7 @@ export default function App() {
   const handleVersion = (v: ToolVersion) => { setVersion(v); persistSettings({ version: v }) }
   const handleProvider = (p: Provider) => { setProvider(p); persistSettings({ provider: p }) }
   const handleModel = (m: string) => { setModel(m); persistSettings({ model: m }) }
-  const handleApiKeyReset = () => { setApiKey(''); saveSettings({ provider, version, model }) }
+  const handleApiKeyReset = () => { setApiKey(''); saveSettings({ apiKey: '', provider, version, model }) }
 
   const handleModeSelect = (mode: Mode) => {
     setSelectedMode(mode)
@@ -110,16 +114,23 @@ export default function App() {
     setStreaming(true)
     if (retryCount === 0) setScreen('result')
 
+    const ac = new AbortController()
+    abortControllerRef.current = ac
+
     try {
       const systemPrompt = buildSystemPrompt()
       const userContent = buildUserMessage(mode, data)
       let accumulated = ''
-      for await (const chunk of streamChat(apiKey, systemPrompt, userContent, model, provider)) {
+      for await (const chunk of streamChat(apiKey, systemPrompt, userContent, model, provider, ac.signal)) {
         accumulated += chunk
         setResult(accumulated)
       }
       setStreaming(false)
     } catch (e) {
+      if (e instanceof Error && e.name === 'AbortError') {
+        setStreaming(false)
+        return
+      }
       setStreaming(false)
       const msg = e instanceof Error ? e.message : String(e)
       const waitSecs = retryCount < 3 ? parseRetryAfter(msg) : null
@@ -150,6 +161,7 @@ export default function App() {
 
   const cancelRetry = () => {
     if (retryTimerRef.current) { clearInterval(retryTimerRef.current); retryTimerRef.current = null }
+    abortControllerRef.current?.abort()
     setRetryCountdown(null)
   }
 
