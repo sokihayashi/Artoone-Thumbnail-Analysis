@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import type { UploadedImage } from '../types'
 import { fileToUploadedImage } from '../utils/imageUtils'
 
@@ -13,6 +13,7 @@ interface Props {
 
 export default function ImageUploader({ images, onChange, label, hint, multiple = true, required = false }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
+  const [isDragging, setIsDragging] = useState(false)
 
   const handleFiles = async (files: FileList | null) => {
     if (!files) return
@@ -21,8 +22,15 @@ export default function ImageUploader({ images, onChange, label, hint, multiple 
     if (inputRef.current) inputRef.current.value = ''
   }
 
-  const handleDrop = (e: React.DragEvent) => {
+  const onDragOver = (e: React.DragEvent) => e.preventDefault()
+  const onDragEnter = (e: React.DragEvent) => { e.preventDefault(); setIsDragging(true) }
+  const onDragLeave = (e: React.DragEvent) => {
+    if ((e.currentTarget as HTMLElement).contains(e.relatedTarget as Node)) return
+    setIsDragging(false)
+  }
+  const onDrop = (e: React.DragEvent) => {
     e.preventDefault()
+    setIsDragging(false)
     handleFiles(e.dataTransfer.files)
   }
 
@@ -49,9 +57,11 @@ export default function ImageUploader({ images, onChange, label, hint, multiple 
       {/* Single image: show it filling the 16:9 zone */}
       {!multiple && images.length === 1 ? (
         <div
-          className="upload upload--filled"
-          onDrop={handleDrop}
-          onDragOver={(e) => e.preventDefault()}
+          className={`upload upload--filled${isDragging ? ' upload--drag' : ''}`}
+          onDrop={onDrop}
+          onDragOver={onDragOver}
+          onDragEnter={onDragEnter}
+          onDragLeave={onDragLeave}
           onClick={openPicker}
         >
           <img src={images[0].dataUrl} alt={images[0].name} className="upload-fill-img" />
@@ -61,19 +71,20 @@ export default function ImageUploader({ images, onChange, label, hint, multiple 
             onClick={(e) => { e.stopPropagation(); remove(0) }}
             title="削除"
           >×</button>
+          {isDragging && <div className="upload-drag-overlay" />}
         </div>
 
       ) : multiple && images.length > 0 ? (
-        /* Multiple images: 16:9 grid + small add button below */
-        <div>
-          <div className="upload-grid">
+        /* Multiple images: full-width stacked tiles + small add button below */
+        <div
+          onDrop={onDrop}
+          onDragOver={onDragOver}
+          onDragEnter={onDragEnter}
+          onDragLeave={onDragLeave}
+        >
+          <div className={`upload-grid${isDragging ? ' upload-grid--drag' : ''}`}>
             {images.map((img, i) => (
-              <div
-                key={i}
-                className="upload-tile"
-                onDrop={handleDrop}
-                onDragOver={(e) => e.preventDefault()}
-              >
+              <div key={i} className="upload-tile">
                 <img src={img.dataUrl} alt={img.name} />
                 <button
                   type="button"
@@ -96,12 +107,14 @@ export default function ImageUploader({ images, onChange, label, hint, multiple 
       ) : (
         /* Empty drop zone */
         <div
-          className="upload"
-          onDrop={handleDrop}
-          onDragOver={(e) => e.preventDefault()}
+          className={`upload${isDragging ? ' upload--drag' : ''}`}
+          onDrop={onDrop}
+          onDragOver={onDragOver}
+          onDragEnter={onDragEnter}
+          onDragLeave={onDragLeave}
           onClick={openPicker}
         >
-          <span>クリックまたはドラッグ&ドロップで画像を追加</span>
+          <span>{isDragging ? 'ここにドロップ' : 'クリックまたはドラッグ&ドロップで画像を追加'}</span>
         </div>
       )}
     </div>

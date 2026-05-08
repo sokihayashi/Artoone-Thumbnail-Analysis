@@ -289,7 +289,6 @@ export default function App() {
                   mode={selectedMode}
                   data={submittedData}
                   model={model}
-                  provider={provider}
                 />
               </div>
               <div className="pane-foot">

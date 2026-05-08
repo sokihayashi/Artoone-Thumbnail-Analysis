@@ -153,6 +153,11 @@ body {
 .row { display: flex; align-items: center; gap: 8px; }
 .col { display: flex; flex-direction: column; }
 .muted { color: var(--muted); }
+.submit-hint {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
 .dim { color: var(--dim); }
 .mono { font-family: var(--font-mono); }
 
@@ -943,6 +948,21 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
   font-size: 12.5px;
 }
 .upload:hover { background: var(--surface); color: var(--ink); box-shadow: 3px 3px 0 var(--ink); }
+.upload--drag {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 3px 3px 0 var(--accent);
+}
+/* Drag overlay for filled single-image zone */
+.upload-drag-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 82, 232, 0.18);
+  border: 2px solid var(--accent);
+  border-radius: 3px;
+  pointer-events: none;
+}
 
 /* Filled: image covers the zone */
 .upload--filled {
@@ -976,11 +996,16 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
 }
 .upload-fill-remove:hover { background: rgba(0, 0, 0, 0.9); }
 
-/* Multiple images: 2-col 16:9 grid */
+/* Multiple images: full-width stacked */
 .upload-grid {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+.upload-grid--drag {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 .upload-tile {
   position: relative;

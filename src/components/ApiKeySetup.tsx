@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import type { Provider } from '../types'
 
 interface Props {
@@ -39,6 +39,9 @@ export default function ApiKeySetup({ onSave }: Props) {
   const [provider, setProvider] = useState<Provider>('openrouter')
   const [key, setKey] = useState('')
   const [show, setShow] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => { inputRef.current?.focus() }, [provider])
 
   const info = INFO[provider]
 
@@ -82,6 +85,7 @@ export default function ApiKeySetup({ onSave }: Props) {
             <label className="field-label" htmlFor="apikey">{info.label}</label>
             <div className="row" style={{ gap: 6 }}>
               <input
+                ref={inputRef}
                 className="input"
                 id="apikey"
                 type={show ? 'text' : 'password'}

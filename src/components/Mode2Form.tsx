@@ -26,6 +26,11 @@ export default function Mode2Form({ onSubmit, onBack, loading, initialData }: Pr
     setD((prev) => ({ ...prev, [field]: e.target.value }))
 
   const canSubmit = !!(d.title.trim() && d.thumbnailImages.length > 0)
+  const touched = !!(d.title || d.thumbnailImages.length || d.members || d.overview)
+  const submitHint = touched && !canSubmit
+    ? !d.thumbnailImages.length ? '画像を追加してください'
+    : 'タイトルを入力してください'
+    : null
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -51,7 +56,7 @@ export default function Mode2Form({ onSubmit, onBack, loading, initialData }: Pr
 
           <div className="field">
             <div className="field-label">動画タイトル <span className="field-required">*</span></div>
-            <input className="input" type="text" value={d.title} onChange={set('title')} required />
+            <input className="input" type="text" value={d.title} onChange={set('title')} placeholder="例：【検証】ChatGPTで1週間生活したら..." required />
           </div>
 
           <div className="field">
@@ -104,10 +109,13 @@ export default function Mode2Form({ onSubmit, onBack, loading, initialData }: Pr
 
       <div className="pane-foot">
         <button type="button" className="btn btn-ghost btn-sm" onClick={onBack}>← モード選択</button>
-        <button type="submit" className="btn btn-accent" disabled={loading || !canSubmit}>
-          <span style={{ fontSize: 14 }}>✦</span>
-          {loading ? '診断中…' : '診断を開始'}
-        </button>
+        <div className="col" style={{ alignItems: 'flex-end', gap: 4 }}>
+          {submitHint && <span className="submit-hint">{submitHint}</span>}
+          <button type="submit" className="btn btn-accent" disabled={loading || !canSubmit}>
+            <span style={{ fontSize: 14 }}>✦</span>
+            {loading ? '診断中…' : '診断を開始'}
+          </button>
+        </div>
       </div>
     </form>
   )

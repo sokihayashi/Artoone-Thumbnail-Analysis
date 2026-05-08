@@ -35,7 +35,13 @@ export default function Mode3Form({ onSubmit, onBack, loading, initialData }: Pr
     onSubmit(d)
   }
 
-  const needsMore = d.thumbnailImages.length > 0 && d.thumbnailImages.length < 2
+  const touched = !!(d.title || d.purpose || d.thumbnailImages.length)
+  const submitHint = touched && !canSubmit
+    ? d.thumbnailImages.length === 0 ? '比較する画像を2枚以上追加してください'
+    : d.thumbnailImages.length < 2 ? `あと${2 - d.thumbnailImages.length}枚追加してください`
+    : !d.title.trim() ? 'タイトルを入力してください'
+    : '比較の目的を入力してください'
+    : null
 
   return (
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
@@ -53,15 +59,10 @@ export default function Mode3Form({ onSubmit, onBack, loading, initialData }: Pr
             onChange={(imgs) => setD((prev) => ({ ...prev, thumbnailImages: imgs }))}
             required
           />
-          {needsMore && (
-            <div className="dim mono" style={{ fontSize: 11.5, marginTop: -8 }}>
-              あと{2 - d.thumbnailImages.length}枚追加してください
-            </div>
-          )}
 
           <div className="field">
             <div className="field-label">動画タイトル <span className="field-required">*</span></div>
-            <input className="input" type="text" value={d.title} onChange={set('title')} required />
+            <input className="input" type="text" value={d.title} onChange={set('title')} placeholder="例：【検証】ChatGPTで1週間生活したら..." required />
           </div>
 
           <div className="field">
@@ -124,10 +125,13 @@ export default function Mode3Form({ onSubmit, onBack, loading, initialData }: Pr
 
       <div className="pane-foot">
         <button type="button" className="btn btn-ghost btn-sm" onClick={onBack}>← モード選択</button>
-        <button type="submit" className="btn btn-accent" disabled={loading || !canSubmit}>
-          <span style={{ fontSize: 14 }}>✦</span>
-          {loading ? '診断中…' : '診断を開始'}
-        </button>
+        <div className="col" style={{ alignItems: 'flex-end', gap: 4 }}>
+          {submitHint && <span className="submit-hint">{submitHint}</span>}
+          <button type="submit" className="btn btn-accent" disabled={loading || !canSubmit}>
+            <span style={{ fontSize: 14 }}>✦</span>
+            {loading ? '診断中…' : '診断を開始'}
+          </button>
+        </div>
       </div>
     </form>
   )
