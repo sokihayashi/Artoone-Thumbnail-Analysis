@@ -947,12 +947,12 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
   transition: all .15s;
   font-size: 12.5px;
 }
-.upload:hover { background: var(--surface); color: var(--ink); box-shadow: 3px 3px 0 var(--ink); }
+.upload:hover { background: var(--surface); color: var(--ink); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 .upload--drag {
   background: var(--accent-soft);
   border-color: var(--accent);
   color: var(--accent);
-  box-shadow: 3px 3px 0 var(--accent);
+  box-shadow: 0 4px 12px rgba(26,82,232,0.15);
 }
 /* Drag overlay for filled single-image zone */
 .upload-drag-overlay {
@@ -1256,149 +1256,304 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   RETRO CHROME OVERLAY — pixel/brutalist accents on UI shell
+   CLEAN DESIGN — iOS-inspired with pops of color
    ═══════════════════════════════════════════════════════════════ */
 
-:root {
-  --font-pixel: "VT323", "JetBrains Mono", monospace;
-  --ink-stroke: 1.5px solid var(--ink);
-}
+:root { --font-pixel: "VT323", monospace; }
 
-/* Header header-tag becomes a stamp */
-.header-tag {
-  font-family: var(--font-pixel);
-  font-size: 14px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  border: 1.5px solid var(--ink);
-  border-radius: 0;
-  padding: 1px 7px;
-  color: var(--ink);
-  background: var(--surface);
-}
-
-/* App header bottom rule — switch to dotted/solid hard line */
+/* ── Header ── */
 .app-header {
-  border-bottom: 1.5px solid var(--ink);
-  background: var(--bg);
-  backdrop-filter: none;
+  border-bottom: 1px solid var(--border);
+  background: rgba(247, 244, 237, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
-
-/* Pixel-block logo mark */
+.header-tag {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface-2);
+  border: none;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
 .logo-mark {
-  border-radius: 3px;
-  font-family: var(--font-pixel);
-  font-size: 18px;
-  letter-spacing: 0;
-  border: 1.5px solid var(--ink);
+  border-radius: 8px;
   background: var(--accent);
   color: #fff;
-  text-shadow: 1px 1px 0 rgba(0,0,0,0.35);
-}
-
-/* ── Mode select retro ── */
-.mode-step {
-  font-family: var(--font-pixel);
-  font-size: 16px;
-  color: var(--ink);
-  letter-spacing: 0.06em;
-}
-
-.mode-h1 {
-  font-family: var(--font);
+  border: none;
+  box-shadow: 0 2px 6px rgba(26, 82, 232, 0.28);
+  font-size: 15px;
   font-weight: 700;
+  font-family: inherit;
+}
+.logo-text {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.logo-subtitle { font-size: 12px; color: var(--muted); letter-spacing: normal; }
+
+/* ── Mode select ── */
+.mode-step {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--dim);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-/* Brutalist mode cards */
+/* Mode cards — clean elevation */
 .mode-card {
-  border: 1.5px solid var(--ink);
-  border-radius: 4px;
-  box-shadow: 4px 4px 0 var(--ink);
-  transition: transform .12s, box-shadow .12s;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  background: #fff;
+  transition: box-shadow .2s ease, transform .2s ease, border-color .15s;
 }
 .mode-card:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 var(--ink);
-  border-color: var(--ink);
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.11);
+  transform: translateY(-2px);
 }
 .mode-card:active {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--ink);
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
-.mode-card-num {
-  font-family: var(--font-pixel);
-  font-size: 16px;
-  letter-spacing: 0.04em;
-  color: var(--ink);
-  background: var(--accent-soft);
-  border: 1px solid var(--ink);
-  padding: 1px 6px;
-  border-radius: 3px;
-}
-
+/* Colored icon backgrounds per mode */
 .mode-card-icon {
-  border: 1.5px solid var(--ink);
-  border-radius: 4px;
-  background: var(--surface);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background: var(--surface-2);
+  color: var(--ink-2);
+}
+.mode-card[data-mode="1"] .mode-card-icon { background: #FFF3D0; color: #B87000; }
+.mode-card[data-mode="2"] .mode-card-icon { background: #E5EDFF; color: var(--accent); }
+.mode-card[data-mode="3"] .mode-card-icon { background: #E1F7EC; color: #1B8A52; }
+
+/* Mode number — small subtle ordinal */
+.mode-card-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
 }
 
+/* Mode card footer */
 .mode-card-foot {
-  font-family: var(--font-pixel);
-  font-size: 14px;
-  letter-spacing: 0.03em;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+  color: var(--dim);
+  border-top: 1px solid var(--border-faint);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.mode-card-foot > span:first-child {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mode-card-foot > span:last-child {
+  flex-shrink: 0;
+  margin-left: 10px;
+  background: var(--surface-2);
+  border: none;
+  border-radius: 999px;
+  padding: 1px 8px;
   color: var(--muted);
-  border-top: 1px dashed var(--border-strong);
-  padding-top: 10px;
 }
 
-/* ── Buttons brutalist ── */
+/* ── iOS segmented control ── */
+.tab-pill {
+  background: var(--surface-3);
+  border: none;
+  border-radius: 999px;
+  padding: 3px;
+}
+.tab-pill button {
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  height: 26px;
+  padding: 0 14px;
+  color: var(--muted);
+  background: transparent;
+}
+.tab-pill button.is-on {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.14);
+}
+.tab-pill button:not(.is-on):hover { color: var(--ink-2); }
+
+/* ── Submit button ── */
 .btn-accent {
-  border: 1.5px solid var(--ink);
-  box-shadow: 3px 3px 0 var(--ink);
-  border-radius: 5px;
+  border: none;
+  border-radius: 9px;
+  box-shadow: 0 2px 8px rgba(26, 82, 232, 0.30);
   font-weight: 600;
-  transition: transform .1s, box-shadow .1s;
+  transition: box-shadow .15s, transform .1s;
 }
 .btn-accent:hover:not(:disabled) {
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0 var(--ink);
+  box-shadow: 0 4px 14px rgba(26, 82, 232, 0.40);
+  transform: translateY(-1px);
 }
 .btn-accent:active:not(:disabled) {
-  transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 var(--ink);
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(26, 82, 232, 0.22);
+}
+.btn-primary { border: 1px solid var(--border); border-radius: 9px; }
+
+/* ── Form step tag ── */
+.form-step-tag {
+  display: inline-block;
+  border: none;
+  padding: 0;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 8px;
 }
 
-.btn-primary {
-  border: 1.5px solid var(--ink);
-  border-radius: 5px;
+/* ── Mode chip ── */
+.chip {
+  border-radius: 999px;
+  border: none;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  height: 20px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
 }
 
-/* ── Section card kind labels — bracket-stamped ── */
+/* ── Section kind label ── */
 .section-kind {
-  font-family: var(--font-pixel);
-  font-size: 14px;
-  letter-spacing: 0.04em;
-  font-weight: 400;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
 }
-.section-kind-glyph { font-size: 11px; }
+.section-kind-glyph { font-size: 9px; }
 
-/* ── Stage tracker pixel-block progress ── */
-.stage-strip { border-bottom: 1.5px solid var(--ink); }
+/* ── Section cards ── */
+.section-card {
+  border-radius: 10px;
+  border: 1px solid var(--border-faint);
+  box-shadow: none;
+}
+.section-card--priority {
+  border-left: 3px solid var(--accent);
+  border-top-color: var(--border-faint);
+  border-right-color: var(--border-faint);
+  border-bottom-color: var(--border-faint);
+  background: #f6f9ff;
+}
 
+/* ── Priority strip (dark card) ── */
+.priority-strip {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+}
+.priority-strip-head {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── Stage tracker ── */
+.stage-strip { border-bottom: 1px solid var(--border); }
 .stage-label {
-  font-family: var(--font-pixel);
-  font-size: 15px;
-  letter-spacing: 0.06em;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
   color: var(--accent);
 }
-
 .stage-elapsed,
 .stage-meta {
-  font-family: var(--font-pixel);
-  font-size: 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
   letter-spacing: 0.04em;
+  color: var(--muted);
 }
+.progress-blocks .block { border-radius: 2px; border: none; }
+
+/* ── Report meta ── */
+.report-stamp {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.07em;
+  color: var(--dim);
+  background: transparent;
+  border: none;
+  padding: 0;
+  text-transform: uppercase;
+}
+.recap-tag, .toc-tag, .form-step-tag, .report-meta {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.07em;
+}
+
+/* ── Setup card ── */
+.setup-card {
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.09);
+}
+
+/* ── Empty result ── */
+.empty-result-icon {
+  border: none;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: none;
+}
+.empty-result-title {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .mode-card { border-radius: 12px; }
+  .mode-card:hover { transform: none; box-shadow: 0 4px 14px rgba(0,0,0,0.09); }
+  .btn-accent { box-shadow: 0 2px 6px rgba(26, 82, 232, 0.28); }
+  .setup-card { border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+}
+
+
 
 .progress-blocks {
   display: flex;
@@ -1431,212 +1586,5 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
   20%, 40%      { background: var(--accent);    border-color: var(--accent); }
 }
 
-/* ── Report stamp ── */
-.report-stamp {
-  font-family: var(--font-pixel);
-  font-size: 14px;
-  letter-spacing: 0.06em;
-  color: var(--ink);
-  border: 1.5px solid var(--ink);
-  padding: 1px 8px;
-  background: var(--surface);
-  text-transform: uppercase;
-}
-
-/* Priority strip retro head */
-.priority-strip-head {
-  font-family: var(--font-pixel);
-  font-size: 14px;
-  letter-spacing: 0.06em;
-}
-
-/* ── Empty result pixel ── */
-.empty-result-icon {
-  border-radius: 4px;
-  border: 1.5px solid var(--ink);
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-.empty-result-title {
-  font-family: var(--font-pixel);
-  font-size: 16px;
-  letter-spacing: 0.04em;
-  color: var(--ink);
-}
-
-/* Recap tags retro */
-.recap-tag,
-.toc-tag,
-.form-step-tag,
-.report-meta {
-  font-family: var(--font-pixel);
-  font-size: 13.5px;
-  letter-spacing: 0.06em;
-}
-
-/* Mobile: lighten brutalist shadows so cards don't overflow */
-@media (max-width: 600px) {
-  .mode-card { box-shadow: 3px 3px 0 var(--ink); }
-  .mode-card:hover { box-shadow: 4px 4px 0 var(--ink); }
-  .btn-accent { box-shadow: 2px 2px 0 var(--ink); }
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   RETRO CHROME OVERLAY — round 2: stronger pixel/brutalist vibes
-   ═══════════════════════════════════════════════════════════════ */
-
-/* ── Mode card: bigger pixel num badge, fix foot wrap ── */
-.mode-card-num {
-  font-size: 18px;
-  padding: 2px 10px;
-  border-width: 1.5px;
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--ink);
-  box-shadow: 2px 2px 0 var(--ink);
-  letter-spacing: 0.06em;
-}
-
-.mode-card-icon {
-  width: 36px;
-  height: 36px;
-  border-width: 1.5px;
-  color: var(--ink);
-}
-
-.mode-card-foot {
-  white-space: nowrap;
-  overflow: hidden;
-}
-.mode-card-foot > span:first-child {
-  flex: 1;
-  min-width: 0;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.mode-card-foot > span:last-child {
-  flex-shrink: 0;
-  margin-left: 12px;
-  color: var(--ink);
-  background: var(--surface-2);
-  border: 1px solid var(--border-strong);
-  padding: 0 6px;
-  border-radius: 2px;
-}
-
-/* ── Pixel chip ── */
-.chip {
-  border-radius: 2px;
-  border: 1.5px solid var(--ink);
-  background: var(--surface);
-  font-family: var(--font-pixel);
-  font-size: 14px;
-  letter-spacing: 0.04em;
-  height: 22px;
-  padding: 0 8px;
-  color: var(--ink);
-}
-
-/* ── Pixel kbd (chunky 3D look) ── */
-.kbd {
-  font-family: var(--font-pixel);
-  font-size: 14px;
-  min-width: 22px;
-  height: 22px;
-  padding: 0 6px;
-  border: 1.5px solid var(--ink);
-  border-bottom-width: 3px;
-  border-radius: 3px;
-  background: var(--surface);
-  color: var(--ink);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-
-/* ── Form step retro framed ── */
-.form-step-tag {
-  display: inline-block;
-  border: 1.5px solid var(--ink);
-  padding: 1px 8px;
-  background: var(--surface);
-  margin-bottom: 10px;
-  letter-spacing: 0.06em;
-}
-
-/* ── Priority strip: solid border + offset shadow ── */
-.priority-strip {
-  border: 1.5px solid var(--ink);
-  border-radius: 4px;
-  box-shadow: 4px 4px 0 var(--ink);
-  position: relative;
-}
-
-/* ── Section card retro: square corners + shadow ── */
-.section-card {
-  border-radius: 4px;
-  border: 1px solid var(--border);
-}
-.section-card--priority {
-  border: 1.5px solid var(--accent);
-  border-left-width: 4px;
-  background: var(--accent-soft);
-}
-
-/* ── Setup card retro framing ── */
-.setup-card {
-  border: 1.5px solid var(--ink);
-  border-radius: 4px;
-  box-shadow: 6px 6px 0 var(--ink);
-}
-
-/* ── Header logo text: pixel for "Artoone" word ── */
-.logo-text {
-  font-family: var(--font-pixel);
-  font-size: 18px;
-  letter-spacing: 0.04em;
-}
-.logo-subtitle {
-  font-size: 12px;
-}
-
-/* ── Tab pill: square corners ── */
-.tab-pill {
-  border-radius: 3px;
-  border: 1.5px solid var(--ink);
-  background: var(--surface-2);
-  padding: 2px;
-}
-.tab-pill button {
-  border-radius: 2px;
-  font-family: var(--font-pixel);
-  font-size: 14px;
-  letter-spacing: 0.04em;
-  height: 24px;
-  padding: 0 10px;
-}
-.tab-pill button.is-on {
-  background: var(--ink);
-  color: var(--bg);
-}
-
-/* ── Empty result icon + sparkle ── */
-.empty-result-icon {
-  width: 64px;
-  height: 64px;
-  box-shadow: 3px 3px 0 var(--ink);
-}
-
-/* ── Keep markdown content body in modern sans-serif (already is) ── */
-
-/* Mobile scaling for new retro elements */
-@media (max-width: 600px) {
-  .mode-card-num { box-shadow: 1px 1px 0 var(--ink); }
-  .mode-card-foot { font-size: 12px; }
-  .priority-strip { box-shadow: 3px 3px 0 var(--ink); }
-  .setup-card { box-shadow: 4px 4px 0 var(--ink); }
-}
 
 
