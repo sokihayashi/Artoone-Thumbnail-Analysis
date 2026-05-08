@@ -107,10 +107,10 @@ export default function ModeSelector({ version, onSelect }: Props) {
 
         <div className="mode-cards">
           {MODES.map((m) => (
-            <button key={m.id} type="button" className="mode-card" onClick={() => onSelect(m.id)}>
+            <button key={m.id} type="button" className="mode-card" data-mode={m.id} onClick={() => onSelect(m.id)}>
               <div className="mode-card-top">
                 <span className="mode-card-icon">{m.icon}</span>
-                <span className="mode-card-num">[{m.num}]</span>
+                <span className="mode-card-num">{m.num}</span>
               </div>
               <div className="mode-card-title">{m.title}</div>
               <div className="mode-card-desc">{m.desc}</div>
