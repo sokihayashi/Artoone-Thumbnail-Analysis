@@ -5,7 +5,7 @@ AIがサムネ画像や企画内容を分析し、構造化されたフィード
 
 ## 使い方
 
-**https://sokihayashi.github.io/artoone-thumbnail-analysis/**
+**https://sokihayashi.github.io/Artoone-Thumbnail-Analysis/**
 
 1. モードを選ぶ
    - **01 サムネを1から考える** — タイトル・概要・素材から構図・要素をゼロ提案
