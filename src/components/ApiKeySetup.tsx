@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import type { Provider } from '../types'
+import AtLogo from '../assets/at_logo_black.svg?react'
 
 interface Props {
   onSave: (key: string, provider: Provider) => void
@@ -59,12 +60,7 @@ export default function ApiKeySetup({ onSave }: Props) {
   return (
     <div className="setup-overlay">
       <div className="setup-card">
-        <div className="row" style={{ gap: 10, marginBottom: 14 }}>
-          <div className="logo-mark" style={{ width: 28, height: 28, fontSize: 13 }}>A</div>
-          <div className="col">
-            <h1 style={{ margin: 0 }}>Artoone サムネ診断</h1>
-          </div>
-        </div>
+        <AtLogo className="setup-logo-svg" aria-label="アートゥーン！" />
         <p className="setup-subtitle">YouTubeチーム向け · サムネイル診断ツール</p>
 
         <div className="tab-pill" style={{ marginBottom: 18 }}>
