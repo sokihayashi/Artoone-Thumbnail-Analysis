@@ -28,7 +28,7 @@ async function* streamAnthropic(
       model,
       max_tokens: 4096,
       stream: true,
-      system: systemPrompt,
+      system: [{ type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } }],
       messages: [{ role: 'user', content }],
     }),
   })
@@ -66,7 +66,7 @@ async function* streamOpenRouter(
       model,
       stream: true,
       messages: [
-        { role: 'system', content: systemPrompt },
+        { role: 'system', content: [{ type: 'text', text: systemPrompt, cache_control: { type: 'ephemeral' } }] },
         { role: 'user', content: parts },
       ],
     }),

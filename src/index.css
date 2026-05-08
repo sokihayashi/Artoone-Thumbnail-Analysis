@@ -15,6 +15,12 @@
   --border-focus: #E8672A;
   --error: #DC2626;
   --success: #16A34A;
+  --accent-positive: #16A34A;
+  --accent-negative: #DC2626;
+  --accent-priority: var(--primary);
+  --accent-instruction: #2563EB;
+  --accent-bonus: #94A3B8;
+  --accent-neutral: var(--border);
   --radius-sm: 6px;
   --radius: 10px;
   --radius-lg: 14px;
@@ -571,6 +577,59 @@ textarea { resize: vertical; min-height: 72px; }
   font-size: 12px;
   font-family: 'Courier New', monospace;
 }
+
+/* ─── Section Cards ─── */
+.section-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.section-card {
+  --accent-color: var(--accent-neutral);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent-color);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+
+.section-card__heading {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent-color);
+  margin: 0 0 10px;
+  letter-spacing: 0.02em;
+}
+
+.section-card__body {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--text);
+}
+.section-card__body > :last-child { margin-bottom: 0; }
+.section-card__body p { margin: 0 0 8px; }
+.section-card__body ul, .section-card__body ol {
+  margin: 0 0 8px;
+  padding-left: 20px;
+}
+.section-card__body li { margin-bottom: 4px; }
+.section-card__body strong { font-weight: 700; color: var(--text); }
+.section-card__body code {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+}
+
+.section-card--positive    { --accent-color: var(--accent-positive); }
+.section-card--negative    { --accent-color: var(--accent-negative); }
+.section-card--priority    { --accent-color: var(--accent-priority); }
+.section-card--instruction { --accent-color: var(--accent-instruction); }
+.section-card--bonus       { --accent-color: var(--accent-bonus); }
+.section-card--neutral     { --accent-color: var(--accent-neutral); }
 
 /* ─── Error ─── */
 .error-banner {
