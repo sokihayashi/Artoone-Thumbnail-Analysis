@@ -15,10 +15,9 @@ interface Props {
 
 const MODELS: Record<Provider, { id: string; label: string }[]> = {
   openrouter: [
-    { id: 'google/gemini-2.5-flash', label: 'Gemini 2.5 Flash（推奨・安価）' },
-    { id: 'google/gemini-2.5-flash-lite', label: 'Gemini 2.5 Flash Lite（最安）' },
-    { id: 'anthropic/claude-haiku-4-5', label: 'Claude Haiku 4.5（高速・賢め）' },
+    { id: 'anthropic/claude-haiku-4-5', label: 'Claude Haiku 4.5（推奨）' },
     { id: 'anthropic/claude-sonnet-4-6', label: 'Claude Sonnet 4.6（最高品質）' },
+    { id: 'google/gemini-2.5-flash', label: 'Gemini 2.5 Flash（安価）' },
     { id: 'nvidia/nemotron-nano-12b-v2-vl:free', label: 'Nemotron Nano 12B VL（無料）' },
   ],
   anthropic: [
