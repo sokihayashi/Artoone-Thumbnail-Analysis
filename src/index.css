@@ -244,7 +244,7 @@ body {
   font-weight: 500;
   height: 34px;
   padding: 0 14px;
-  border-radius: 7px;
+  border-radius: 4px;
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--ink);
@@ -319,8 +319,8 @@ body {
   font-size: 13.5px;
   color: var(--ink);
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 7px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 4px;
   padding: 9px 11px;
   width: 100%;
   outline: none;
@@ -345,8 +345,8 @@ input[type="text"], input[type="password"], textarea {
   font-size: 13.5px;
   color: var(--ink);
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 7px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 4px;
   padding: 9px 11px;
   width: 100%;
   outline: none;
@@ -414,6 +414,7 @@ input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
 .mode-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  align-items: stretch;
   gap: 14px;
 }
 
@@ -927,8 +928,8 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
 
 /* ───────── Image upload ───────── */
 .upload {
-  border: 1.5px dashed var(--border-strong);
-  border-radius: var(--r-md);
+  border: 1.5px solid var(--ink);
+  border-radius: 4px;
   background: var(--surface-2);
   aspect-ratio: 16 / 9;
   display: grid;
@@ -939,7 +940,7 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
   transition: all .15s;
   font-size: 12.5px;
 }
-.upload:hover { border-color: var(--ink); background: var(--surface); color: var(--ink); }
+.upload:hover { background: var(--surface); color: var(--ink); box-shadow: 3px 3px 0 var(--ink); }
 
 .image-grid {
   display: flex;
