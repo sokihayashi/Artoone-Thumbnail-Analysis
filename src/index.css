@@ -1015,10 +1015,12 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
 }
 .upload-tile-remove:hover { background: rgba(0, 0, 0, 0.9); }
 
-/* Add tile in multi grid */
-.upload--add {
-  font-size: 13px;
+/* Small add button below multi-grid */
+.upload-add-btn {
+  margin-top: 8px;
   font-family: var(--font-mono);
+  font-size: 12px;
+  border: 1.5px solid var(--border-strong);
 }
 
 /* ───────── API key setup (overlay) ───────── */

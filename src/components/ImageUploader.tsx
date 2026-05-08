@@ -64,32 +64,33 @@ export default function ImageUploader({ images, onChange, label, hint, multiple 
         </div>
 
       ) : multiple && images.length > 0 ? (
-        /* Multiple images: 16:9 grid + add tile */
-        <div className="upload-grid">
-          {images.map((img, i) => (
-            <div
-              key={i}
-              className="upload-tile"
-              onDrop={handleDrop}
-              onDragOver={(e) => e.preventDefault()}
-            >
-              <img src={img.dataUrl} alt={img.name} />
-              <button
-                type="button"
-                className="upload-tile-remove"
-                onClick={() => remove(i)}
-                title="削除"
-              >×</button>
-            </div>
-          ))}
-          <div
-            className="upload upload--add"
-            onDrop={handleDrop}
-            onDragOver={(e) => e.preventDefault()}
+        /* Multiple images: 16:9 grid + small add button below */
+        <div>
+          <div className="upload-grid">
+            {images.map((img, i) => (
+              <div
+                key={i}
+                className="upload-tile"
+                onDrop={handleDrop}
+                onDragOver={(e) => e.preventDefault()}
+              >
+                <img src={img.dataUrl} alt={img.name} />
+                <button
+                  type="button"
+                  className="upload-tile-remove"
+                  onClick={() => remove(i)}
+                  title="削除"
+                >×</button>
+              </div>
+            ))}
+          </div>
+          <button
+            type="button"
+            className="btn btn-ghost btn-sm upload-add-btn"
             onClick={openPicker}
           >
-            <span>＋ 追加</span>
-          </div>
+            ＋ 追加
+          </button>
         </div>
 
       ) : (
