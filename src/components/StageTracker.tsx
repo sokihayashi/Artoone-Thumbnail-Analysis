@@ -17,17 +17,20 @@ export default function StageTracker({ streaming, elapsed, retryCountdown, onCan
     <div className="stage-strip">
       <div className="stage-strip-row">
         <span className="stage-dot" />
-        <span className="stage-label">{isRetrying ? 'リトライ待機中' : '診断中'}</span>
+        <span className="stage-label">[{isRetrying ? 'RETRYING' : 'ANALYZING'}]</span>
         <span className="stage-meta">
           {isRetrying ? `${retryCountdown}秒後に再試行` : 'AIがサムネを解析しています'}
         </span>
-        <span className="stage-elapsed">elapsed {formatElapsed(elapsed)}</span>
+        <span className="stage-elapsed">T+ {formatElapsed(elapsed)}</span>
         <button className="btn btn-ghost btn-sm" onClick={onCancel} disabled={!streaming && !isRetrying}>
           中断
         </button>
       </div>
-      <div className="progress-track">
-        <div className="progress-fill" />
+      <div className="progress-blocks" aria-hidden>
+        <span className="block" /><span className="block" /><span className="block" />
+        <span className="block" /><span className="block" /><span className="block" />
+        <span className="block" /><span className="block" /><span className="block" />
+        <span className="block" /><span className="block" /><span className="block" />
       </div>
     </div>
   )

@@ -69,8 +69,11 @@ export default function ModeSelector({ version, onSelect }: Props) {
   return (
     <div className="mode-screen">
       <div className="mode-screen-inner">
-        <div className="mode-step">STEP 1 / 3</div>
+        <div className="mode-step">[ STEP 1 / 3 ] · MODE SELECT</div>
         <h1 className="mode-h1">どう診断しますか？</h1>
+        <div className="ascii-rule" aria-hidden>
+          ////////////////////////////////////////////////////////////////
+        </div>
         <p className="mode-sub">
           企画段階か、検討中の案があるか、複数案で迷っているか。状況に合わせて選んでください。
           <span className="chip" style={{ marginLeft: 8 }}>{version === 'big' ? '詳細' : 'かんたん'}</span>
@@ -81,13 +84,13 @@ export default function ModeSelector({ version, onSelect }: Props) {
             <button key={m.id} type="button" className="mode-card" onClick={() => onSelect(m.id)}>
               <div className="mode-card-top">
                 <span className="mode-card-icon">{m.icon}</span>
-                <span className="mode-card-num">{m.num}</span>
+                <span className="mode-card-num">[{m.num}]</span>
               </div>
               <div className="mode-card-title">{m.title}</div>
               <div className="mode-card-desc">{m.desc}</div>
               <div className="mode-card-foot">
                 <span>{m.meta}</span>
-                <span>{m.time}</span>
+                <span>≈ {m.time}</span>
               </div>
             </button>
           ))}

@@ -14,12 +14,12 @@ type Accent = 'positive' | 'negative' | 'priority' | 'instruction' | 'bonus' | '
 type KindConfig = { label: string; glyph: string; sev: number; color: string }
 
 const KIND_CONFIG: Record<Accent, KindConfig> = {
-  priority:    { label: 'PRIORITY',     glyph: '●', sev: 3, color: 'var(--sev-crit)' },
-  negative:    { label: 'ISSUE',        glyph: '▲', sev: 2, color: 'var(--sev-warn)' },
-  positive:    { label: 'STRENGTH',     glyph: '◆', sev: 2, color: 'var(--sev-good)' },
-  instruction: { label: 'ACTION',       glyph: '▶', sev: 1, color: 'var(--sev-info)' },
-  bonus:       { label: 'NICE TO HAVE', glyph: '○', sev: 0, color: 'var(--sev-mute)' },
-  neutral:     { label: '',             glyph: '',  sev: 0, color: 'var(--muted)' },
+  priority:    { label: '[ PRIORITY ]',     glyph: '●', sev: 3, color: 'var(--sev-crit)' },
+  negative:    { label: '[ ISSUE ]',        glyph: '▲', sev: 2, color: 'var(--sev-warn)' },
+  positive:    { label: '[ STRENGTH ]',     glyph: '◆', sev: 2, color: 'var(--sev-good)' },
+  instruction: { label: '[ ACTION ]',       glyph: '▶', sev: 1, color: 'var(--sev-info)' },
+  bonus:       { label: '[ NICE TO HAVE ]', glyph: '○', sev: 0, color: 'var(--sev-mute)' },
+  neutral:     { label: '',                 glyph: '',  sev: 0, color: 'var(--muted)' },
 }
 
 function parseSections(md: string): Section[] {
@@ -181,7 +181,7 @@ export default function ResultDisplay({ result, streaming, model, onNewDiagnosis
   return (
     <>
       <div className="report-meta">
-        <span>REPORT · {todayStr()} · {shortModel(model)}</span>
+        <span className="report-stamp">[ REPORT // {todayStr()} // {shortModel(model)} ]</span>
         <span className="section-spacer" />
         {!streaming && result && (
           <button className="btn btn-ghost btn-sm" onClick={handleCopy}>{copyLabel}</button>
@@ -192,6 +192,9 @@ export default function ResultDisplay({ result, streaming, model, onNewDiagnosis
       </div>
 
       <h1 className="report-h1">診断レポート</h1>
+      <div className="ascii-rule" aria-hidden>
+        ════════════════════════════════════════════════════════════════
+      </div>
 
       {streaming && !result && (
         <div className="streaming-dots">

@@ -1178,3 +1178,265 @@ details.section-card--bonus .section-card__body { margin-top: 12px; }
 
   .section-card { padding: 14px 16px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   RETRO CHROME OVERLAY — pixel/brutalist accents on UI shell
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --font-pixel: "VT323", "JetBrains Mono", monospace;
+  --ink-stroke: 1.5px solid var(--ink);
+}
+
+/* ── Window controls (●○○) ── */
+.window-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 6px;
+  padding: 0 4px 0 0;
+  border-right: 1px solid var(--border);
+  height: 18px;
+}
+.window-controls i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--surface-3);
+  border: 1px solid var(--border-strong);
+  display: block;
+}
+.window-controls i:nth-child(1) { background: #FF5F57; border-color: #E04A41; }
+.window-controls i:nth-child(2) { background: #FEBC2E; border-color: #DEA021; }
+.window-controls i:nth-child(3) { background: #28C840; border-color: #1AAB29; }
+
+/* Header header-tag becomes a stamp */
+.header-tag {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1.5px solid var(--ink);
+  border-radius: 0;
+  padding: 1px 7px;
+  color: var(--ink);
+  background: var(--surface);
+}
+
+/* App header bottom rule — switch to dotted/solid hard line */
+.app-header {
+  border-bottom: 1.5px solid var(--ink);
+  background: var(--bg);
+  backdrop-filter: none;
+}
+
+/* Pixel-block logo mark */
+.logo-mark {
+  border-radius: 3px;
+  font-family: var(--font-pixel);
+  font-size: 18px;
+  letter-spacing: 0;
+  border: 1.5px solid var(--ink);
+  background: var(--accent);
+  color: #fff;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.35);
+}
+
+/* ── ASCII rule ── */
+.ascii-rule {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--whisper);
+  letter-spacing: 0.05em;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 6px 0 16px;
+  user-select: none;
+}
+
+/* ── Mode select retro ── */
+.mode-step {
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  color: var(--ink);
+  letter-spacing: 0.06em;
+}
+
+.mode-h1 {
+  font-family: var(--font);
+  font-weight: 700;
+}
+
+/* Brutalist mode cards */
+.mode-card {
+  border: 1.5px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform .12s, box-shadow .12s;
+}
+.mode-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+  border-color: var(--ink);
+}
+.mode-card:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.mode-card-num {
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  background: var(--accent-soft);
+  border: 1px solid var(--ink);
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.mode-card-icon {
+  border: 1.5px solid var(--ink);
+  border-radius: 4px;
+  background: var(--surface);
+}
+
+.mode-card-foot {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  border-top: 1px dashed var(--border-strong);
+  padding-top: 10px;
+}
+
+/* ── Buttons brutalist ── */
+.btn-accent {
+  border: 1.5px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  border-radius: 5px;
+  font-weight: 600;
+  transition: transform .1s, box-shadow .1s;
+}
+.btn-accent:hover:not(:disabled) {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.btn-accent:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.btn-primary {
+  border: 1.5px solid var(--ink);
+  border-radius: 5px;
+}
+
+/* ── Section card kind labels — bracket-stamped ── */
+.section-kind {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  font-weight: 400;
+}
+.section-kind-glyph { font-size: 11px; }
+
+/* ── Stage tracker pixel-block progress ── */
+.stage-strip { border-bottom: 1.5px solid var(--ink); }
+
+.stage-label {
+  font-family: var(--font-pixel);
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+.stage-elapsed,
+.stage-meta {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+.progress-blocks {
+  display: flex;
+  gap: 3px;
+  padding: 8px 0 10px;
+}
+.progress-blocks .block {
+  flex: 1;
+  height: 6px;
+  background: var(--surface-3);
+  border: 1px solid var(--border-strong);
+  border-radius: 0;
+  animation: blockflash 1.4s infinite;
+}
+.progress-blocks .block:nth-child(1)  { animation-delay: 0.00s; }
+.progress-blocks .block:nth-child(2)  { animation-delay: 0.07s; }
+.progress-blocks .block:nth-child(3)  { animation-delay: 0.14s; }
+.progress-blocks .block:nth-child(4)  { animation-delay: 0.21s; }
+.progress-blocks .block:nth-child(5)  { animation-delay: 0.28s; }
+.progress-blocks .block:nth-child(6)  { animation-delay: 0.35s; }
+.progress-blocks .block:nth-child(7)  { animation-delay: 0.42s; }
+.progress-blocks .block:nth-child(8)  { animation-delay: 0.49s; }
+.progress-blocks .block:nth-child(9)  { animation-delay: 0.56s; }
+.progress-blocks .block:nth-child(10) { animation-delay: 0.63s; }
+.progress-blocks .block:nth-child(11) { animation-delay: 0.70s; }
+.progress-blocks .block:nth-child(12) { animation-delay: 0.77s; }
+
+@keyframes blockflash {
+  0%, 60%, 100% { background: var(--surface-3); border-color: var(--border-strong); }
+  20%, 40%      { background: var(--accent);    border-color: var(--accent); }
+}
+
+/* ── Report stamp ── */
+.report-stamp {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  padding: 1px 8px;
+  background: var(--surface);
+  text-transform: uppercase;
+}
+
+/* Priority strip retro head */
+.priority-strip-head {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+}
+
+/* ── Empty result pixel ── */
+.empty-result-icon {
+  border-radius: 4px;
+  border: 1.5px solid var(--ink);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.empty-result-title {
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+/* Recap tags retro */
+.recap-tag,
+.toc-tag,
+.form-step-tag,
+.report-meta {
+  font-family: var(--font-pixel);
+  font-size: 13.5px;
+  letter-spacing: 0.06em;
+}
+
+/* Mobile: lighten brutalist shadows so cards don't overflow */
+@media (max-width: 600px) {
+  .mode-card { box-shadow: 3px 3px 0 var(--ink); }
+  .mode-card:hover { box-shadow: 4px 4px 0 var(--ink); }
+  .btn-accent { box-shadow: 2px 2px 0 var(--ink); }
+  .ascii-rule { font-size: 10px; }
+}
+

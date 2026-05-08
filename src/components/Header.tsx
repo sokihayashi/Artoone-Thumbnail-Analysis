@@ -50,12 +50,15 @@ export default function Header({
   return (
     <header className="app-header">
       <div className="header-left">
+        <span className="window-controls" aria-hidden>
+          <i /><i /><i />
+        </span>
         <button className="header-logo" onClick={onReset} title="モード選択へ">
           <div className="logo-mark">A</div>
           <span className="logo-text">Artoone</span>
           <span className="logo-subtitle">/ サムネ診断</span>
         </button>
-        {subtitle && <span className="header-tag">{subtitle}</span>}
+        {subtitle && <span className="header-tag">[{subtitle}]</span>}
       </div>
 
       <div className="header-right">
