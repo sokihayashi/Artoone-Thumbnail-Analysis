@@ -178,10 +178,8 @@ export async function buildUserMessage(mode: Mode, data: FormData): Promise<Anth
   const text = renderModeText(mode, data)
   const images = collectImages(mode, data)
   const targets = collectAnalysisTargets(mode, data)
-  const [facts, cases] = await Promise.all([
-    buildAnalysisFactsBlock(targets),
-    Promise.resolve(buildRelevantCasesBlock(mode, data)),
-  ])
+  const facts = await buildAnalysisFactsBlock(targets)
+  const cases = buildRelevantCasesBlock(mode, data)
 
   const parts = [text, cases, facts].filter((s) => s.length > 0)
   const content: AnthropicContent[] = [{ type: 'text', text: parts.join('\n\n') }]

@@ -13,7 +13,6 @@ const FACE_MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.15
 
 let ocrWorker: import('tesseract.js').Worker | null = null
 let ocrInitPromise: Promise<import('tesseract.js').Worker> | null = null
-let faceModelLoaded = false
 let faceLoadPromise: Promise<typeof import('@vladmandic/face-api')> | null = null
 
 async function getOcrWorker() {
@@ -31,11 +30,8 @@ async function getOcrWorker() {
 
 export async function analyzeThumb(image: UploadedImage): Promise<ThumbnailMetrics> {
   const data = await getImageData(image)
-  const [textRegions, faces, colorInfo] = await Promise.all([
-    runOcr(image, data),
-    runFaceDetection(image, data),
-    Promise.resolve(extractColors(data)),
-  ])
+  const colorInfo = extractColors(data)
+  const [textRegions, faces] = await Promise.all([runOcr(image, data), runFaceDetection(image, data)])
   return {
     width: data.width,
     height: data.height,
@@ -50,10 +46,7 @@ async function loadFaceApi() {
   if (!faceLoadPromise) {
     faceLoadPromise = (async () => {
       const faceapi = await import('@vladmandic/face-api')
-      if (!faceModelLoaded) {
-        await faceapi.nets.tinyFaceDetector.loadFromUri(FACE_MODEL_URL)
-        faceModelLoaded = true
-      }
+      await faceapi.nets.tinyFaceDetector.loadFromUri(FACE_MODEL_URL)
       return faceapi
     })()
   }
