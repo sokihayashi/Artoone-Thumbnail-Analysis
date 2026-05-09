@@ -1,1 +1,248 @@
-aW1wb3J0IHsgdXNlU3RhdGUgfSBmcm9tICdyZWFjdCcKaW1wb3J0IFJlYWN0TWFya2Rvd24gZnJvbSAncmVhY3QtbWFya2Rvd24nCgppbnRlcmZhY2UgUHJvcHMgewogIHJlc3VsdDogc3RyaW5nCiAgc3RyZWFtaW5nOiBib29sZWFuCiAgbW9kZWw6IHN0cmluZwogIG9uTmV3RGlhZ25vc2lzOiAoKSA9PiB2b2lkCn0KCnR5cGUgU2VjdGlvbiA9IHsgaGVhZGluZzogc3RyaW5nOyBib2R5OiBzdHJpbmcgfQp0eXBlIEFjY2VudCA9ICdwb3NpdGl2ZScgfCAnbmVnYXRpdmUnIHwgJ3ByaW9yaXR5JyB8ICdpbnN0cnVjdGlvbicgfCAnYm9udXMnIHwgJ25ldXRyYWwnCgp0eXBlIEtpbmRDb25maWcgPSB7IGxhYmVsOiBzdHJpbmc7IGdseXBoOiBzdHJpbmc7IHNldjogbnVtYmVyOyBjb2xvcjogc3RyaW5nIH0KCmNvbnN0IEtJTkRfQ09ORklHOiBSZWNvcmQ8QWNjZW50LCBLaW5kQ29uZmlnPiA9IHsKICBwcmlvcml0eTogICAgeyBsYWJlbDogJ1sgUFJJT1JJVFkgXScsICAgICBnbHlwaDogJ+KXjycsIHNldjogMywgY29sb3I6ICd2YXIoLS1zZXYtY3JpdCknIH0sCiAgbmVnYXRpdmU6ICAgIHsgbGFiZWw6ICdbIElTU1VFIF0nLCAgICAgICAgZ2x5cGg6ICfilrInLCBzZXY6IDIsIGNvbG9yOiAndmFyKC0tc2V2LXdhcm4pJyB9LAogIHBvc2l0aXZlOiAgICB7IGxhYmVsOiAnWyBTVFJFTkdUSCBdJywgICAgIGdseXBoOiAn4peGJywgc2V2OiAyLCBjb2xvcjogJ3ZhcigtLXNldi1nb29kKScgfSwKICBpbnN0cnVjdGlvbjogeyBsYWJlbDogJ1sgQUNUSU9OIF0nLCAgICAgICBnbHlwaDogJ+KWticsIHNldjogMSwgY29sb3I6ICd2YXIoLS1zZXYtaW5mbyknIH0sCiAgYm9udXM6ICAgICAgIHsgbGFiZWw6ICdbIE5JQ0UgVE8gSEFWRSBdJywgZ2x5cGg6ICfil4snLCBzZXY6IDAsIGNvbG9yOiAndmFyKC0tc2V2LW11dGUpJyB9LAogIG5ldXRyYWw6ICAgICB7IGxhYmVsOiAnJywgICAgICAgICAgICAgICAgIGdseXBoOiAnJywgIHNldjogMCwgY29sb3I6ICd2YXIoLS1tdXRlZCknIH0sCn0KCmZ1bmN0aW9uIHBhcnNlU2VjdGlvbnMobWQ6IHN0cmluZyk6IFNlY3Rpb25bXSB7CiAgaWYgKCFtZCkgcmV0dXJuIFtdCiAgY29uc3QgbGluZXMgPSBtZC5zcGxpdCgnXG4nKQogIGNvbnN0IHNlY3Rpb25zOiBTZWN0aW9uW10gPSBbXQogIGxldCBjdXJyZW50OiBTZWN0aW9uIHwgbnVsbCA9IG51bGwKICBjb25zdCBoZWFkaW5nUmUgPSAvXiMjIyAoLis/KVxzKiQvCgogIGZvciAoY29uc3QgbGluZSBvZiBsaW5lcykgewogICAgY29uc3QgbSA9IGxpbmUubWF0Y2goaGVhZGluZ1JlKQogICAgaWYgKG0pIHsKICAgICAgaWYgKGN1cnJlbnQpIHNlY3Rpb25zLnB1c2goY3VycmVudCkKICAgICAgY3VycmVudCA9IHsgaGVhZGluZzogbVsxXS50cmltKCksIGJvZHk6ICcnIH0KICAgIH0gZWxzZSB7CiAgICAgIGlmIChjdXJyZW50KSB7CiAgICAgICAgY3VycmVudC5ib2R5ICs9IChjdXJyZW50LmJvZHkgPyAnXG4nIDogJycpICsgbGluZQogICAgICB9IGVsc2UgewogICAgICAgIGlmIChzZWN0aW9ucy5sZW5ndGggPT09IDApIHNlY3Rpb25zLnB1c2goeyBoZWFkaW5nOiAnJywgYm9keTogbGluZSB9KQogICAgICAgIGVsc2Ugc2VjdGlvbnNbMF0uYm9keSArPSAnXG4nICsgbGluZQogICAgICB9CiAgICB9CiAgfQogIGlmIChjdXJyZW50KSBzZWN0aW9ucy5wdXNoKGN1cnJlbnQpCgogIGlmIChzZWN0aW9ucy5sZW5ndGggPT09IDEgJiYgc2VjdGlvbnNbMF0uaGVhZGluZyA9PT0gJycpIHJldHVybiBbXQogIGlmIChzZWN0aW9ucy5sZW5ndGggPiAwICYmIHNlY3Rpb25zWzBdLmhlYWRpbmcgPT09ICcnICYmICFzZWN0aW9uc1swXS5ib2R5LnRyaW0oKSkgewogICAgc2VjdGlvbnMuc2hpZnQoKQogIH0KICByZXR1cm4gc2VjdGlvbnMKfQoKZnVuY3Rpb24gYWNjZW50Rm9yKGhlYWRpbmc6IHN0cmluZyk6IEFjY2VudCB7CiAgaWYgKGhlYWRpbmcgPT09ICfoia/jgYTngrknKSByZXR1cm4gJ3Bvc2l0aXZlJwogIGlmIChoZWFkaW5nID09PSAn5ZWP6aGM54K5JyB8fCBoZWFkaW5nID09PSAn5ZCE5qGI44Gu5ZWP6aGM54K5JyB8fCBoZWFkaW5nID09PSAn6YG/44GR44Gf44GE5pa55ZCRJykgcmV0dXJuICduZWdhdGl2ZScKICBpZiAoaGVhZGluZyA9PT0gJ+acgOWEquWFiOOBp+ebtOOBl+OBn+OBhOOBk+OBqCcgfHwgaGVhZGluZyA9PT0gJ+S7iuOBmeOBkOebtOOBl+OBn+OBhOOBk+OBqCcpIHJldHVybiAncHJpb3JpdHknCiAgaWYgKGhlYWRpbmcgPT09ICfkv67mraPmjIfnpLonIHx8IGhlYWRpbmcgPT09ICfliLbkvZzjg6Hjg6InIHx8IGhlYWRpbmcgPT09ICfliLbkvZzmi4XlvZPjgbjjga7kuIDoqIDjg6Hjg6InKSByZXR1cm4gJ2luc3RydWN0aW9uJwogIGlmIChoZWFkaW5nID09PSAn5L2Z6KOV44GM44GC44KM44GwJyB8fCBoZWFkaW5nID09PSAn6L+R44GE5Y+C6ICD5L6LJykgcmV0dXJuICdib251cycKICByZXR1cm4gJ25ldXRyYWwnCn0KCmZ1bmN0aW9uIFNlY3Rpb25DYXJkVmlldyh7IGhlYWRpbmcsIGJvZHksIGFjY2VudCwgc2hvd0N1cnNvciwgc3RyZWFtaW5nIH06IHsKICBoZWFkaW5nOiBzdHJpbmcKICBib2R5OiBzdHJpbmcKICBhY2NlbnQ6IEFjY2VudAogIHNob3dDdXJzb3I6IGJvb2xlYW4KICBzdHJlYW1pbmc6IGJvb2xlYW4KfSkgewogIGNvbnN0IGNmZyA9IEtJTkRfQ09ORklHW2FjY2VudF0KICBjb25zdCBpc0JvbnVzID0gYWNjZW50ID09PSAnYm9udXMnCiAgY29uc3QgaXNOZXV0cmFsID0gYWNjZW50ID09PSAnbmV1dHJhbCcKCiAgY29uc3QgYm9keUVsID0gKAogICAgPGRpdiBjbGFzc05hbWU9InNlY3Rpb24tY2FyZF9fYm9keSBtYXJrZG93bi1jb250ZW50Ij4KICAgICAgPFJlYWN0TWFya2Rvd24+e2JvZHl9PC9SZWFjdE1hcmtkb3duPgogICAgICB7c2hvd0N1cnNvciAmJiA8c3BhbiBjbGFzc05hbWU9InN0cmVhbS1jdXJzb3IiIC8+fQogICAgPC9kaXY+CiAgKQoKICBpZiAoaXNCb251cykgewogICAgcmV0dXJuICgKICAgICAgPGRldGFpbHMgY2xhc3NOYW1lPXtgc2VjdGlvbi1jYXJkIHNlY3Rpb24tY2FyZC0tJHthY2NlbnR9YH0gb3Blbj17c3RyZWFtaW5nfT4KICAgICAgICA8c3VtbWFyeT4KICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJzZWN0aW9uLWNhcmQtaGVhZCI+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0ic2VjdGlvbi1raW5kIiBzdHlsZT17eyBjb2xvcjogY2ZnLmNvbG9yIH19PgogICAgICAgICAgICAgIHtjZmcuZ2x5cGggJiYgPHNwYW4gY2xhc3NOYW1lPSJzZWN0aW9uLWtpbmQtZ2x5cGgiPntjZmcuZ2x5cGh9PC9zcGFuPn0KICAgICAgICAgICAgICB7Y2ZnLmxhYmVsfQogICAgICAgICAgICA8L3NwYW4+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0ic2VjdGlvbi1zcGFjZXIiIC8+CiAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0iYm9udXMtdG9nZ2xlIiAvPgogICAgICAgICAgPC9kaXY+CiAgICAgICAgICB7aGVhZGluZyAmJiA8ZGl2IGNsYXNzTmFtZT0ic2VjdGlvbi10aXRsZSI+e2hlYWRpbmd9PC9kaXY+fQogICAgICAgIDwvc3VtbWFyeT4KICAgICAgICB7Ym9keUVsfQogICAgICA8L2RldGFpbHM+CiAgICApCiAgfQoKICBpZiAoaXNOZXV0cmFsKSB7CiAgICByZXR1cm4gKAogICAgICA8ZGl2IGNsYXNzTmFtZT17YHNlY3Rpb24tY2FyZCBzZWN0aW9uLWNhcmQtLSR7YWNjZW50fWB9PgogICAgICAgIHtoZWFkaW5nICYmIDxoMyBjbGFzc05hbWU9InNlY3Rpb24tY2FyZF9faGVhZGluZyI+e2hlYWRpbmd9PC9oMz59CiAgICAgICAge2JvZHlFbH0KICAgICAgPC9kaXY+CiAgICApCiAgfQoKICByZXR1cm4gKAogICAgPGRpdiBjbGFzc05hbWU9e2BzZWN0aW9uLWNhcmQgc2VjdGlvbi1jYXJkLS0ke2FjY2VudH1gfT4KICAgICAgPGRpdiBjbGFzc05hbWU9InNlY3Rpb24tY2FyZC1oZWFkIj4KICAgICAgICA8c3BhbiBjbGFzc05hbWU9InNlY3Rpb24ta2luZCIgc3R5bGU9e3sgY29sb3I6IGNmZy5jb2xvciB9fT4KICAgICAgICAgIHtjZmcuZ2x5cGggJiYgPHNwYW4gY2xhc3NOYW1lPSJzZWN0aW9uLWtpbmQtZ2x5cGgiPntjZmcuZ2x5cGh9PC9zcGFuPn0KICAgICAgICAgIHtjZmcubGFiZWx9CiAgICAgICAgPC9zcGFuPgogICAgICAgIDxzcGFuIGNsYXNzTmFtZT0ic2VjdGlvbi1zcGFjZXIiIC8+CiAgICAgICAge2NmZy5zZXYgPiAwICYmICgKICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0ic2V2IiBzdHlsZT17eyBjb2xvcjogY2ZnLmNvbG9yIH19PgogICAgICAgICAgICB7WzAsIDEsIDJdLm1hcChpID0+ICgKICAgICAgICAgICAgICA8c3BhbiBrZXk9e2l9IGNsYXNzTmFtZT17YHNldi1kb3Qke2kgPCBjZmcuc2V2ID8gJyBvbicgOiAnJ31gfSAvPgogICAgICAgICAgICApKX0KICAgICAgICAgIDwvc3Bhbj4KICAgICAgICApfQogICAgICA8L2Rpdj4KICAgICAge2hlYWRpbmcgJiYgPGRpdiBjbGFzc05hbWU9InNlY3Rpb24tdGl0bGUiPntoZWFkaW5nfTwvZGl2Pn0KICAgICAge2JvZHlFbH0KICAgIDwvZGl2PgogICkKfQoKZnVuY3Rpb24gU2tlbGV0b25DYXJkKCkgewogIHJldHVybiAoCiAgICA8ZGl2IGNsYXNzTmFtZT0ic2VjdGlvbi1jYXJkIHNlY3Rpb24tY2FyZC0tc2tlbGV0b24iPgogICAgICA8ZGl2IGNsYXNzTmFtZT0icm93IiBzdHlsZT17eyBtYXJnaW5Cb3R0b206IDggfX0+CiAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJza2VsIiBzdHlsZT17eyB3aWR0aDogNjQsIGhlaWdodDogMTEgfX0gLz4KICAgICAgICA8c3BhbiBjbGFzc05hbWU9InNlY3Rpb24tc3BhY2VyIiAvPgogICAgICAgIDxzcGFuIGNsYXNzTmFtZT0ic2tlbCIgc3R5bGU9e3sgd2lkdGg6IDI4LCBoZWlnaHQ6IDggfX0gLz4KICAgICAgPC9kaXY+CiAgICAgIDxzcGFuIGNsYXNzTmFtZT0ic2tlbCIgc3R5bGU9e3sgd2lkdGg6ICc3MCUnLCBoZWlnaHQ6IDE0LCBtYXJnaW5Cb3R0b206IDEwIH19IC8+CiAgICAgIDxzcGFuIGNsYXNzTmFtZT0ic2tlbCIgc3R5bGU9e3sgd2lkdGg6ICcxMDAlJywgaGVpZ2h0OiA5LCBtYXJnaW5Cb3R0b206IDQgfX0gLz4KICAgICAgPHNwYW4gY2xhc3NOYW1lPSJza2VsIiBzdHlsZT17eyB3aWR0aDogJzkyJScsIGhlaWdodDogOSwgbWFyZ2luQm90dG9tOiA0IH19IC8+CiAgICAgIDxzcGFuIGNsYXNzTmFtZT0ic2tlbCIgc3R5bGU9e3sgd2lkdGg6ICc2MCUnLCBoZWlnaHQ6IDkgfX0gLz4KICAgIDwvZGl2PgogICkKfQoKZnVuY3Rpb24gc2hvcnRNb2RlbChtb2RlbDogc3RyaW5nKTogc3RyaW5nIHsKICByZXR1cm4gbW9kZWwuc3BsaXQoJy8nKS5wb3AoKSB8fCBtb2RlbAp9CgpmdW5jdGlvbiB0b2RheVN0cigpOiBzdHJpbmcgewogIGNvbnN0IG5vdyA9IG5ldyBEYXRlKCkKICBjb25zdCB5ID0gbm93LmdldEZ1bGxZZWFyKCkKICBjb25zdCBtID0gKG5vdy5nZXRNb250aCgpICsgMSkudG9TdHJpbmcoKS5wYWRTdGFydCgyLCAnMCcpCiAgY29uc3QgZCA9IG5vdy5nZXREYXRlKCkudG9TdHJpbmcoKS5wYWRTdGFydCgyLCAnMCcpCiAgY29uc3QgaGggPSBub3cuZ2V0SG91cnMoKS50b1N0cmluZygpLnBhZFN0YXJ0KDIsICcwJykKICBjb25zdCBtbSA9IG5vdy5nZXRNaW51dGVzKCkudG9TdHJpbmcoKS5wYWRTdGFydCgyLCAnMCcpCiAgcmV0dXJuIGAke3l9LSR7bX0tJHtkfSAke2hofToke21tfWAKfQoKZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gUmVzdWx0RGlzcGxheSh7IHJlc3VsdCwgc3RyZWFtaW5nLCBtb2RlbCwgb25OZXdEaWFnbm9zaXMgfTogUHJvcHMpIHsKICBjb25zdCBbY29weUxhYmVsLCBzZXRDb3B5TGFiZWxdID0gdXNlU3RhdGUoJ+OCs+ODlOODvCcpCgogIGNvbnN0IGhhbmRsZUNvcHkgPSAoKSA9PiB7CiAgICBuYXZpZ2F0b3IuY2xpcGJvYXJkLndyaXRlVGV4dChyZXN1bHQpLnRoZW4oCiAgICAgICgpID0+IHsKICAgICAgICBzZXRDb3B5TGFiZWwoJ+OCs+ODlOODvOa4iOOBv++8gScpCiAgICAgICAgc2V0VGltZW91dCgoKSA9PiBzZXRDb3B5TGFiZWwoJ+OCs+ODlOODvCcpLCAxNTAwKQogICAgICB9LAogICAgICAoKSA9PiB7CiAgICAgICAgc2V0Q29weUxhYmVsKCfjgrPjg5Tjg7zlpLHmlZcnKQogICAgICAgIHNldFRpbWVvdXQoKCkgPT4gc2V0Q29weUxhYmVsKCfjgrPjg5Tjg7wnKSwgMTUwMCkKICAgICAgfSwKICAgICkKICB9CgogIGNvbnN0IHNlY3Rpb25zID0gcGFyc2VTZWN0aW9ucyhyZXN1bHQpCiAgY29uc3QgcHJpb3JpdHlTZWN0aW9ucyA9IHNlY3Rpb25zLmZpbHRlcihzID0+IGFjY2VudEZvcihzLmhlYWRpbmcpID09PSAncHJpb3JpdHknKQoKICByZXR1cm4gKAogICAgPD4KICAgICAgPGRpdiBjbGFzc05hbWU9InJlcG9ydC1tZXRhIj4KICAgICAgICA8c3BhbiBjbGFzc05hbWU9InJlcG9ydC1zdGFtcCI+WyBSRVBPUlQgLy8ge3RvZGF5U3RyKCl9IC8vIHtzaG9ydE1vZGVsKG1vZGVsKX0gXTwvc3Bhbj4KICAgICAgICA8c3BhbiBjbGFzc05hbWU9InNlY3Rpb24tc3BhY2VyIiAvPgogICAgICAgIHshc3RyZWFtaW5nICYmIHJlc3VsdCAmJiAoCiAgICAgICAgICA8YnV0dG9uIGNsYXNzTmFtZT0iYnRuIGJ0bi1naG9zdCBidG4tc20iIG9uQ2xpY2s9e2hhbmRsZUNvcHl9Pntjb3B5TGFiZWx9PC9idXR0b24+CiAgICAgICAgKX0KICAgICAgICB7IXN0cmVhbWluZyAmJiByZXN1bHQgJiYgKAogICAgICAgICAgPGJ1dHRvbiBjbGFzc05hbWU9ImJ0biBidG4tcHJpbWFyeSBidG4tc20iIG9uQ2xpY2s9e29uTmV3RGlhZ25vc2lzfT7mlrDjgZfjgYToqLrmlq08L2J1dHRvbj4KICAgICAgICApfQogICAgICA8L2Rpdj4KCiAgICAgIDxoMSBjbGFzc05hbWU9InJlcG9ydC1oMSI+6Ki65pat44Os44Od44O844OIPC9oMT4KCiAgICAgIHtzdHJlYW1pbmcgJiYgIXJlc3VsdCAmJiAoCiAgICAgICAgPGRpdiBjbGFzc05hbWU9InN0cmVhbWluZy1kb3RzIj4KICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0iZG90IiAvPjxzcGFuIGNsYXNzTmFtZT0iZG90IiAvPjxzcGFuIGNsYXNzTmFtZT0iZG90IiAvPgogICAgICAgIDwvZGl2PgogICAgICApfQoKICAgICAgey8qIFRPUCBQUklPUklUWSBzdHJpcCDigJQgbGlzdGVkIGlmIHRoZXJlIGFyZSBwcmlvcml0eSBzZWN0aW9ucyAqL30KICAgICAgeyFzdHJlYW1pbmcgJiYgcHJpb3JpdHlTZWN0aW9ucy5sZW5ndGggPiAwICYmICgKICAgICAgICA8ZGl2IGNsYXNzTmFtZT0icHJpb3JpdHktc3RyaXAiPgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9InByaW9yaXR5LXN0cmlwLWhlYWQiPgogICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9InByaW9yaXR5LXN0cmlwLWhlYWQtbWFya2VyIj7il488L3NwYW4+CiAgICAgICAgICAgIFRPUCBQUklPUklUWSDCtyDjgb7jgZrnm7TjgZnjgarjgonjgZPjgZMKICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJwcmlvcml0eS1zdHJpcC1jb3VudCI+e3ByaW9yaXR5U2VjdGlvbnMubGVuZ3RofeS7tjwvc3Bhbj4KICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPG9sPgogICAgICAgICAgICB7cHJpb3JpdHlTZWN0aW9ucy5tYXAoKHMsIGkpID0+ICgKICAgICAgICAgICAgICA8bGkga2V5PXtpfT57Zmlyc3RMaW5lKHMuYm9keSkgfHwgcy5oZWFkaW5nfTwvbGk+CiAgICAgICAgICAgICkpfQogICAgICAgICAgPC9vbD4KICAgICAgICA8L2Rpdj4KICAgICAgKX0KCiAgICAgIHtzZWN0aW9ucy5sZW5ndGggPiAwICYmICgKICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ic2VjdGlvbi1jYXJkcyI+CiAgICAgICAgICB7c2VjdGlvbnMubWFwKChzLCBpKSA9PiAoCiAgICAgICAgICAgIDxTZWN0aW9uQ2FyZFZpZXcKICAgICAgICAgICAgICBrZXk9e2l9CiAgICAgICAgICAgICAgaGVhZGluZz17cy5oZWFkaW5nfQogICAgICAgICAgICAgIGJvZHk9e3MuYm9keX0KICAgICAgICAgICAgICBhY2NlbnQ9e2FjY2VudEZvcihzLmhlYWRpbmcpfQogICAgICAgICAgICAgIHNob3dDdXJzb3I9e3N0cmVhbWluZyAmJiBpID09PSBzZWN0aW9ucy5sZW5ndGggLSAxfQogICAgICAgICAgICAgIHN0cmVhbWluZz17c3RyZWFtaW5nfQogICAgICAgICAgICAvPgogICAgICAgICAgKSl9CiAgICAgICAgICB7c3RyZWFtaW5nICYmIHNlY3Rpb25zLmxlbmd0aCA+IDAgJiYgPFNrZWxldG9uQ2FyZCAvPn0KICAgICAgICA8L2Rpdj4KICAgICAgKX0KCiAgICAgIHtyZXN1bHQgJiYgc2VjdGlvbnMubGVuZ3RoID09PSAwICYmICgKICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ibWFya2Rvd24tY29udGVudCI+CiAgICAgICAgICA8UmVhY3RNYXJrZG93bj57cmVzdWx0fTwvUmVhY3RNYXJrZG93bj4KICAgICAgICAgIHtzdHJlYW1pbmcgJiYgPHNwYW4gY2xhc3NOYW1lPSJzdHJlYW0tY3Vyc29yIiAvPn0KICAgICAgICA8L2Rpdj4KICAgICAgKX0KICAgIDwvPgogICkKfQoKZnVuY3Rpb24gZmlyc3RMaW5lKGJvZHk6IHN0cmluZyk6IHN0cmluZyB7CiAgY29uc3QgdHJpbW1lZCA9IGJvZHkudHJpbSgpCiAgY29uc3QgbGluZSA9IHRyaW1tZWQuc3BsaXQoJ1xuJykuZmluZCgobCkgPT4gbC50cmltKCkpIHx8ICcnCiAgcmV0dXJuIGxpbmUucmVwbGFjZSgvXlsqXC0+XHNdKy8sICcnKS50cmltKCkKfQo=
+import { useState } from 'react'
+import ReactMarkdown from 'react-markdown'
+
+interface Props {
+  result: string
+  streaming: boolean
+  model: string
+  onNewDiagnosis: () => void
+}
+
+type Section = { heading: string; body: string }
+type Accent = 'positive' | 'negative' | 'priority' | 'instruction' | 'bonus' | 'neutral'
+
+type KindConfig = { label: string; glyph: string; sev: number; color: string }
+
+const KIND_CONFIG: Record<Accent, KindConfig> = {
+  priority:    { label: '[ PRIORITY ]',     glyph: '●', sev: 3, color: 'var(--sev-crit)' },
+  negative:    { label: '[ ISSUE ]',        glyph: '▲', sev: 2, color: 'var(--sev-warn)' },
+  positive:    { label: '[ STRENGTH ]',     glyph: '◆', sev: 2, color: 'var(--sev-good)' },
+  instruction: { label: '[ ACTION ]',       glyph: '▶', sev: 1, color: 'var(--sev-info)' },
+  bonus:       { label: '[ NICE TO HAVE ]', glyph: '○', sev: 0, color: 'var(--sev-mute)' },
+  neutral:     { label: '',                 glyph: '',  sev: 0, color: 'var(--muted)' },
+}
+
+function parseSections(md: string): Section[] {
+  if (!md) return []
+  const lines = md.split('\n')
+  const sections: Section[] = []
+  let current: Section | null = null
+  const headingRe = /^### (.+?)\s*$/
+
+  for (const line of lines) {
+    const m = line.match(headingRe)
+    if (m) {
+      if (current) sections.push(current)
+      current = { heading: m[1].trim(), body: '' }
+    } else {
+      if (current) {
+        current.body += (current.body ? '\n' : '') + line
+      } else {
+        if (sections.length === 0) sections.push({ heading: '', body: line })
+        else sections[0].body += '\n' + line
+      }
+    }
+  }
+  if (current) sections.push(current)
+
+  if (sections.length === 1 && sections[0].heading === '') return []
+  if (sections.length > 0 && sections[0].heading === '' && !sections[0].body.trim()) {
+    sections.shift()
+  }
+  return sections
+}
+
+function accentFor(heading: string): Accent {
+  if (heading === '良い点') return 'positive'
+  if (heading === '問題点' || heading === '各案の問題点' || heading === '避けたい方向') return 'negative'
+  if (heading === '最優先で直したいこと' || heading === '今すぐ直したいこと') return 'priority'
+  if (heading === '修正指示' || heading === '制作メモ' || heading === '制作担当への一言メモ') return 'instruction'
+  if (heading === '余裕があれば' || heading === '近い参考例') return 'bonus'
+  return 'neutral'
+}
+
+function SectionCardView({ heading, body, accent, showCursor, streaming }: {
+  heading: string
+  body: string
+  accent: Accent
+  showCursor: boolean
+  streaming: boolean
+}) {
+  const cfg = KIND_CONFIG[accent]
+  const isBonus = accent === 'bonus'
+  const isNeutral = accent === 'neutral'
+
+  const bodyEl = (
+    <div className="section-card__body markdown-content">
+      <ReactMarkdown>{body}</ReactMarkdown>
+      {showCursor && <span className="stream-cursor" />}
+    </div>
+  )
+
+  if (isBonus) {
+    return (
+      <details className={`section-card section-card--${accent}`} open={streaming}>
+        <summary>
+          <div className="section-card-head">
+            <span className="section-kind" style={{ color: cfg.color }}>
+              {cfg.glyph && <span className="section-kind-glyph">{cfg.glyph}</span>}
+              {cfg.label}
+            </span>
+            <span className="section-spacer" />
+            <span className="bonus-toggle" />
+          </div>
+          {heading && <div className="section-title">{heading}</div>}
+        </summary>
+        {bodyEl}
+      </details>
+    )
+  }
+
+  if (isNeutral) {
+    return (
+      <div className={`section-card section-card--${accent}`}>
+        {heading && <h3 className="section-card__heading">{heading}</h3>}
+        {bodyEl}
+      </div>
+    )
+  }
+
+  return (
+    <div className={`section-card section-card--${accent}`}>
+      <div className="section-card-head">
+        <span className="section-kind" style={{ color: cfg.color }}>
+          {cfg.glyph && <span className="section-kind-glyph">{cfg.glyph}</span>}
+          {cfg.label}
+        </span>
+        <span className="section-spacer" />
+        {cfg.sev > 0 && (
+          <span className="sev" style={{ color: cfg.color }}>
+            {[0, 1, 2].map(i => (
+              <span key={i} className={`sev-dot${i < cfg.sev ? ' on' : ''}`} />
+            ))}
+          </span>
+        )}
+      </div>
+      {heading && <div className="section-title">{heading}</div>}
+      {bodyEl}
+    </div>
+  )
+}
+
+function SkeletonCard() {
+  return (
+    <div className="section-card section-card--skeleton">
+      <div className="row" style={{ marginBottom: 8 }}>
+        <span className="skel" style={{ width: 64, height: 11 }} />
+        <span className="section-spacer" />
+        <span className="skel" style={{ width: 28, height: 8 }} />
+      </div>
+      <span className="skel" style={{ width: '70%', height: 14, marginBottom: 10 }} />
+      <span className="skel" style={{ width: '100%', height: 9, marginBottom: 4 }} />
+      <span className="skel" style={{ width: '92%', height: 9, marginBottom: 4 }} />
+      <span className="skel" style={{ width: '60%', height: 9 }} />
+    </div>
+  )
+}
+
+function shortModel(model: string): string {
+  return model.split('/').pop() || model
+}
+
+function todayStr(): string {
+  const now = new Date()
+  const y = now.getFullYear()
+  const m = (now.getMonth() + 1).toString().padStart(2, '0')
+  const d = now.getDate().toString().padStart(2, '0')
+  const hh = now.getHours().toString().padStart(2, '0')
+  const mm = now.getMinutes().toString().padStart(2, '0')
+  return `${y}-${m}-${d} ${hh}:${mm}`
+}
+
+export default function ResultDisplay({ result, streaming, model, onNewDiagnosis }: Props) {
+  const [copyLabel, setCopyLabel] = useState('コピー')
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(result).then(
+      () => {
+        setCopyLabel('コピー済み！')
+        setTimeout(() => setCopyLabel('コピー'), 1500)
+      },
+      () => {
+        setCopyLabel('コピー失敗')
+        setTimeout(() => setCopyLabel('コピー'), 1500)
+      },
+    )
+  }
+
+  const sections = parseSections(result)
+  const prioritySections = sections.filter(s => accentFor(s.heading) === 'priority')
+
+  return (
+    <>
+      <div className="report-meta">
+        <span className="report-stamp">[ REPORT // {todayStr()} // {shortModel(model)} ]</span>
+        <span className="section-spacer" />
+        {!streaming && result && (
+          <button className="btn btn-ghost btn-sm" onClick={handleCopy}>{copyLabel}</button>
+        )}
+        {!streaming && result && (
+          <button className="btn btn-primary btn-sm" onClick={onNewDiagnosis}>新しい診断</button>
+        )}
+      </div>
+
+      <h1 className="report-h1">診断レポート</h1>
+
+      {streaming && !result && (
+        <div className="streaming-dots">
+          <span className="dot" /><span className="dot" /><span className="dot" />
+        </div>
+      )}
+
+      {/* TOP PRIORITY strip — listed if there are priority sections */}
+      {!streaming && prioritySections.length > 0 && (
+        <div className="priority-strip">
+          <div className="priority-strip-head">
+            <span className="priority-strip-head-marker">●</span>
+            TOP PRIORITY · まず直すならここ
+            <span className="priority-strip-count">{prioritySections.length}件</span>
+          </div>
+          <ol>
+            {prioritySections.map((s, i) => (
+              <li key={i}>{firstLine(s.body) || s.heading}</li>
+            ))}
+          </ol>
+        </div>
+      )}
+
+      {sections.length > 0 && (
+        <div className="section-cards">
+          {sections.map((s, i) => (
+            <SectionCardView
+              key={i}
+              heading={s.heading}
+              body={s.body}
+              accent={accentFor(s.heading)}
+              showCursor={streaming && i === sections.length - 1}
+              streaming={streaming}
+            />
+          ))}
+          {streaming && sections.length > 0 && <SkeletonCard />}
+        </div>
+      )}
+
+      {result && sections.length === 0 && (
+        <div className="markdown-content">
+          <ReactMarkdown>{result}</ReactMarkdown>
+          {streaming && <span className="stream-cursor" />}
+        </div>
+      )}
+    </>
+  )
+}
+
+function firstLine(body: string): string {
+  const trimmed = body.trim()
+  const line = trimmed.split('\n').find((l) => l.trim()) || ''
+  return line.replace(/^[*\->\s]+/, '').trim()
+}
