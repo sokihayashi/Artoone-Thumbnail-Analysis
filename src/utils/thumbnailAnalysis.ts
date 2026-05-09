@@ -163,20 +163,20 @@ function sampleFgBg(data: ImageData, x: number, y: number, w: number, h: number)
   return { fg, bg }
 }
 
-function avgColor(arr: { r: number; g: number; b: number }[]): { r: number; g: number; b: number } {
+export function avgColor(arr: { r: number; g: number; b: number }[]): { r: number; g: number; b: number } {
   if (!arr.length) return { r: 128, g: 128, b: 128 }
   const sum = arr.reduce((acc, c) => ({ r: acc.r + c.r, g: acc.g + c.g, b: acc.b + c.b }), { r: 0, g: 0, b: 0 })
   return { r: sum.r / arr.length, g: sum.g / arr.length, b: sum.b / arr.length }
 }
 
-function wcagContrast(a: { r: number; g: number; b: number }, b: { r: number; g: number; b: number }): number {
+export function wcagContrast(a: { r: number; g: number; b: number }, b: { r: number; g: number; b: number }): number {
   const la = relativeLuminance(a.r, a.g, a.b)
   const lb = relativeLuminance(b.r, b.g, b.b)
   const [hi, lo] = la > lb ? [la, lb] : [lb, la]
   return (hi + 0.05) / (lo + 0.05)
 }
 
-function relativeLuminance(r: number, g: number, b: number): number {
+export function relativeLuminance(r: number, g: number, b: number): number {
   const conv = (c: number) => {
     const s = c / 255
     return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4
@@ -184,12 +184,12 @@ function relativeLuminance(r: number, g: number, b: number): number {
   return 0.2126 * conv(r) + 0.7152 * conv(g) + 0.0722 * conv(b)
 }
 
-function rgbToHex(c: { r: number; g: number; b: number }): string {
+export function rgbToHex(c: { r: number; g: number; b: number }): string {
   const h = (n: number) => Math.round(n).toString(16).padStart(2, '0').toUpperCase()
   return `#${h(c.r)}${h(c.g)}${h(c.b)}`
 }
 
-function extractColors(data: ImageData): { colors: ColorBucket[]; brightness: number } {
+export function extractColors(data: ImageData): { colors: ColorBucket[]; brightness: number } {
   const buckets = new Map<number, number>()
   let total = 0
   let lumSum = 0
