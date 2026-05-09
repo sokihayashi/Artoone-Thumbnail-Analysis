@@ -240,7 +240,7 @@ function scoreMatch(queryTokens: string[], video: DlcVideo): number {
 function tokenize(text: string): string[] {
   return text
     .toLowerCase()
-    .replace(/[【】「」『』、。·・！？!?,.()\[\]<>\/\\]/g, ' ')
+    .replace(/[【】「」『』、。·・！？!?,.(\)[\]<>\/\\]/g, ' ')
     .split(/\s+/)
     .filter((t) => t.length > 0)
 }
@@ -267,6 +267,7 @@ async function buildAnalysisFactsBlock(images: UploadedImage[]): Promise<string>
     '## 機械測定データ（参考値）',
     '以下は画像処理ライブラリ(Tesseract OCR + WCAGコントラスト計算)による客観値。',
     '装飾的小文字（©、URL、配信時刻など）は人間判断で無視してよい。',
+    'OCRが文字を未検出でも装飾フォント起因が多い。未検出を「文字が細い」と判断しないこと。',
     '',
     blocks.join('\n\n'),
   ].join('\n')
@@ -292,7 +293,7 @@ function formatMetrics(m: ThumbnailMetrics, idx: number): string {
       lines.push(`- "${r.text}" font_size≈${r.fontSize}px contrast=${r.contrastRatio}${sizeWarn}${ctrWarn}`)
     }
   } else {
-    lines.push('[テキスト領域] OCR検出なし')
+    lines.push('[テキスト領域] OCR検出なし（装飾・カラーフォントはOCRが苦手。大きな文字でも未検出になる場合あり）')
   }
 
   lines.push('')
@@ -315,7 +316,7 @@ function formatMetrics(m: ThumbnailMetrics, idx: number): string {
   const major = m.dominantColors.filter((c) => c.ratio >= 10)
   if (major.length) {
     lines.push(major.map((c) => `${c.hex} (${c.ratio}%)`).join(' / '))
-    if (major.length >= 5) lines.push('⚠注意: 主要荲5色以上 → ごちゃつき・視線分散')
+    if (major.length >= 5) lines.push('⚠注意: 主要色5色以上 → ごちゃつき・視線分散')
   } else {
     lines.push('（占有10%以上の主要色なし → グラデーション or ノイズ多い）')
   }

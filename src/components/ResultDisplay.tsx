@@ -244,5 +244,9 @@ export default function ResultDisplay({ result, streaming, model, onNewDiagnosis
 function firstLine(body: string): string {
   const trimmed = body.trim()
   const line = trimmed.split('\n').find((l) => l.trim()) || ''
-  return line.replace(/^[*\->\s]+/, '').trim()
+  return line
+    .replace(/^\d+\.\s*/, '')
+    .replace(/^[*\->\s]+/, '')
+    .replace(/\*\*/g, '')
+    .trim()
 }
