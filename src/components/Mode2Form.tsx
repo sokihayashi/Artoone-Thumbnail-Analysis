@@ -1,1 +1,139 @@
-aW1wb3J0IHsgdXNlU3RhdGUgfSBmcm9tICdyZWFjdCcKaW1wb3J0IHR5cGUgeyBNb2RlMkZvcm1EYXRhIH0gZnJvbSAnLi4vdHlwZXMnCmltcG9ydCBJbWFnZVVwbG9hZGVyIGZyb20gJy4vSW1hZ2VVcGxvYWRlcicKCmludGVyZmFjZSBQcm9wcyB7CiAgb25TdWJtaXQ6IChkYXRhOiBNb2RlMkZvcm1EYXRhKSA9PiB2b2lkCiAgb25CYWNrOiAoKSA9PiB2b2lkCiAgbG9hZGluZzogYm9vbGVhbgogIGluaXRpYWxEYXRhPzogTW9kZTJGb3JtRGF0YQp9CgpleHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBNb2RlMkZvcm0oeyBvblN1Ym1pdCwgb25CYWNrLCBsb2FkaW5nLCBpbml0aWFsRGF0YSB9OiBQcm9wcykgewogIGNvbnN0IFtkLCBzZXREXSA9IHVzZVN0YXRlPE1vZGUyRm9ybURhdGE+KGluaXRpYWxEYXRhID8/IHsKICAgIHRpdGxlOiAnJywKICAgIG1lbWJlcnM6ICcnLAogICAgb3ZlcnZpZXc6ICcnLAogICAgbWF0ZXJpYWxzOiAnJywKICAgIGludGVuZGVkU3ViamVjdDogJycsCiAgICB0ZW5zaW9uOiAnJywKICAgIGltcHJlc3Npb246ICcnLAogICAgY29tcGxldGlvbkxldmVsOiAnJywKICAgIHRodW1ibmFpbEltYWdlczogW10sCiAgICByZWZlcmVuY2VJbWFnZXM6IFtdLAogIH0pCgogIGNvbnN0IHNldCA9IChmaWVsZDoga2V5b2YgTW9kZTJGb3JtRGF0YSkgPT4gKGU6IFJlYWN0LkNoYW5nZUV2ZW50PEhUTUxJbnB1dEVsZW1lbnQgfCBIVE1MVGV4dEFyZWFFbGVtZW50PikgPT4KICAgIHNldEQoKHByZXYpID0+ICh7IC4uLnByZXYsIFtmaWVsZF06IGUudGFyZ2V0LnZhbHVlIH0pKQoKICBjb25zdCBjYW5TdWJtaXQgPSAhIShkLnRpdGxlLnRyaW0oKSAmJiBkLnRodW1ibmFpbEltYWdlcy5sZW5ndGggPiAwKQogIGNvbnN0IHRvdWNoZWQgPSAhIShkLnRpdGxlIHx8IGQudGh1bWJuYWlsSW1hZ2VzLmxlbmd0aCB8fCBkLm1lbWJlcnMgfHwgZC5vdmVydmlldykKICBjb25zdCBzdWJtaXRIaW50ID0gdG91Y2hlZCAmJiAhY2FuU3VibWl0CiAgICA/ICFkLnRodW1ibmFpbEltYWdlcy5sZW5ndGggPyAn55S75YOP44KS6L+95Yqg44GX44Gm44GP44Gg44GV44GEJwogICAgOiAn44K/44Kk44OI44Or44KS5YWl5Yqb44GX44Gm44GP44Gg44GV44GEJwogICAgOiBudWxsCgogIGNvbnN0IGhhbmRsZVN1Ym1pdCA9IChlOiBSZWFjdC5Gb3JtRXZlbnQpID0+IHsKICAgIGUucHJldmVudERlZmF1bHQoKQogICAgaWYgKCFjYW5TdWJtaXQpIHJldHVybgogICAgb25TdWJtaXQoZCkKICB9CgogIHJldHVybiAoCiAgICA8Zm9ybSBvblN1Ym1pdD17aGFuZGxlU3VibWl0fSBzdHlsZT17eyBkaXNwbGF5OiAnZmxleCcsIGZsZXhEaXJlY3Rpb246ICdjb2x1bW4nLCBmbGV4OiAxLCBtaW5IZWlnaHQ6IDAgfX0+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJwYW5lLXNjcm9sbCI+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZvcm0tc3RlcCI+CiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZm9ybS1zdGVwLXRhZyI+U1RFUCAyIC8gMyDCtyBJTlBVVDwvZGl2PgogICAgICAgICAgPGgyIGNsYXNzTmFtZT0iZm9ybS1zdGVwLWgyIj7jgrXjg6Djg43jgajmlofohIjjgpLmlZnjgYjjgabjgY/jgaDjgZXjgYQ8L2gyPgogICAgICAgIDwvZGl2PgoKICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZm9ybS1maWVsZHMiPgogICAgICAgICAgPEltYWdlVXBsb2FkZXIKICAgICAgICAgICAgbGFiZWw9IuODrOODk+ODpeODvOOBmeOCi+OCteODoOODjeeUu+WDjyIKICAgICAgICAgICAgaW1hZ2VzPXtkLnRodW1ibmFpbEltYWdlc30KICAgICAgICAgICAgb25DaGFuZ2U9eyhpbWdzKSA9PiBzZXREKChwcmV2KSA9PiAoeyAuLi5wcmV2LCB0aHVtYm5haWxJbWFnZXM6IGltZ3MgfSkpfQogICAgICAgICAgICByZXF1aXJlZAogICAgICAgICAgLz4KCiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmllbGQiPgogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmllbGQtbGFiZWwiPuWLleeUu+OCv+OCpOODiOODqyA8c3BhbiBjbGFzc05hbWU9ImZpZWxkLXJlcXVpcmVkIj4qPC9zcGFuPjwvZGl2PgogICAgICAgICAgICA8aW5wdXQgY2xhc3NOYW1lPSJpbnB1dCIgdHlwZT0idGV4dCIgdmFsdWU9e2QudGl0bGV9IG9uQ2hhbmdlPXtzZXQoJ3RpdGxlJyl9IHBsYWNlaG9sZGVyPSLkvovvvJrjgJDmpJzoqLzjgJFDaGF0R1BU44GnMemAsemWk+eUn+a0u+OBl+OBn+OCiS4uLiIgcmVxdWlyZWQgLz4KICAgICAgICAgIDwvZGl2PgoKICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmaWVsZCI+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmaWVsZC1sYWJlbCI+44K144Og44ON44Gr5Ye644Gm44GE44KL44Oh44Oz44OQ44O8IDxzcGFuIGNsYXNzTmFtZT0iZmllbGQtaGludCI+5Lu75oSPPC9zcGFuPjwvZGl2PgogICAgICAgICAgICA8aW5wdXQgY2xhc3NOYW1lPSJpbnB1dCIgdHlwZT0idGV4dCIgdmFsdWU9e2QubWVtYmVyc30gb25DaGFuZ2U9e3NldCgnbWVtYmVycycpfSBwbGFjZWhvbGRlcj0i5L6L77ya55yf55Sw44CB5p6XIiAvPgogICAgICAgICAgPC9kaXY+CgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZpZWxkIj4KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZpZWxkLWxhYmVsIj7li5XnlLvjga7mpoLopoEgPHNwYW4gY2xhc3NOYW1lPSJmaWVsZC1oaW50Ij4xMjDlrZfnqIvluqY8L3NwYW4+PC9kaXY+CiAgICAgICAgICAgIDx0ZXh0YXJlYSBjbGFzc05hbWU9InRleHRhcmVhIiB2YWx1ZT17ZC5vdmVydmlld30gb25DaGFuZ2U9e3NldCgnb3ZlcnZpZXcnKX0gcm93cz17M30gLz4KICAgICAgICAgIDwvZGl2PgoKICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmaWVsZCI+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmaWVsZC1sYWJlbCI+5L2/44Gj44Gm44GE44KL57Sg5p2QIDxzcGFuIGNsYXNzTmFtZT0iZmllbGQtaGludCI+5Lu75oSPPC9zcGFuPjwvZGl2PgogICAgICAgICAgICA8aW5wdXQgY2xhc3NOYW1lPSJpbnB1dCIgdHlwZT0idGV4dCIgdmFsdWU9e2QubWF0ZXJpYWxzfSBvbkNoYW5nZT17c2V0KCdtYXRlcmlhbHMnKX0gLz4KICAgICAgICAgIDwvZGl2PgoKICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmaWVsZCI+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmaWVsZC1sYWJlbCI+44K144Og44ON44Gn5Li75b2544Gr44GX44Gm44GE44KL44KC44GuIDxzcGFuIGNsYXNzTmFtZT0iZmllbGQtaGludCI+5Lu75oSPPC9zcGFuPjwvZGl2PgogICAgICAgICAgICA8c2VsZWN0CiAgICAgICAgICAgICAgY2xhc3NOYW1lPSJzZWxlY3QiCiAgICAgICAgICAgICAgdmFsdWU9e2QuaW50ZW5kZWRTdWJqZWN0fQogICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0RCgocHJldikgPT4gKHsgLi4ucHJldiwgaW50ZW5kZWRTdWJqZWN0OiBlLnRhcmdldC52YWx1ZSB9KSl9CiAgICAgICAgICAgID4KICAgICAgICAgICAgICA8b3B0aW9uIHZhbHVlPSIiPumBuOaKnuOBl+OBquOBhDwvb3B0aW9uPgogICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9IumhlOODu+ODquOCouOCr+OCt+ODp+ODsyI+6aGU44O744Oq44Ki44Kv44K344On44Oz77yI5Lq654mp44Gu6KGo5oOF44KE5Y+N5b+c44KS6KaL44Gb44Gf44GE77yJPC9vcHRpb24+CiAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT0i5L2c5ZOB44O75a6M5oiQ54mp44O744Oi44OOIj7kvZzlk4Hjg7vlrozmiJDnianjg7vjg6Ljg47vvIjliLbkvZznianjgoTntKDmnZDjgYzkuLvlvbnvvIk8L29wdGlvbj4KICAgICAgICAgICAgICA8b3B0aW9uIHZhbHVlPSLmloflrZfjg7vkvIHnlLvjga7jgqTjg7Pjg5Hjgq/jg4giPuaWh+Wtl+ODu+S8geeUu+OBruOCpOODs+ODkeOCr+ODiO+8iOOCreODo+ODg+ODgeOCs+ODlOODvOOChOaEj+WkluaAp++8iTwvb3B0aW9uPgogICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9IuS6uueJqeOBqOS9nOWTgeOBrue1hOOBv+WQiOOCj+OBmyI+5Lq654mp44Go5L2c5ZOB44Gu57WE44G/5ZCI44KP44Gb77yI5Lih5pa56KaL44Gb44Gf44GE77yJPC9vcHRpb24+CiAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT0i44G+44Gg5rG644KB44Gm44GE44Gq44GEIj7jgo/jgYvjgonjgarjgYQgLyDov7fjgaPjgabjgYTjgos8L29wdGlvbj4KICAgICAgICAgICAgPC9zZWxlY3Q+CiAgICAgICAgICA8L2Rpdj4KCiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmllbGQiPgogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iZmllbGQtbGFiZWwiPuODhuODs+OCt+ODp+ODs+aEnyA8c3BhbiBjbGFzc05hbWU9ImZpZWxkLWhpbnQiPuS7u+aEjzwvc3Bhbj48L2Rpdj4KICAgICAgICAgICAgPGlucHV0IGNsYXNzTmFtZT0iaW5wdXQiIHR5cGU9InRleHQiIHZhbHVlPXtkLnRlbnNpb259IG9uQ2hhbmdlPXtzZXQoJ3RlbnNpb24nKX0gcGxhY2Vob2xkZXI9IuS+i++8muOBq+OBjuOChOOBi+OAgeOCt+ODquOCouOCuSIgLz4KICAgICAgICAgIDwvZGl2PgoKICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmaWVsZCI+CiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJmaWVsZC1sYWJlbCI+44K144Og44ON44Gn55uu5oyH44GX44Gf44GE5Y2w6LGhIDxzcGFuIGNsYXNzTmFtZT0iZmllbGQtaGludCI+5Lu75oSPPC9zcGFuPjwvZGl2PgogICAgICAgICAgICA8aW5wdXQgY2xhc3NOYW1lPSJpbnB1dCIgdHlwZT0idGV4dCIgdmFsdWU9e2QuaW1wcmVzc2lvbn0gb25DaGFuZ2U9e3NldCgnaW1wcmVzc2lvbicpfSAvPgogICAgICAgICAgPC9kaXY+CgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZpZWxkIj4KICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9ImZpZWxkLWxhYmVsIj7jg6njg5XjgYvlrozmiJDniYjjgYsgPHNwYW4gY2xhc3NOYW1lPSJmaWVsZC1oaW50Ij7ku7vmhI88L3NwYW4+PC9kaXY+CiAgICAgICAgICAgIDxzZWxlY3QKICAgICAgICAgICAgICBjbGFzc05hbWU9InNlbGVjdCIKICAgICAgICAgICAgICB2YWx1ZT17ZC5jb21wbGV0aW9uTGV2ZWx9CiAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiBzZXREKChwcmV2KSA9PiAoeyAuLi5wcmV2LCBjb21wbGV0aW9uTGV2ZWw6IGUudGFyZ2V0LnZhbHVlIH0pKX0KICAgICAgICAgICAgPgogICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9IiI+6YG45oqe44GX44Gq44GEPC9vcHRpb24+CiAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT0i44Op44OVIj7jg6njg5U8L29wdGlvbj4KICAgICAgICAgICAgICA8b3B0aW9uIHZhbHVlPSLjgbvjgbzlrozmiJAiPuOBu+OBvOWujOaIkDwvb3B0aW9uPgogICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9IuWujOaIkOeJiCI+5a6M5oiQ54mIPC9vcHRpb24+CiAgICAgICAgICAgIDwvc2VsZWN0PgogICAgICAgICAgPC9kaXY+CgogICAgICAgICAgPEltYWdlVXBsb2FkZXIKICAgICAgICAgICAgbGFiZWw9IuWPguiAg+OBq+OBl+OBn+OBhOaXouWtmOOCteODoOODjSIKICAgICAgICAgICAgaGludD0i5Lu75oSPIgogICAgICAgICAgICBpbWFnZXM9e2QucmVmZXJlbmNlSW1hZ2VzfQogICAgICAgICAgICBvbkNoYW5nZT17KGltZ3MpID0+IHNldEQoKHByZXYpID0+ICh7IC4uLnByZXYsIHJlZmVyZW5jZUltYWdlczogaW1ncyB9KSl9CiAgICAgICAgICAvPgogICAgICAgIDwvZGl2PgogICAgICA8L2Rpdj4KCiAgICAgIDxkaXYgY2xhc3NOYW1lPSJwYW5lLWZvb3QiPgogICAgICAgIDxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzc05hbWU9ImJ0biBidG4tZ2hvc3QgYnRuLXNtIiBvbkNsaWNrPXtvbkJhY2t9PuKGkCDjg6Ljg7zjg4npgbjmip48L2J1dHRvbj4KICAgICAgICA8ZGl2IGNsYXNzTmFtZT0iY29sIiBzdHlsZT17eyBhbGlnbkl0ZW1zOiAnZmxleC1lbmQnLCBnYXA6IDQgfX0+CiAgICAgICAgICB7c3VibWl0SGludCAmJiA8c3BhbiBjbGFzc05hbWU9InN1Ym1pdC1oaW50Ij57c3VibWl0SGludH08L3NwYW4+fQogICAgICAgICAgPGJ1dHRvbiB0eXBlPSJzdWJtaXQiIGNsYXNzTmFtZT0iYnRuIGJ0bi1hY2NlbnQiIGRpc2FibGVkPXtsb2FkaW5nIHx8ICFjYW5TdWJtaXR9PgogICAgICAgICAgICA8c3BhbiBzdHlsZT17eyBmb250U2l6ZTogMTQgfX0+4pymPC9zcGFuPgogICAgICAgICAgICB7bG9hZGluZyA/ICfoqLrmlq3kuK3igKYnIDogJ+iouuaWreOCkumWi+Wniyd9CiAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CiAgICA8L2Zvcm0+CiAgKQp9Cg==
+import { useState } from 'react'
+import type { Mode2FormData } from '../types'
+import ImageUploader from './ImageUploader'
+
+interface Props {
+  onSubmit: (data: Mode2FormData) => void
+  onBack: () => void
+  loading: boolean
+  initialData?: Mode2FormData
+}
+
+export default function Mode2Form({ onSubmit, onBack, loading, initialData }: Props) {
+  const [d, setD] = useState<Mode2FormData>(initialData ?? {
+    title: '',
+    members: '',
+    overview: '',
+    materials: '',
+    intendedSubject: '',
+    tension: '',
+    impression: '',
+    completionLevel: '',
+    thumbnailImages: [],
+    referenceImages: [],
+  })
+
+  const set = (field: keyof Mode2FormData) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setD((prev) => ({ ...prev, [field]: e.target.value }))
+
+  const canSubmit = !!(d.title.trim() && d.thumbnailImages.length > 0)
+  const touched = !!(d.title || d.thumbnailImages.length || d.members || d.overview)
+  const submitHint = touched && !canSubmit
+    ? !d.thumbnailImages.length ? '画像を追加してください'
+    : 'タイトルを入力してください'
+    : null
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!canSubmit) return
+    onSubmit(d)
+  }
+
+  return (
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
+      <div className="pane-scroll">
+        <div className="form-step">
+          <div className="form-step-tag">STEP 2 / 3 · INPUT</div>
+          <h2 className="form-step-h2">サムネと文脈を教えてください</h2>
+        </div>
+
+        <div className="form-fields">
+          <ImageUploader
+            label="レビューするサムネ画像"
+            images={d.thumbnailImages}
+            onChange={(imgs) => setD((prev) => ({ ...prev, thumbnailImages: imgs }))}
+            required
+          />
+
+          <div className="field">
+            <div className="field-label">動画タイトル <span className="field-required">*</span></div>
+            <input className="input" type="text" value={d.title} onChange={set('title')} placeholder="例：【検証】ChatGPTで1週間生活したら..." required />
+          </div>
+
+          <div className="field">
+            <div className="field-label">サムネに出ているメンバー <span className="field-hint">任意</span></div>
+            <input className="input" type="text" value={d.members} onChange={set('members')} placeholder="例：真田、林" />
+          </div>
+
+          <div className="field">
+            <div className="field-label">動画の概要 <span className="field-hint">120字程度</span></div>
+            <textarea className="textarea" value={d.overview} onChange={set('overview')} rows={3} />
+          </div>
+
+          <div className="field">
+            <div className="field-label">使っている素材 <span className="field-hint">任意</span></div>
+            <input className="input" type="text" value={d.materials} onChange={set('materials')} />
+          </div>
+
+          <div className="field">
+            <div className="field-label">サムネで主役にしているもの <span className="field-hint">任意</span></div>
+            <select
+              className="select"
+              value={d.intendedSubject}
+              onChange={(e) => setD((prev) => ({ ...prev, intendedSubject: e.target.value }))}
+            >
+              <option value="">選択しない</option>
+              <option value="顔・リアクション">顔・リアクション（人物の表情や反応を見せたい）</option>
+              <option value="作品・完成物・モノ">作品・完成物・モノ（制作物や素材が主役）</option>
+              <option value="文字・企画のインパクト">文字・企画のインパクト（キャッチコピーや意外性）</option>
+              <option value="人物と作品の組み合わせ">人物と作品の組み合わせ（両方見せたい）</option>
+              <option value="まだ決めていない">わからない / 迷っている</option>
+            </select>
+          </div>
+
+          <div className="field">
+            <div className="field-label">テンション感 <span className="field-hint">任意</span></div>
+            <input className="input" type="text" value={d.tension} onChange={set('tension')} placeholder="例：にぎやか、シリアス" />
+          </div>
+
+          <div className="field">
+            <div className="field-label">サムネで目指したい印象 <span className="field-hint">任意</span></div>
+            <input className="input" type="text" value={d.impression} onChange={set('impression')} />
+          </div>
+
+          <div className="field">
+            <div className="field-label">ラフか完成版か <span className="field-hint">任意</span></div>
+            <select
+              className="select"
+              value={d.completionLevel}
+              onChange={(e) => setD((prev) => ({ ...prev, completionLevel: e.target.value }))}
+            >
+              <option value="">選択しない</option>
+              <option value="ラフ">ラフ</option>
+              <option value="ほぼ完成">ほぼ完成</option>
+              <option value="完成版">完成版</option>
+            </select>
+          </div>
+
+          <ImageUploader
+            label="参考にしたい既存サムネ"
+            hint="任意"
+            images={d.referenceImages}
+            onChange={(imgs) => setD((prev) => ({ ...prev, referenceImages: imgs }))}
+          />
+        </div>
+      </div>
+
+      <div className="pane-foot">
+        <button type="button" className="btn btn-ghost btn-sm" onClick={onBack}>← モード選択</button>
+        <div className="col" style={{ alignItems: 'flex-end', gap: 4 }}>
+          {submitHint && <span className="submit-hint">{submitHint}</span>}
+          <button type="submit" className="btn btn-accent" disabled={loading || !canSubmit}>
+            <span style={{ fontSize: 14 }}>✦</span>
+            {loading ? '診断中…' : '診断を開始'}
+          </button>
+        </div>
+      </div>
+    </form>
+  )
+}
