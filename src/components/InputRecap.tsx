@@ -1,10 +1,9 @@
-import type { Mode, FormData, Provider, UploadedImage, Mode1FormData, Mode2FormData, Mode3FormData } from '../types'
+import type { Mode, FormData, UploadedImage, Mode1FormData, Mode2FormData, Mode3FormData } from '../types'
 
 interface Props {
   mode: Mode | null
   data: FormData | null
   model: string
-  provider: Provider
 }
 
 const MODE_LABEL: Record<Mode, string> = {
@@ -23,7 +22,7 @@ function pickThumbnails(mode: Mode | null, data: FormData | null): UploadedImage
   return d.thumbnailImages
 }
 
-export default function InputRecap({ mode, data, model, provider }: Props) {
+export default function InputRecap({ mode, data, model }: Props) {
   const thumbnails = pickThumbnails(mode, data)
   const title = data?.title || ''
   const overview = (data as Mode1FormData | Mode2FormData | Mode3FormData | null)?.overview || ''
@@ -70,13 +69,13 @@ export default function InputRecap({ mode, data, model, provider }: Props) {
       )}
 
       <div className="recap-meta">
-        <div><span className="recap-meta-key">model</span>　{shortModel(model, provider)}</div>
+        <div><span className="recap-meta-key">model</span>　{shortModel(model)}</div>
         <div><span className="recap-meta-key">mode</span>　{mode ? MODE_LABEL[mode] : '—'}</div>
       </div>
     </>
   )
 }
 
-function shortModel(model: string, _provider: Provider): string {
+function shortModel(model: string): string {
   return model.split('/').pop() || model
 }

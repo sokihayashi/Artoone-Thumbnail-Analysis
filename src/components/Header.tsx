@@ -1,4 +1,5 @@
 import type { ToolVersion, Provider } from '../types'
+import AtLogo from '../assets/at_logo_black.svg?react'
 
 interface Props {
   version: ToolVersion
@@ -51,9 +52,8 @@ export default function Header({
     <header className="app-header">
       <div className="header-left">
         <button className="header-logo" onClick={onReset} title="モード選択へ">
-          <div className="logo-mark">A</div>
-          <span className="logo-text">Artoone</span>
-          <span className="logo-subtitle">/ サムネ診断</span>
+          <AtLogo className="header-logo-svg" aria-label="アートゥーン！" />
+          <span className="logo-subtitle">サムネ診断</span>
         </button>
         {subtitle && <span className="header-tag">{subtitle}</span>}
       </div>
