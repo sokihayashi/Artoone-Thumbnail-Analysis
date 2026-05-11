@@ -204,7 +204,7 @@ function buildRelevantCasesBlock(mode: Mode, data: FormData): string {
 
 function buildQueryText(mode: Mode, data: FormData): string {
   const d = data as Mode1FormData & Mode2FormData & Mode3FormData
-  const parts = [d.title, d.overview, d.tension, d.impression]
+  const parts = [d.title, d.overview, d.intendedSubject, d.tension, d.impression]
   if (mode === 1 && d.lightInstruction) parts.push(d.lightInstruction)
   if (mode === 3 && d.purpose) parts.push(d.purpose)
   return parts.filter(Boolean).join(' ')
@@ -214,22 +214,32 @@ function pickRelevantCases(query: string, n: number): DlcVideo[] {
   const all = (dlcData.top_videos ?? []) as DlcVideo[]
   if (!query) return all.slice(0, n)
   const tokens = tokenize(query)
-  const scored = all.map((video) => ({
-    video,
-    score: scoreMatch(tokens, video),
-  }))
+  const scored = all.map((video) => ({ video, score: scoreMatch(tokens, video) }))
   scored.sort((a, b) => b.score - a.score)
   return scored.slice(0, n).map((s) => s.video)
 }
 
 function scoreMatch(queryTokens: string[], video: DlcVideo): number {
-  const targetText = `${video['動画のタイトル']} ${video['企画型']} ${video['タイトル型']} ${video['勝ち筋ラベル']}`
+  const targetText = [
+    video['動画のタイトル'],
+    video['企画型'],
+    video['タイトル型'],
+    video['相性の良いサムネ型'],
+    video['勝ち筋ラベル'],
+    video['タイトルとサムネの関係'],
+    video['成立ライン'],
+  ].join(' ')
   const targetTokens = tokenize(targetText)
-  let overlap = 0
-  for (const q of queryTokens) {
-    if (q.length < 2) continue
-    if (targetTokens.some((t) => t.includes(q) || q.includes(t))) overlap += 1
+  const meaningful = queryTokens.filter((q) => q.length >= 2)
+  if (!meaningful.length) return 0
+
+  let raw = 0
+  for (const q of meaningful) {
+    if (targetTokens.includes(q)) raw += 2
+    else if (targetTokens.some((t) => t.includes(q) || q.includes(t))) raw += 1
   }
+  // Normalize by sqrt(query length) to avoid long-query bias
+  const overlap = raw / Math.sqrt(meaningful.length)
   const ctrBoost = Math.min(video['インプレッションのクリック率 (%)'] / 10, 0.5)
   const viewBoost = Math.min(Math.log10(Math.max(video['視聴回数'], 1)) / 20, 0.3)
   return overlap + ctrBoost + viewBoost
