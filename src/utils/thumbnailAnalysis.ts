@@ -1,37 +1,10 @@
-import type {
-  UploadedImage,
-  ThumbnailMetrics,
-  TextRegion,
-  FaceRegion,
-  ColorBucket,
-} from '../types'
+import type { UploadedImage, ThumbnailMetrics, FaceRegion, ColorBucket } from '../types'
 import { getImageData } from './imageUtils'
 
-const MIN_OCR_CONFIDENCE = 60
 const COLOR_BUCKET_BITS = 4
 const FACE_MODEL_URL = 'https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.15/model'
 
-let ocrWorker: import('tesseract.js').Worker | null = null
-let ocrInitPromise: Promise<import('tesseract.js').Worker> | null = null
 let faceLoadPromise: Promise<typeof import('@vladmandic/face-api')> | null = null
-
-type OcrBbox = { x0: number; y0: number; x1: number; y1: number }
-type OcrLine = { text?: string; confidence?: number; bbox: OcrBbox }
-type OcrParagraph = { lines?: OcrLine[] }
-type OcrBlock = { paragraphs?: OcrParagraph[] }
-
-async function getOcrWorker() {
-  if (ocrWorker) return ocrWorker
-  if (!ocrInitPromise) {
-    ocrInitPromise = (async () => {
-      const { createWorker } = await import('tesseract.js')
-      const worker = await createWorker(['jpn', 'eng'])
-      ocrWorker = worker
-      return worker
-    })()
-  }
-  return ocrInitPromise
-}
 
 async function loadFaceApi() {
   if (!faceLoadPromise) {
@@ -47,11 +20,10 @@ async function loadFaceApi() {
 export async function analyzeThumb(image: UploadedImage): Promise<ThumbnailMetrics> {
   const data = await getImageData(image)
   const colorInfo = extractColors(data)
-  const [textRegions, faces] = await Promise.all([runOcr(image, data), runFaceDetection(image, data)])
+  const faces = await runFaceDetection(image, data)
   return {
     width: data.width,
     height: data.height,
-    textRegions,
     faces,
     dominantColors: colorInfo.colors,
     averageBrightness: colorInfo.brightness,
@@ -93,62 +65,6 @@ function loadHTMLImage(dataUrl: string): Promise<HTMLImageElement> {
     img.onerror = reject
     img.src = dataUrl
   })
-}
-
-async function runOcr(image: UploadedImage, data: ImageData): Promise<TextRegion[]> {
-  const worker = await getOcrWorker()
-  const result = await worker.recognize(image.dataUrl, {}, { blocks: true })
-  const blocks = (result.data.blocks as OcrBlock[] | undefined) ?? []
-  const rawLines = blocks.flatMap((b) =>
-    (b.paragraphs ?? []).flatMap((p) => (p.lines ?? []).filter((l) => l.bbox && l.text)),
-  )
-  return rawLines
-    .map((l) => ({ text: l.text!.trim(), bbox: l.bbox, confidence: l.confidence ?? 0 }))
-    .filter((l) => l.text.length > 0 && l.confidence >= MIN_OCR_CONFIDENCE)
-    .map((l) => buildRegion(l.text, l.bbox, l.confidence, data))
-}
-
-function buildRegion(
-  text: string,
-  bbox: OcrBbox,
-  confidence: number,
-  data: ImageData,
-): TextRegion {
-  const x = Math.max(0, Math.floor(bbox.x0))
-  const y = Math.max(0, Math.floor(bbox.y0))
-  const w = Math.max(1, Math.floor(bbox.x1 - bbox.x0))
-  const h = Math.max(1, Math.floor(bbox.y1 - bbox.y0))
-  const fontSize = Math.round(h * 0.78)
-  const { fg, bg } = sampleFgBg(data, x, y, w, h)
-  const contrastRatio = wcagContrast(fg, bg)
-  return {
-    text,
-    bbox: { x, y, w, h },
-    fontSize,
-    fgColor: rgbToHex(fg),
-    bgColor: rgbToHex(bg),
-    contrastRatio: Math.round(contrastRatio * 100) / 100,
-    confidence: Math.round(confidence),
-  }
-}
-
-function sampleFgBg(data: ImageData, x: number, y: number, w: number, h: number) {
-  const step = Math.max(1, Math.floor(Math.min(w, h) / 12))
-  const samples: { r: number; g: number; b: number; lum: number }[] = []
-  for (let yy = y; yy < y + h && yy < data.height; yy += step) {
-    for (let xx = x; xx < x + w && xx < data.width; xx += step) {
-      const i = (yy * data.width + xx) * 4
-      const r = data.data[i], g = data.data[i + 1], b = data.data[i + 2]
-      samples.push({ r, g, b, lum: relativeLuminance(r, g, b) })
-    }
-  }
-  const lums = samples.map((s) => s.lum)
-  const minL = Math.min(...lums)
-  const maxL = Math.max(...lums)
-  const range = maxL - minL
-  const dark = samples.filter((s) => s.lum <= minL + range * 0.3)
-  const light = samples.filter((s) => s.lum >= maxL - range * 0.3)
-  return { fg: avgColor(dark), bg: avgColor(light) }
 }
 
 export function avgColor(arr: { r: number; g: number; b: number }[]): { r: number; g: number; b: number } {
@@ -200,12 +116,4 @@ export function extractColors(data: ImageData): { colors: ColorBucket[]; brightn
     }
   })
   return { colors, brightness: Math.round((lumSum / total) * 1000) / 1000 }
-}
-
-export async function terminateOcr() {
-  if (ocrWorker) {
-    await ocrWorker.terminate()
-    ocrWorker = null
-    ocrInitPromise = null
-  }
 }

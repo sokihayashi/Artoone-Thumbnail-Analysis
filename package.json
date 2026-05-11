@@ -15,8 +15,7 @@
     "@vladmandic/face-api": "^1.7.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-markdown": "^9.0.1",
-    "tesseract.js": "^5.1.1"
+    "react-markdown": "^9.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.12",

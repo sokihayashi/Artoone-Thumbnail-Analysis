@@ -11,16 +11,6 @@ export interface UploadedImage {
   height?: number
 }
 
-export interface TextRegion {
-  text: string
-  bbox: { x: number; y: number; w: number; h: number }
-  fontSize: number
-  fgColor: string
-  bgColor: string
-  contrastRatio: number
-  confidence: number
-}
-
 export interface FaceRegion {
   bbox: { x: number; y: number; w: number; h: number }
   areaRatio: number
@@ -35,7 +25,6 @@ export interface ColorBucket {
 export interface ThumbnailMetrics {
   width: number
   height: number
-  textRegions: TextRegion[]
   faces: FaceRegion[]
   dominantColors: ColorBucket[]
   averageBrightness: number

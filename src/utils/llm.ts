@@ -273,9 +273,7 @@ async function buildAnalysisFactsBlock(images: UploadedImage[]): Promise<string>
   if (!blocks.length) return ''
   return [
     '## 機械測定データ（参考値）',
-    '以下は画像処理ライブラリ(Tesseract OCR + WCAGコントラスト計算)による客観値。',
-    '装飾的小文字（©、URL、配信時刻など）は人間判断で無視してよい。',
-    'OCRが文字を未検出でも装飾フォント起因が多い。未検出を「文字が細い」と判断しないこと。',
+    '以下は画像処理ライブラリ（顔検出 + 色分析）による客観値。テキスト視認性は画像を直接見て評価する。',
     '',
     blocks.join('\n\n'),
   ].join('\n')
@@ -293,18 +291,6 @@ async function safeAnalyze(image: UploadedImage): Promise<ThumbnailMetrics | nul
 function formatMetrics(m: ThumbnailMetrics, idx: number): string {
   const lines: string[] = [`### サムネ画像${idx}（${m.width}×${m.height}）`]
 
-  if (m.textRegions.length) {
-    lines.push('[テキスト領域]')
-    for (const r of m.textRegions) {
-      const sizeWarn = r.fontSize < 36 ? ' ⚠危険' : r.fontSize < 60 ? ' ⚠注意' : ''
-      const ctrWarn = r.contrastRatio < 3 ? ' ⚠危険' : r.contrastRatio < 4.5 ? ' ⚠注意' : ''
-      lines.push(`- "${r.text}" font_size≈${r.fontSize}px contrast=${r.contrastRatio}${sizeWarn}${ctrWarn}`)
-    }
-  } else {
-    lines.push('[テキスト領域] OCR検出なし（装飾・カラーフォントはOCRが苦手。大きな文字でも未検出になる場合あり）')
-  }
-
-  lines.push('')
   if (m.faces.length) {
     lines.push('[顔検出]')
     const sortedFaces = [...m.faces].sort((a, b) => b.areaRatio - a.areaRatio)
